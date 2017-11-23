@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="hexo,ssh keys," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文简要介绍了基于GitHub和Hexo在Mac上搭建个人博客的过程以及theme更改、域名设置等。基于GitHub和Hexo搭建博客的关键在于借助hexo创建本地博客、在GitHub上创建repository以及通过SSH keys将前两者进行关联等这三个步骤。本文还对theme的更改、域名的设置、图片的插入等问题提供了解决方案。">
+<meta name="keywords" content="hexo,ssh keys">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Build Blog on GitHub by Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/index.html">
+<meta property="og:site_name" content="LeiHuang&#39;s Blog">
+<meta property="og:description" content="本文简要介绍了基于GitHub和Hexo在Mac上搭建个人博客的过程以及theme更改、域名设置等。基于GitHub和Hexo搭建博客的关键在于借助hexo创建本地博客、在GitHub上创建repository以及通过SSH keys将前两者进行关联等这三个步骤。本文还对theme的更改、域名的设置、图片的插入等问题提供了解决方案。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/init.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/repository%20name.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/cloneHttps.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/config.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/deploy.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/sshkeys.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/theme.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/domainAnalysis.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/newDomain.png">
+<meta property="og:updated_time" content="2017-11-23T16:50:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Build Blog on GitHub by Hexo">
+<meta name="twitter:description" content="本文简要介绍了基于GitHub和Hexo在Mac上搭建个人博客的过程以及theme更改、域名设置等。基于GitHub和Hexo搭建博客的关键在于借助hexo创建本地博客、在GitHub上创建repository以及通过SSH keys将前两者进行关联等这三个步骤。本文还对theme的更改、域名的设置、图片的插入等问题提供了解决方案。">
+<meta name="twitter:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/init.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/"/>
+
+
+
+
+
+  <title>Build Blog on GitHub by Hexo | LeiHuang's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?fa63699072fd198a02e43cccf4d60faa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LeiHuang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">逆水行舟，不进则退。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LeiHuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LeiHuang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Build Blog on GitHub by Hexo</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-23T20:41:59+08:00">
+                2017-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Build-Blog/" itemprop="url" rel="index">
+                    <span itemprop="name">Build Blog</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文简要介绍了基于GitHub和Hexo在Mac上搭建个人博客的过程以及theme更改、域名设置等。基于GitHub和Hexo搭建博客的关键在于借助hexo创建本地博客、在GitHub上创建repository以及通过SSH keys将前两者进行关联等这三个步骤。本文还对theme的更改、域名的设置、图片的插入等问题提供了解决方案。</p>
+<a id="more"></a>
+<h2 id="1-环境"><a href="#1-环境" class="headerlink" title="1. 环境"></a>1. 环境</h2><p>在GitHub上搭建个人博客，除了需要一个GitHub账号外，本地环境需要必备如下几个应用程序：</p>
+<ul>
+<li><a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a>：用于生成静态页面。</li>
+<li><a href="https://git-scm.com" target="_blank" rel="external">Git</a>：可将本地的Hexo内容提交到GitHub上。</li>
+<li><a href="https://hexo.io" target="_blank" rel="external">Hexo</a></li>
+</ul>
+<h3 id="1-1-Node-js"><a href="#1-1-Node-js" class="headerlink" title="1.1 Node.js"></a>1.1 Node.js</h3><p>如果不确定本地是否已经安装了Node.js，可以在终端执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node --version</div></pre></td></tr></table></figure>
+<p>进行检验。如果已经正确安装，会得到所安装的版本号，例如<code>v6.10.3</code>。</p>
+<p>如果本地未安装或需要对版本进行升级，则均可以从<a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js官网</a>进行下载安装.</p>
+<h3 id="1-2-Git"><a href="#1-2-Git" class="headerlink" title="1.2 Git"></a>1.2 Git</h3><p>因本地安装的Xcode自带了Git，所以此处不做介绍。如有需要可以访问hexo官方提供的<a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="external">Git安装</a>中获得相应的帮助。</p>
+<h3 id="1-3-Hexo"><a href="#1-3-Hexo" class="headerlink" title="1.3 Hexo"></a>1.3 Hexo</h3><p>在完成Node.js和Git的安装后，进行Hexo的安装。在Mac终端执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo npm install -g hexo</div></pre></td></tr></table></figure>
+<p>输入管理员密码，即Mac的登录密码，就会开始进行安装。在Windows系统上，此处的命令行会有所不同。</p>
+<h2 id="2-搭建"><a href="#2-搭建" class="headerlink" title="2. 搭建"></a>2. 搭建</h2><h3 id="2-1-本地初始化"><a href="#2-1-本地初始化" class="headerlink" title="2.1 本地初始化"></a>2.1 本地初始化</h3><ol>
+<li><p>终端cd至准备存放Blog代码的目录，执行：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo init BlogFolder</div></pre></td></tr></table></figure>
+<p> <code>BlogFolder</code>是存放Blog代码的文件夹，即博客根目录，可以自定义，不建议使用中文。如果不写<code>BlogFolder</code>，则会在当前目录下直接创建并存放相应的文件。</p>
+</li>
+<li><p>终端cd至博客根目录，执行：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install</div></pre></td></tr></table></figure>
+<p> 进行npm的安装。</p>
+</li>
+<li><p>终端cd至博客根目录，执行：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo g</div><div class="line">hexo s</div></pre></td></tr></table></figure>
+<p> <code>hexo g</code>可以生成静态页面，<code>hexo s</code>可以在本地开启hexo服务器。这样通过浏览器访问<a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a> 就可以看到类似如下图所示的结果，如此便可以完成本地的创建。在终端使用<code>Ctrl+C</code>就可以关闭hexo服务器。<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/init.png" alt="init">上图是本人已经进行过部分设置后的截图，会与初次开启hexo服务器时看到的略有不同。</p>
+</li>
+</ol>
+<h3 id="2-2-GitHub"><a href="#2-2-GitHub" class="headerlink" title="2.2 GitHub"></a>2.2 GitHub</h3><p>在GitHub上创建repository，并与本地的blog进行初步关联。</p>
+<ol>
+<li><p>创建repository。其中Repository name为<code>用户名.github.io</code>，例如，<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/repository name.png" alt="repository name"></p>
+</li>
+<li><p>创建完成后，复制该repository的https，例如<code>https://github.com/BossHuang/bosshuang.github.io.git</code>  <img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/cloneHttps.png" alt="https"></p>
+</li>
+<li><p>修改blog的配置文件。打开博客根目录下的<code>_config.yml</code>文件，<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/config.png" alt="config">找到<code>deploy</code>部分，将上一步中所得的https复制其中，并修改属性，如下图所示：<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/deploy.png" alt="deploy"></p>
+</li>
+</ol>
+<h3 id="2-3-本地blog与GitHub进行关联"><a href="#2-3-本地blog与GitHub进行关联" class="headerlink" title="2.3 本地blog与GitHub进行关联."></a>2.3 本地blog与GitHub进行关联.</h3><p>本地blog与Github上的repository进行关联除了2.2中的第3步外，还需要设置SSH keys方便博客的发布。</p>
+<ol>
+<li><p>终端cd至<code>~/.ssh</code>执行：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C &quot;example_email@example.com&quot;</div></pre></td></tr></table></figure>
+<p> 其中<code>example_email@example.com</code>应当是登录GitHub所使用的账号。上述两步后会要求输入用于保存SSH keys的文件名，例如<code>github</code>，再输入电脑的登录密码。会得到如下图所示：<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/sshkeys.png" alt="sshkeys">这样会在<code>~/.ssh/</code>下生成<code>github</code>和<code>github.pub</code>文件。如果不输入文件名，则会默认生成<code>id_rsa</code>和<code>id_rsa.pub</code>，这里不建议使用默认，避免与其他的SSH文件冲突。</p>
+</li>
+<li><p>打开上一步中所得的<code>github.pub</code>文件，复制其中的内容。在<code>GitHub --&gt; Settings --&gt; SSH and GPG keys --&gt; New SSH key</code> 的<code>Key</code>中进行粘贴，并取一个适当的<code>Title</code>，例如<code>Blog</code>。</p>
+</li>
+</ol>
+<h2 id="3-发布"><a href="#3-发布" class="headerlink" title="3. 发布"></a>3. 发布</h2><p>完成博客的搭建后，cd至博客根目录，执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure>
+<p>如果在执行<code>hexo d</code>时报未找到或无法连接git的错误，则在终端执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-deployer-git --save</div></pre></td></tr></table></figure>
+<p>而后再次执行之前的命令，完成后可以在浏览器里输入<code>用户名.github.io</code>进行访问，会看到与本地访问相同的页面。至此便完成整个博客的搭建和发布。</p>
+<h2 id="4-其他"><a href="#4-其他" class="headerlink" title="4. 其他"></a>4. 其他</h2><h3 id="4-1-文章的创建和发布"><a href="#4-1-文章的创建和发布" class="headerlink" title="4.1 文章的创建和发布"></a>4.1 文章的创建和发布</h3><p>在终端cd至博客根目录，执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo new &quot;new article name&quot;</div></pre></td></tr></table></figure>
+<p>会得到名为<code>new-article-name.md</code>的文件，并且存放在<code>/source/_posts/</code>。关于文章的一些设置可以访问hexo官方提供的<a href="https://hexo.io/zh-cn/docs/writing.html" target="_blank" rel="external">写作</a>，关于文章的编辑不在本文里进行赘述。</p>
+<p>完成文章的创建和编辑后，在终端执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure>
+<p>便完成文章的发布。</p>
+<h3 id="4-2-theme"><a href="#4-2-theme" class="headerlink" title="4.2 theme"></a>4.2 theme</h3><p>因默认提供的主题对文章目录的支持不友好，所以我考虑更改主题。</p>
+<p>hexo的主题可以访问<a href="https://hexo.io/themes/" target="_blank" rel="external">Themes</a>进行选择。本人这里选择的是<code>NexT</code>主题，因此以<code>NexT</code>为例，介绍下主题的更改，主题的具体配置可以访问主题的使用文档。</p>
+<ol>
+<li>在<a href="https://hexo.io/themes/" target="_blank" rel="external">Themes</a>中选择想要的主题，一般打开后会跳转至相应的github页面，找到对应的https，复制。</li>
+<li><p>终端cd至博客根目录，执行<code>git clone https地址</code>，例如</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/iissnan/hexo-theme-next.git</div></pre></td></tr></table></figure>
+</li>
+<li><p>打开博客根目录下的<code>_config.yml</code>文件，找到<code>theme</code>部分，将其内容修改为<code>next</code>，例如：<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/theme.png" alt="theme"></p>
+</li>
+<li><p>再次执行博客生成和发布命令</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo clean</div><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure>
+<p> 这样就可以完成theme的修改。</p>
+</li>
+<li>关于theme的其他设置，可以通过其官方文档获得帮助，例如<a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">NexT的文档</a></li>
+</ol>
+<h3 id="4-3-域名"><a href="#4-3-域名" class="headerlink" title="4.3 域名"></a>4.3 域名</h3><p>本人是在万网购买的域名，因此下面的说明仅供参考，但大体上相同。</p>
+<ol>
+<li>购买域名后，登录系统，然后选择<code>控制台 --&gt; 域名服务 --&gt; 域名列表 --&gt; 点击所购买的域名的 解析</code>，如果看到如下图所示的记录，可以将其全部删除，这些是设置企业邮箱所使用的，如果有需要，可以在设置企业邮箱时再次添加，如不删除会与域名跳转的设置相冲突。<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/domainAnalysis.png" alt="domainAnalysis.png"></li>
+<li>点击<code>添加解析</code>，将其设置为如下图所示的例子。<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/newDomain.png" alt="newDomain">其中记录值应当设置为<code>用户名.github.io.</code>，其他的则相同。</li>
+<li>在<code>根目录/source/</code>目录下添加不带任何后缀且名为<code>CNAME</code>的文件，写入自己购买的域名，例如<code>domainname.com</code>.</li>
+<li><p>执行</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo clean</div><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure>
+<p> 完成域名的设置。</p>
+</li>
+</ol>
+<h3 id="4-4-本地图片"><a href="#4-4-本地图片" class="headerlink" title="4.4 本地图片"></a>4.4 本地图片</h3><p>在博客中插入图片：</p>
+<ul>
+<li><p>方法一：借助某些工具或服务来生成图片的URL，插入文章中。例如</p>
+<ul>
+<li>借助微博图床</li>
+<li>借助七牛云</li>
+<li><p>借助<a href="https://www.v2ex.com/t/182703" target="_blank" rel="external">V2ex上网友</a>做的图床网站<code>https://sm.ms</code></p>
+<p>等类似的方法来生成图片的URL。这种方法的优势在于图片的URL在任意文章中均可以使用，劣势在于文章图片较多时不方便管理、七牛云在使用一定量后是收费的。</p>
+</li>
+</ul>
+</li>
+<li><p>方法二：本地图片上传。借助<a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="external">hexo-asset-image</a>插件来实现本地图片的上传和加载。具体过程如下：</p>
+<ol>
+<li>打开博客根目录下的<code>_config.yml</code>文件，修改<code>post_asset_folder</code>字段的值为<code>true</code>。这样每次通过<code>hexo new</code>新建文章时，会在同级目录下创建相同名字的文件夹。例如新创建的文章的名字为<code>new-artile-name.md</code>，相应的文件夹的名字为<code>new-article-name</code>。</li>
+<li><p>终端cd至博客根目录，执行</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-asset-image --save</div></pre></td></tr></table></figure>
+</li>
+<li><p>将准备插入文章的图片复制到与文章同名的文件夹，然后在文章中使用标准的图片插入方式插入即可。例如<code>![文字](new-article-name/图片名.jpg)</code></p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="4-5-代码托管"><a href="#4-5-代码托管" class="headerlink" title="4.5 代码托管"></a>4.5 代码托管</h3><p>关于异地更新博客文章或更换电脑后对博客的更新等类似问题。</p>
+<ul>
+<li>方法一：备份所有的Blog文件和代码。该方法的缺点在于更新不及时，需要手动备份，比较麻烦。</li>
+<li>方法二：在GitHub新建仓库存放Blog的文件和代码。该方法会使博客的源代码公开，不是一个好办法。</li>
+<li>方法三：在Coding.net上，个人用户可以免费使用一定数量的私人项目，因此可以考虑将代码托管其中。这样可以可以解决私密性和托管的问题。</li>
+</ul>
+<p>方法三本人目前还没有测试过，所以不做具体介绍。</p>
+<h3 id="4-6-部署至Coding"><a href="#4-6-部署至Coding" class="headerlink" title="4.6 部署至Coding"></a>4.6 部署至Coding</h3><p>为了方便国内的访问，也多一些选择可能，有些还会把博客同时部署到Coding.net，同时在域名解析中增加国内域名的解析。</p>
+<p>本人目前没有在Coding上进行过部署，所以不做具体介绍。</p>
+<h3 id="4-7-其他"><a href="#4-7-其他" class="headerlink" title="4.7 其他"></a>4.7 其他</h3><ul>
+<li>关于博客的其他设置，可以参考<a href="https://hexo.io/docs/" target="_blank" rel="external">Hexo的官方文档</a>。</li>
+<li>关于theme的其他设置，可以参考相应的官方文档。</li>
+</ul>
+<h2 id="5-References"><a href="#5-References" class="headerlink" title="5.References"></a>5.References</h2><ul>
+<li>[1] Hexo官方文档：<a href="https://hexo.io/docs/" target="_blank" rel="external">https://hexo.io/docs/</a></li>
+<li>[2] NexT使用文档：<a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">http://theme-next.iissnan.com/getting-started.html</a></li>
+<li>[3] hexo-asset-image：<a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="external">https://github.com/CodeFalling/hexo-asset-image</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>All article here are forbidden to reprint without my permission. 所有文章未经允许禁止转载。Thanks for reading.</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpeg" alt="LeiHuang WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpeg" alt="LeiHuang Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hexo/" rel="tag"># hexo</a>
+          
+            <a href="/tags/ssh-keys/" rel="tag"># ssh keys</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">LeiHuang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/bosshuang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:myheromyjoe@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-环境"><span class="nav-text">1. 环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Node-js"><span class="nav-text">1.1 Node.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Git"><span class="nav-text">1.2 Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Hexo"><span class="nav-text">1.3 Hexo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-搭建"><span class="nav-text">2. 搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-本地初始化"><span class="nav-text">2.1 本地初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-GitHub"><span class="nav-text">2.2 GitHub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-本地blog与GitHub进行关联"><span class="nav-text">2.3 本地blog与GitHub进行关联.</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-发布"><span class="nav-text">3. 发布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-其他"><span class="nav-text">4. 其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-文章的创建和发布"><span class="nav-text">4.1 文章的创建和发布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-theme"><span class="nav-text">4.2 theme</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-域名"><span class="nav-text">4.3 域名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-本地图片"><span class="nav-text">4.4 本地图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-代码托管"><span class="nav-text">4.5 代码托管</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-部署至Coding"><span class="nav-text">4.6 部署至Coding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-7-其他"><span class="nav-text">4.7 其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-References"><span class="nav-text">5.References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LeiHuang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
