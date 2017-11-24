@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="hexo,ssh keys," />
+  <meta name="keywords" content="hexo,GitHub,SSH keys,域名,本地图片上传," />
 
 
 
@@ -77,13 +77,13 @@
 
 
 
-<meta name="description" content="本文简要介绍了基于GitHub和Hexo在Mac上搭建个人博客的过程以及theme更改、域名设置等。基于GitHub和Hexo搭建博客的关键在于借助hexo创建本地博客、在GitHub上创建repository以及通过SSH keys将前两者进行关联等这三个步骤。本文还对theme的更改、域名的设置、图片的插入等问题提供了解决方案。">
-<meta name="keywords" content="hexo,ssh keys">
+<meta name="description" content="本文简要介绍了基于GitHub和Hexo在Mac上搭建个人博客的过程以及theme更改、域名设置、图片上传等常见问题提供了解决方案。首先，本文介绍了基于GitHub和Hexo搭建博客的三个关键步骤：借助hexo创建本地博客、在GitHub上创建repository以及通过SSH keys将前两者进行关联。然后，介绍了文章的创建和发布、theme的更改、域名的设置、本地图片插入等常见问题的解决方案。">
+<meta name="keywords" content="hexo,GitHub,SSH keys,域名,本地图片上传">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Build Blog on GitHub by Hexo">
 <meta property="og:url" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/index.html">
 <meta property="og:site_name" content="LeiHuang&#39;s Blog">
-<meta property="og:description" content="本文简要介绍了基于GitHub和Hexo在Mac上搭建个人博客的过程以及theme更改、域名设置等。基于GitHub和Hexo搭建博客的关键在于借助hexo创建本地博客、在GitHub上创建repository以及通过SSH keys将前两者进行关联等这三个步骤。本文还对theme的更改、域名的设置、图片的插入等问题提供了解决方案。">
+<meta property="og:description" content="本文简要介绍了基于GitHub和Hexo在Mac上搭建个人博客的过程以及theme更改、域名设置、图片上传等常见问题提供了解决方案。首先，本文介绍了基于GitHub和Hexo搭建博客的三个关键步骤：借助hexo创建本地博客、在GitHub上创建repository以及通过SSH keys将前两者进行关联。然后，介绍了文章的创建和发布、theme的更改、域名的设置、本地图片插入等常见问题的解决方案。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/init.png">
 <meta property="og:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/repository%20name.png">
@@ -94,10 +94,10 @@
 <meta property="og:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/theme.png">
 <meta property="og:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/domainAnalysis.png">
 <meta property="og:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/newDomain.png">
-<meta property="og:updated_time" content="2017-11-23T16:50:58.000Z">
+<meta property="og:updated_time" content="2017-11-24T11:41:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Build Blog on GitHub by Hexo">
-<meta name="twitter:description" content="本文简要介绍了基于GitHub和Hexo在Mac上搭建个人博客的过程以及theme更改、域名设置等。基于GitHub和Hexo搭建博客的关键在于借助hexo创建本地博客、在GitHub上创建repository以及通过SSH keys将前两者进行关联等这三个步骤。本文还对theme的更改、域名的设置、图片的插入等问题提供了解决方案。">
+<meta name="twitter:description" content="本文简要介绍了基于GitHub和Hexo在Mac上搭建个人博客的过程以及theme更改、域名设置、图片上传等常见问题提供了解决方案。首先，本文介绍了基于GitHub和Hexo搭建博客的三个关键步骤：借助hexo创建本地博客、在GitHub上创建repository以及通过SSH keys将前两者进行关联。然后，介绍了文章的创建和发布、theme的更改、域名的设置、本地图片插入等常见问题的解决方案。">
 <meta name="twitter:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/init.png">
 
 
@@ -368,7 +368,7 @@
       
 
       
-        <p>本文简要介绍了基于GitHub和Hexo在Mac上搭建个人博客的过程以及theme更改、域名设置等。基于GitHub和Hexo搭建博客的关键在于借助hexo创建本地博客、在GitHub上创建repository以及通过SSH keys将前两者进行关联等这三个步骤。本文还对theme的更改、域名的设置、图片的插入等问题提供了解决方案。</p>
+        <p>本文简要介绍了基于GitHub和Hexo在Mac上搭建个人博客的过程以及theme更改、域名设置、图片上传等常见问题提供了解决方案。首先，本文介绍了基于GitHub和Hexo搭建博客的三个关键步骤：借助hexo创建本地博客、在GitHub上创建repository以及通过SSH keys将前两者进行关联。然后，介绍了文章的创建和发布、theme的更改、域名的设置、本地图片插入等常见问题的解决方案。</p>
 <a id="more"></a>
 <h2 id="1-环境"><a href="#1-环境" class="headerlink" title="1. 环境"></a>1. 环境</h2><p>在GitHub上搭建个人博客，除了需要一个GitHub账号外，本地环境需要必备如下几个应用程序：</p>
 <ul>
@@ -478,9 +478,8 @@
 <ul>
 <li>方法一：备份所有的Blog文件和代码。该方法的缺点在于更新不及时，需要手动备份，比较麻烦。</li>
 <li>方法二：在GitHub新建仓库存放Blog的文件和代码。该方法会使博客的源代码公开，不是一个好办法。</li>
-<li>方法三：在Coding.net上，个人用户可以免费使用一定数量的私人项目，因此可以考虑将代码托管其中。这样可以可以解决私密性和托管的问题。</li>
+<li>方法三：在Coding.net上，个人用户可以免费使用一定数量的私人项目，因此可以考虑将代码托管其中。这样可以解决私密性和托管的问题。</li>
 </ul>
-<p>方法三本人目前还没有测试过，所以不做具体介绍。</p>
 <h3 id="4-6-部署至Coding"><a href="#4-6-部署至Coding" class="headerlink" title="4.6 部署至Coding"></a>4.6 部署至Coding</h3><p>为了方便国内的访问，也多一些选择可能，有些还会把博客同时部署到Coding.net，同时在域名解析中增加国内域名的解析。</p>
 <p>本人目前没有在Coding上进行过部署，所以不做具体介绍。</p>
 <h3 id="4-7-其他"><a href="#4-7-其他" class="headerlink" title="4.7 其他"></a>4.7 其他</h3><ul>
@@ -540,7 +539,13 @@
           
             <a href="/tags/hexo/" rel="tag"># hexo</a>
           
-            <a href="/tags/ssh-keys/" rel="tag"># ssh keys</a>
+            <a href="/tags/GitHub/" rel="tag"># GitHub</a>
+          
+            <a href="/tags/SSH-keys/" rel="tag"># SSH keys</a>
+          
+            <a href="/tags/域名/" rel="tag"># 域名</a>
+          
+            <a href="/tags/本地图片上传/" rel="tag"># 本地图片上传</a>
           
         </div>
       
@@ -640,7 +645,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
