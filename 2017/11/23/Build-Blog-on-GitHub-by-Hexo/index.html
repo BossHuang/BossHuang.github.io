@@ -5,7 +5,7 @@
 
 <html class="theme-next pisces" lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/theme.png">
 <meta property="og:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/domainAnalysis.png">
 <meta property="og:image" content="http://yoursite.com/2017/11/23/Build-Blog-on-GitHub-by-Hexo/newDomain.png">
-<meta property="og:updated_time" content="2017-11-24T11:41:01.000Z">
+<meta property="og:updated_time" content="2017-12-08T15:51:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Build Blog on GitHub by Hexo">
 <meta name="twitter:description" content="本文简要介绍了基于GitHub和Hexo在Mac上搭建个人博客的过程以及theme更改、域名设置、图片上传等常见问题提供了解决方案。首先，本文介绍了基于GitHub和Hexo搭建博客的三个关键步骤：借助hexo创建本地博客、在GitHub上创建repository以及通过SSH keys将前两者进行关联。然后，介绍了文章的创建和发布、theme的更改、域名的设置、本地图片插入等常见问题的解决方案。">
@@ -149,7 +149,7 @@
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
-  </script>
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 
@@ -163,7 +163,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -402,7 +402,7 @@
 <ol>
 <li><p>创建repository。其中Repository name为<code>用户名.github.io</code>，例如，<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/repository name.png" alt="repository name"></p>
 </li>
-<li><p>创建完成后，复制该repository的https，例如<code>https://github.com/BossHuang/bosshuang.github.io.git</code>  <img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/cloneHttps.png" alt="https"></p>
+<li><p>创建完成后，复制该repository的https，例如<code>https://github.com/BossHuang/bosshuang.github.io.git</code> <img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/cloneHttps.png" alt="https"></p>
 </li>
 <li><p>修改blog的配置文件。打开博客根目录下的<code>_config.yml</code>文件，<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/config.png" alt="config">找到<code>deploy</code>部分，将上一步中所得的https复制其中，并修改属性，如下图所示：<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/deploy.png" alt="deploy"></p>
 </li>
@@ -444,7 +444,7 @@
 </ol>
 <h3 id="4-3-域名"><a href="#4-3-域名" class="headerlink" title="4.3 域名"></a>4.3 域名</h3><p>本人是在万网购买的域名，因此下面的说明仅供参考，但大体上相同。</p>
 <ol>
-<li>购买域名后，登录系统，然后选择<code>控制台 --&gt; 域名服务 --&gt; 域名列表 --&gt; 点击所购买的域名的 解析</code>，如果看到如下图所示的记录，可以将其全部删除，这些是设置企业邮箱所使用的，如果有需要，可以在设置企业邮箱时再次添加，如不删除会与域名跳转的设置相冲突。<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/domainAnalysis.png" alt="domainAnalysis.png"></li>
+<li>购买域名后，登录系统，然后选择<code>控制台 --&gt; 域名服务 --&gt; 域名列表 --&gt; 点击所购买的域名的 解析</code>，如果看到如下图所示的记录，可以将其全部删除，这些是设置企业邮箱所使用的，如果有需要，可以在设置企业邮箱时再次添加，如不删除会与域名跳转的设置相冲突。<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/domainAnalysis.png" alt="domainAnalysis"></li>
 <li>点击<code>添加解析</code>，将其设置为如下图所示的例子。<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/newDomain.png" alt="newDomain">其中记录值应当设置为<code>用户名.github.io.</code>，其他的则相同。</li>
 <li>在<code>根目录/source/</code>目录下添加不带任何后缀且名为<code>CNAME</code>的文件，写入自己购买的域名，例如<code>domainname.com</code>.</li>
 <li><p>执行</p>
@@ -555,6 +555,22 @@
       
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/27/Use-MarkDown/" rel="prev" title="Use MarkDown">
+                Use MarkDown <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
 
       
       
@@ -623,7 +639,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -634,7 +650,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -899,6 +915,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
 
   
 

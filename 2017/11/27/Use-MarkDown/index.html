@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MarkDown," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文简要介绍了MarkDown的常用语法，包括数学公式的编写、表格、引用等。">
+<meta name="keywords" content="MarkDown">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Use MarkDown">
+<meta property="og:url" content="http://yoursite.com/2017/11/27/Use-MarkDown/index.html">
+<meta property="og:site_name" content="LeiHuang&#39;s Blog">
+<meta property="og:description" content="本文简要介绍了MarkDown的常用语法，包括数学公式的编写、表格、引用等。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/headers.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/StrongAndEmphasize.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/link.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/lists.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/quote.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/inline.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/block.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/reference.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/table.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/code.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/formatting.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/task.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/公式示例.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/math_1_2_3.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/math_4.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/math_5.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/math_6_7.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/math_8_9.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/math_10.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/math_11.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/math_12.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/math_13.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/math_14.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/math_15.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/math_16.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/math_17.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/math_18.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/math_19.png">
+<meta property="og:updated_time" content="2017-12-08T15:56:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Use MarkDown">
+<meta name="twitter:description" content="本文简要介绍了MarkDown的常用语法，包括数学公式的编写、表格、引用等。">
+<meta name="twitter:image" content="http://yoursite.com/2017/11/27/Use-MarkDown/headers.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/27/Use-MarkDown/"/>
+
+
+
+
+
+  <title>Use MarkDown | LeiHuang's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?fa63699072fd198a02e43cccf4d60faa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LeiHuang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">逆水行舟，不进则退。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/27/Use-MarkDown/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LeiHuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LeiHuang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Use MarkDown</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-27T19:37:30+08:00">
+                2017-11-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MarkDown/" itemprop="url" rel="index">
+                    <span itemprop="name">MarkDown</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文简要介绍了MarkDown的常用语法，包括数学公式的编写、表格、引用等。</p>
+<a id="more"></a>
+<h2 id="1-The-Basics"><a href="#1-The-Basics" class="headerlink" title="1. The Basics"></a><a name="Basics"></a>1. The Basics</h2><h3 id="1-1-Headers-标题"><a href="#1-1-Headers-标题" class="headerlink" title="1.1 Headers 标题"></a>1.1 Headers 标题</h3><pre><code># Header 1 一级标题
+## Header 2 二级标题
+### header 3 三级标题
+#### header 4 四级标题
+##### header 5 五级标题
+###### header 6 六级标题
+</code></pre><p>标题最多支持到6级，到7级的时候不会被识别为标题，示例如下：<img src="/2017/11/27/Use-MarkDown/headers.png" alt="header"></p>
+<h3 id="1-2-Strong-and-Emphasize-加粗和斜体"><a href="#1-2-Strong-and-Emphasize-加粗和斜体" class="headerlink" title="1.2 Strong and Emphasize 加粗和斜体"></a>1.2 Strong and Emphasize 加粗和斜体</h3><ul>
+<li>加粗: <code>**加粗**</code>或者<code>__加粗__</code></li>
+<li>斜体: <code>*斜体*</code>。<code>_斜体_</code>也支持，但慎用，因为有可能会被识别为加下划线。</li>
+<li>下划线: <code>_下划线_</code></li>
+</ul>
+<p>示例如下: <img src="/2017/11/27/Use-MarkDown/StrongAndEmphasize.png" alt="StrongAndEmphasize"></p>
+<h3 id="1-3-Links-链接"><a href="#1-3-Links-链接" class="headerlink" title="1.3 Links 链接"></a>1.3 Links 链接</h3><ul>
+<li><code>&lt;http://leihwang.com&gt;</code>，效果：<a href="http://leihwang.com" target="_blank" rel="external">http://leihwang.com</a></li>
+<li><code>xxx@xxx.com</code>，效果：<a href="&#x6d;&#x61;&#105;&#108;&#x74;&#111;&#x3a;&#x78;&#x78;&#120;&#64;&#120;&#120;&#120;&#46;&#x63;&#111;&#x6d;">&#x78;&#x78;&#120;&#64;&#120;&#120;&#120;&#46;&#x63;&#111;&#x6d;</a></li>
+<li><code>[leihwang](http://leihwang.com “title”)</code>，效果：<a href="http://leihwang.com “title”" target="_blank" rel="external">leihwang</a>。其中“title”是可选的。</li>
+<li><code>[line text][id]</code>，在文章的其他地方<code>[id]: https://...</code></li>
+<li><code>[line text][]</code>，在文章的其他地方<code>[link text]: https://....</code></li>
+</ul>
+<p>示例：<img src="/2017/11/27/Use-MarkDown/link.png" alt="示例"></p>
+<h3 id="1-4-Image-图片插入"><a href="#1-4-Image-图片插入" class="headerlink" title="1.4 Image 图片插入"></a>1.4 Image 图片插入</h3><ul>
+<li><code>![imageName](address, &quot;title&quot;)</code></li>
+<li><code>![imageName][id]</code>，在文章的其他地方<code>[id]: address &quot;title&quot;</code></li>
+</ul>
+<h3 id="1-5-Lists-列表"><a href="#1-5-Lists-列表" class="headerlink" title="1.5 Lists 列表"></a>1.5 Lists 列表</h3><p><code>-</code>或者<code>*</code>都可以作为无序列表的开头。示例如下：<img src="/2017/11/27/Use-MarkDown/lists.png" alt="lists"></p>
+<h3 id="1-6-Block-Quote-引用"><a href="#1-6-Block-Quote-引用" class="headerlink" title="1.6 Block Quote 引用"></a>1.6 Block Quote 引用</h3><p>用<code>&gt;</code>表示引用，示例：<img src="/2017/11/27/Use-MarkDown/quote.png" alt="quote"></p>
+<h3 id="1-7-Inline-Code"><a href="#1-7-Inline-Code" class="headerlink" title="1.7 Inline Code"></a>1.7 Inline Code</h3><p>用成对的倒引号，例如：<img src="/2017/11/27/Use-MarkDown/inline.png" alt="inline"></p>
+<h3 id="1-8-Block-Code"><a href="#1-8-Block-Code" class="headerlink" title="1.8 Block Code"></a>1.8 Block Code</h3><p>用四个空格或者一个Tab，例如：<img src="/2017/11/27/Use-MarkDown/block.png" alt="block"></p>
+<h3 id="1-9-Horizontal-Line-水平线"><a href="#1-9-Horizontal-Line-水平线" class="headerlink" title="1.9 Horizontal Line 水平线"></a>1.9 Horizontal Line 水平线</h3><p>用三个<code>*</code>或者<code>-</code>，例如<code>---</code>或者<code>***</code></p>
+<h2 id="2-Advanced"><a href="#2-Advanced" class="headerlink" title="2. Advanced"></a>2. Advanced</h2><h3 id="2-1-文章内部的链接"><a href="#2-1-文章内部的链接" class="headerlink" title="2.1 文章内部的链接"></a>2.1 文章内部的链接</h3><p>在需要被链接的标题前加<code>&lt;a name=&quot;name&quot;&gt;&lt;/a&gt;</code>，例如<code>## &lt;a name=&quot;Basics&quot;&gt;&lt;/a&gt;1. The Basics</code>。在需要加链接的地方，加<code>[Text](#name)</code>，例如<code>[Basic](#Basics)</code>, 效果：<a href="#Basics">Basic</a></p>
+<h3 id="2-2-Reference-引用"><a href="#2-2-Reference-引用" class="headerlink" title="2.2 Reference 引用"></a>2.2 Reference 引用</h3><p>文章内的引用需要上标，标明出处。使用<code>[^引用]</code>来处理。示例如下：<img src="/2017/11/27/Use-MarkDown/reference.png" alt="reference"></p>
+<h3 id="2-3-Table-表格"><a href="#2-3-Table-表格" class="headerlink" title="2.3 Table 表格"></a>2.3 Table 表格</h3><p>表格的创建主要使用<code>|</code>和英文状态下的<code>-</code>。示例如下：<img src="/2017/11/27/Use-MarkDown/table.png" alt="table"></p>
+<h3 id="2-4-Fenced-Code-Block-代码块"><a href="#2-4-Fenced-Code-Block-代码块" class="headerlink" title="2.4 Fenced Code Block 代码块"></a>2.4 Fenced Code Block 代码块</h3><p>可以使用三个<code>` </code>或者三个<code>~</code>来引用代码。如果编辑器支持的话，在开头标注语言，那么代码会被高亮。示例如下：<img src="/2017/11/27/Use-MarkDown/code.png" alt="code"></p>
+<h3 id="2-5-删除线、高亮和上标"><a href="#2-5-删除线、高亮和上标" class="headerlink" title="2.5 删除线、高亮和上标"></a>2.5 删除线、高亮和上标</h3><ul>
+<li>删除线：例如<code>~~~lei~~~</code></li>
+<li>高亮：例如<code>===lei===</code></li>
+<li>上标：例如<code>f^(2)</code><br>示例及效果如下：<img src="/2017/11/27/Use-MarkDown/formatting.png" alt="formatting"></li>
+</ul>
+<h3 id="2-6-task-list-任务列表"><a href="#2-6-task-list-任务列表" class="headerlink" title="2.6 task list 任务列表"></a>2.6 task list 任务列表</h3><p>使用<code>[x]</code>表示已经完成的任务，<code>[ ]</code>表示还要做的任务，示例如下：<img src="/2017/11/27/Use-MarkDown/task.png" alt="task"></p>
+<h3 id="2-7-math-syntax-数学公式"><a href="#2-7-math-syntax-数学公式" class="headerlink" title="2.7 math syntax 数学公式"></a>2.7 math syntax 数学公式</h3><p>使用<code>$</code>标记公式的开始和结束。一个<code>$</code>可以在行内插入，两个<code>$$</code>可以单独成行。例如：<img src="/2017/11/27/Use-MarkDown/公式示例.png" alt="公式示例"></p>
+<ul>
+<li>math syntax中空格和分行会被忽略，如果需要则使用<code>\</code>对应$\frac{3}{8}$空格，<code>\:</code>对应$\frac{4}{18}$空格，<code>\;</code>对应$\frac{5}{18}$空格，<code>\quad</code>对应空格，即目前字体中字符M的宽度，<code>\qquad</code>对应一个大空格，<code>\!</code>产生$-\frac{3}{8}$空格。</li>
+<li>如果希望在公式中出现普通的文本，则需要使用<code>\textrm{...}</code>来产生文本。</li>
+<li>使用<code>^</code>和<code>_</code>产生上标和下标。</li>
+<li>平方根<code>\sqrt</code>，例如<code>\sqrt{x}</code>，$\sqrt{x}$</li>
+<li>在表达式的上、下方画出水平线<code>\overline</code>和<code>\underline</code></li>
+<li>在表达式的上、下方给出一水平的大括号<code>\overbrace</code>和<code>\underbrace</code></li>
+<li>导数的$y’ = x$，使用<code>&#39;</code>产生。</li>
+<li>向量上的箭头，用<code>\vec</code>产生，例如<code>\vec a</code>，$\vec a$。定义从A到B的向量时可以使用<code>\overrightarrow</code>和<code>\overleftarrow</code>，例如<code>\overrightarrow{AB}</code>，$\overrightarrow{AB}$。</li>
+<li>乘号<code>\cdot</code>，$a\cdot b$</li>
+<li>分数使用<code>\frac{分子}{分母}</code>，$\frac{分子}{分母}$</li>
+<li>二项系数：<code>{... \choose ...}</code>或<code>{... \atop ...}</code>，后者不带括号。</li>
+<li>积分运算符用<code>\int</code> $\int$，求和运算符用<code>\sum</code> $\sum$，乘积运算符用<code>\prod</code> $\prod$</li>
+<li>对于括号的大小，可以使用<code>\left</code>和<code>\right</code>自动调整大小。如果有需要，可以使用<code>\big</code>、<code>\bigg</code>再调整。</li>
+<li>三个圆点的省略号，<code>\ldots</code>$\ldots$会把点排在基线上，<code>\cdots</code>居中，<code>\vdots</code>垂直，<code>\ddots</code>对角型</li>
+<li>数组array，使用<code>\\\</code>来分行，例如<code>$$X=\left(\begin{array}{}x_1&amp;x_2\end{array}\right)$$</code> $X=\left(\begin{array}{} x_1 &amp; x_2 \end{array}\right)$，<code>$$X=\left(\begin{array}{}x_1 \\\ x_2\end{array}\right)$$</code> $X=\left(\begin{array}{} x_1 \\ x_2 \end{array}\right)$</li>
+<li>可以使用<code>.</code>来隐藏右分隔符，例如<code>$x= \left( \begin{array}{} a+b \\\ c+d \end{array} \right.$</code>，$x= \left( \begin{array}{} a+b \\ c+d \end{array} \right.$</li>
+<li>可以在array中画线，例如<code>$\left(\begin{array}{c|c} 1 &amp; 2 \\\ \hline 3&amp;4 \end{array}\right)$</code>，$\left(\begin{array}{c|c} 1 &amp; 2 \\ \hline 3&amp;4 \end{array}\right)$</li>
+<li>更多关于这部分的语法，可以参考LaTeX的部分。本文中的这部分内容参考自<a href="">一份不太简短的LATEX介绍</a>。一些常用的符号可参考如下的表格。</li>
+</ul>
+<p><img src="/2017/11/27/Use-MarkDown/math_1_2_3.png" alt="math_1_2_3"><br><img src="/2017/11/27/Use-MarkDown/math_4.png" alt="math_4"><br><img src="/2017/11/27/Use-MarkDown/math_5.png" alt="math_5"><br><img src="/2017/11/27/Use-MarkDown/math_6_7.png" alt="math_6_7"><br><img src="/2017/11/27/Use-MarkDown/math_8_9.png" alt="math_8_9"><br><img src="/2017/11/27/Use-MarkDown/math_10.png" alt="math_10"><br><img src="/2017/11/27/Use-MarkDown/math_11.png" alt="math_11"><br><img src="/2017/11/27/Use-MarkDown/math_12.png" alt="math_12"><br><img src="/2017/11/27/Use-MarkDown/math_13.png" alt="math_13"><br><img src="/2017/11/27/Use-MarkDown/math_14.png" alt="math_14"><br><img src="/2017/11/27/Use-MarkDown/math_15.png" alt="math_15"><br><img src="/2017/11/27/Use-MarkDown/math_16.png" alt="math_16"><br><img src="/2017/11/27/Use-MarkDown/math_17.png" alt="math_17"><br><img src="/2017/11/27/Use-MarkDown/math_18.png" alt="math_18"><br><img src="/2017/11/27/Use-MarkDown/math_19.png" alt="math_19"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>All article here are forbidden to reprint without my permission. 所有文章未经允许禁止转载。Thanks for reading.</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpeg" alt="LeiHuang WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpeg" alt="LeiHuang Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MarkDown/" rel="tag"># MarkDown</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/" rel="next" title="Build Blog on GitHub by Hexo">
+                <i class="fa fa-chevron-left"></i> Build Blog on GitHub by Hexo
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">LeiHuang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/bosshuang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:myheromyjoe@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-The-Basics"><span class="nav-text">1. The Basics</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Headers-标题"><span class="nav-text">1.1 Headers 标题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Strong-and-Emphasize-加粗和斜体"><span class="nav-text">1.2 Strong and Emphasize 加粗和斜体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Links-链接"><span class="nav-text">1.3 Links 链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Image-图片插入"><span class="nav-text">1.4 Image 图片插入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-Lists-列表"><span class="nav-text">1.5 Lists 列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-Block-Quote-引用"><span class="nav-text">1.6 Block Quote 引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-Inline-Code"><span class="nav-text">1.7 Inline Code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-8-Block-Code"><span class="nav-text">1.8 Block Code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-9-Horizontal-Line-水平线"><span class="nav-text">1.9 Horizontal Line 水平线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Advanced"><span class="nav-text">2. Advanced</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-文章内部的链接"><span class="nav-text">2.1 文章内部的链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Reference-引用"><span class="nav-text">2.2 Reference 引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Table-表格"><span class="nav-text">2.3 Table 表格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-Fenced-Code-Block-代码块"><span class="nav-text">2.4 Fenced Code Block 代码块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-删除线、高亮和上标"><span class="nav-text">2.5 删除线、高亮和上标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-task-list-任务列表"><span class="nav-text">2.6 task list 任务列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-math-syntax-数学公式"><span class="nav-text">2.7 math syntax 数学公式</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LeiHuang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
