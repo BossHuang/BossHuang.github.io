@@ -377,24 +377,24 @@
 <li><a href="https://hexo.io" target="_blank" rel="external">Hexo</a></li>
 </ul>
 <h3 id="1-1-Node-js"><a href="#1-1-Node-js" class="headerlink" title="1.1 Node.js"></a>1.1 Node.js</h3><p>如果不确定本地是否已经安装了Node.js，可以在终端执行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node --version</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">node --version</div></pre></td></tr></table></figure>
 <p>进行检验。如果已经正确安装，会得到所安装的版本号，例如<code>v6.10.3</code>。</p>
 <p>如果本地未安装或需要对版本进行升级，则均可以从<a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js官网</a>进行下载安装.</p>
 <h3 id="1-2-Git"><a href="#1-2-Git" class="headerlink" title="1.2 Git"></a>1.2 Git</h3><p>因本地安装的Xcode自带了Git，所以此处不做介绍。如有需要可以访问hexo官方提供的<a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="external">Git安装</a>中获得相应的帮助。</p>
 <h3 id="1-3-Hexo"><a href="#1-3-Hexo" class="headerlink" title="1.3 Hexo"></a>1.3 Hexo</h3><p>在完成Node.js和Git的安装后，进行Hexo的安装。在Mac终端执行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo npm install -g hexo</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo npm install -g hexo</div></pre></td></tr></table></figure>
 <p>输入管理员密码，即Mac的登录密码，就会开始进行安装。在Windows系统上，此处的命令行会有所不同。</p>
 <h2 id="2-搭建"><a href="#2-搭建" class="headerlink" title="2. 搭建"></a>2. 搭建</h2><h3 id="2-1-本地初始化"><a href="#2-1-本地初始化" class="headerlink" title="2.1 本地初始化"></a>2.1 本地初始化</h3><ol>
 <li><p>终端cd至准备存放Blog代码的目录，执行：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo init BlogFolder</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hexo init BlogFolder</div></pre></td></tr></table></figure>
 <p> <code>BlogFolder</code>是存放Blog代码的文件夹，即博客根目录，可以自定义，不建议使用中文。如果不写<code>BlogFolder</code>，则会在当前目录下直接创建并存放相应的文件。</p>
 </li>
 <li><p>终端cd至博客根目录，执行：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">npm install</div></pre></td></tr></table></figure>
 <p> 进行npm的安装。</p>
 </li>
 <li><p>终端cd至博客根目录，执行：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo g</div><div class="line">hexo s</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hexo g</div><div class="line">hexo s</div></pre></td></tr></table></figure>
 <p> <code>hexo g</code>可以生成静态页面，<code>hexo s</code>可以在本地开启hexo服务器。这样通过浏览器访问<a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a> 就可以看到类似如下图所示的结果，如此便可以完成本地的创建。在终端使用<code>Ctrl+C</code>就可以关闭hexo服务器。<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/init.png" alt="init">上图是本人已经进行过部分设置后的截图，会与初次开启hexo服务器时看到的略有不同。</p>
 </li>
 </ol>
@@ -410,34 +410,34 @@
 <h3 id="2-3-本地blog与GitHub进行关联"><a href="#2-3-本地blog与GitHub进行关联" class="headerlink" title="2.3 本地blog与GitHub进行关联."></a>2.3 本地blog与GitHub进行关联.</h3><p>本地blog与Github上的repository进行关联除了2.2中的第3步外，还需要设置SSH keys方便博客的发布。</p>
 <ol>
 <li><p>终端cd至<code>~/.ssh</code>执行：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C &quot;example_email@example.com&quot;</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">ssh-keygen -t rsa -C &quot;example_email@example.com&quot;</div></pre></td></tr></table></figure>
 <p> 其中<code>example_email@example.com</code>应当是登录GitHub所使用的账号。上述两步后会要求输入用于保存SSH keys的文件名，例如<code>github</code>，再输入电脑的登录密码。会得到如下图所示：<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/sshkeys.png" alt="sshkeys">这样会在<code>~/.ssh/</code>下生成<code>github</code>和<code>github.pub</code>文件。如果不输入文件名，则会默认生成<code>id_rsa</code>和<code>id_rsa.pub</code>，这里不建议使用默认，避免与其他的SSH文件冲突。</p>
 </li>
 <li><p>打开上一步中所得的<code>github.pub</code>文件，复制其中的内容。在<code>GitHub --&gt; Settings --&gt; SSH and GPG keys --&gt; New SSH key</code> 的<code>Key</code>中进行粘贴，并取一个适当的<code>Title</code>，例如<code>Blog</code>。</p>
 </li>
 </ol>
 <h2 id="3-发布"><a href="#3-发布" class="headerlink" title="3. 发布"></a>3. 发布</h2><p>完成博客的搭建后，cd至博客根目录，执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure>
 <p>如果在执行<code>hexo d</code>时报未找到或无法连接git的错误，则在终端执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-deployer-git --save</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">npm install hexo-deployer-git --save</div></pre></td></tr></table></figure>
 <p>而后再次执行之前的命令，完成后可以在浏览器里输入<code>用户名.github.io</code>进行访问，会看到与本地访问相同的页面。至此便完成整个博客的搭建和发布。</p>
 <h2 id="4-其他"><a href="#4-其他" class="headerlink" title="4. 其他"></a>4. 其他</h2><h3 id="4-1-文章的创建和发布"><a href="#4-1-文章的创建和发布" class="headerlink" title="4.1 文章的创建和发布"></a>4.1 文章的创建和发布</h3><p>在终端cd至博客根目录，执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo new &quot;new article name&quot;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hexo new &quot;new article name&quot;</div></pre></td></tr></table></figure>
 <p>会得到名为<code>new-article-name.md</code>的文件，并且存放在<code>/source/_posts/</code>。关于文章的一些设置可以访问hexo官方提供的<a href="https://hexo.io/zh-cn/docs/writing.html" target="_blank" rel="external">写作</a>，关于文章的编辑不在本文里进行赘述。</p>
 <p>完成文章的创建和编辑后，在终端执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure>
 <p>便完成文章的发布。</p>
 <h3 id="4-2-theme"><a href="#4-2-theme" class="headerlink" title="4.2 theme"></a>4.2 theme</h3><p>因默认提供的主题对文章目录的支持不友好，所以我考虑更改主题。</p>
 <p>hexo的主题可以访问<a href="https://hexo.io/themes/" target="_blank" rel="external">Themes</a>进行选择。本人这里选择的是<code>NexT</code>主题，因此以<code>NexT</code>为例，介绍下主题的更改，主题的具体配置可以访问主题的使用文档。</p>
 <ol>
 <li>在<a href="https://hexo.io/themes/" target="_blank" rel="external">Themes</a>中选择想要的主题，一般打开后会跳转至相应的github页面，找到对应的https，复制。</li>
 <li><p>终端cd至博客根目录，执行<code>git clone https地址</code>，例如</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/iissnan/hexo-theme-next.git</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">git clone https://github.com/iissnan/hexo-theme-next.git</div></pre></td></tr></table></figure>
 </li>
 <li><p>打开博客根目录下的<code>_config.yml</code>文件，找到<code>theme</code>部分，将其内容修改为<code>next</code>，例如：<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/theme.png" alt="theme"></p>
 </li>
 <li><p>再次执行博客生成和发布命令</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo clean</div><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hexo clean</div><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure>
 <p> 这样就可以完成theme的修改。</p>
 </li>
 <li>关于theme的其他设置，可以通过其官方文档获得帮助，例如<a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">NexT的文档</a></li>
@@ -448,7 +448,7 @@
 <li>点击<code>添加解析</code>，将其设置为如下图所示的例子。<img src="/2017/11/23/Build-Blog-on-GitHub-by-Hexo/newDomain.png" alt="newDomain">其中记录值应当设置为<code>用户名.github.io.</code>，其他的则相同。</li>
 <li>在<code>根目录/source/</code>目录下添加不带任何后缀且名为<code>CNAME</code>的文件，写入自己购买的域名，例如<code>domainname.com</code>.</li>
 <li><p>执行</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo clean</div><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hexo clean</div><div class="line">hexo g</div><div class="line">hexo d</div></pre></td></tr></table></figure>
 <p> 完成域名的设置。</p>
 </li>
 </ol>
@@ -467,7 +467,7 @@
 <ol>
 <li>打开博客根目录下的<code>_config.yml</code>文件，修改<code>post_asset_folder</code>字段的值为<code>true</code>。这样每次通过<code>hexo new</code>新建文章时，会在同级目录下创建相同名字的文件夹。例如新创建的文章的名字为<code>new-artile-name.md</code>，相应的文件夹的名字为<code>new-article-name</code>。</li>
 <li><p>终端cd至博客根目录，执行</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-asset-image --save</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">npm install hexo-asset-image --save</div></pre></td></tr></table></figure>
 </li>
 <li><p>将准备插入文章的图片复制到与文章同名的文件夹，然后在文章中使用标准的图片插入方式插入即可。例如<code>![文字](new-article-name/图片名.jpg)</code></p>
 </li>
