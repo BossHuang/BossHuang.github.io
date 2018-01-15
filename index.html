@@ -368,77 +368,14 @@
 
       
         
-          
-            <p>本文是《Python基础教程(第2版 修订版)》第 1 章基础知识的笔记，简要介绍了Python中的基础知识，如变量、数字、表达式、获取用户输入、模块导入和命令行执行等。</p>
-<h3 id="1-Begin"><a href="#1-Begin" class="headerlink" title="1. Begin"></a>1. Begin</h3><ul>
-<li>Python 是一种解释型、面向对象、带有动态语义的高级程序设计语言</li>
-<li>Jython利用Java实现，运行在虚拟机中。IronPython则使用C#实现，运行于公共语言运行时(Common Language Runtime, CLR)的.NET和MONO实现。</li>
-</ul>
-<h3 id="2-Numbers-and-Expressions"><a href="#2-Numbers-and-Expressions" class="headerlink" title="2. Numbers and Expressions"></a>2. Numbers and Expressions</h3><ul>
-<li>单斜线根据两边的数据类型执行不同的操作。双斜线只做整除。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="number">1</span>/<span class="number">2</span>       <span class="comment">#0</span></div><div class="line"><span class="keyword">print</span> <span class="number">1.0</span>/<span class="number">2</span>     <span class="comment">#0.5</span></div><div class="line"><span class="keyword">print</span> <span class="number">1</span>/<span class="number">2.</span>      <span class="comment">#0.5</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> <span class="number">1</span>//<span class="number">2.0</span>    <span class="comment">#0.0</span></div><div class="line"><span class="keyword">print</span> <span class="number">1.0</span>//<span class="number">2.0</span>  <span class="comment">#0.0</span></div><div class="line"><span class="keyword">print</span> <span class="number">1</span>//<span class="number">2</span>      <span class="comment">#0</span></div></pre></td></tr></table></figure>
-<ul>
-<li>取余运算符(%)</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="number">10</span>%<span class="number">3</span>      <span class="comment">#1</span></div><div class="line"><span class="keyword">print</span> <span class="number">2.75</span>%<span class="number">0.5</span>  <span class="comment">#0.25</span></div></pre></td></tr></table></figure>
-<ul>
-<li>幂运算符</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="number">3</span>**<span class="number">2</span>      <span class="comment">#9</span></div><div class="line"><span class="keyword">print</span> <span class="number">-3</span>**<span class="number">2</span>     <span class="comment">#-9</span></div><div class="line"><span class="keyword">print</span> <span class="number">3</span>**<span class="number">-2</span>     <span class="comment">#0.1111</span></div><div class="line"><span class="keyword">print</span> (<span class="number">-3</span>)**<span class="number">2</span>   <span class="comment">#9</span></div></pre></td></tr></table></figure>
-<ul>
-<li>普通整数大于2147483647(2**31-1)或小于-2147483648，Python按照长整型数据类型处理。</li>
-<li>16进制和8进制</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># Hexadecimal</span></div><div class="line"><span class="keyword">print</span> <span class="string">"Hexadecimal"</span></div><div class="line"><span class="keyword">print</span> <span class="number">0xAF</span>      <span class="comment">#175</span></div><div class="line"><span class="comment"># Octals</span></div><div class="line"><span class="keyword">print</span> <span class="string">"Octals"</span></div><div class="line"><span class="keyword">print</span> <span class="number">010</span>       <span class="comment">#8</span></div></pre></td></tr></table></figure>
-<h3 id="3-Variables-and-Statements"><a href="#3-Variables-and-Statements" class="headerlink" title="3. Variables and Statements"></a>3. Variables and Statements</h3><ul>
-<li>变量基本上就是代表（或者引用）某值的名字。</li>
-<li>变量名可以包括字母、数字和下划线(_)。但是不能以数字开头。</li>
-<li>表达式就是<em>某件事情</em>，语句是<em>做某件事情</em>，即告诉计算机做什么。</li>
-</ul>
-<h3 id="4-Getting-input-from-the-User"><a href="#4-Getting-input-from-the-User" class="headerlink" title="4. Getting input from the User"></a>4. Getting input from the User</h3><ul>
-<li>input假设用户输入的是合法的Python表达式</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># x = 10, y = 20, 输出200</span></div><div class="line">x = input(<span class="string">"x:"</span>)</div><div class="line">y = input(<span class="string">"y:"</span>)</div><div class="line"><span class="keyword">print</span> x*y</div><div class="line"></div><div class="line"><span class="comment"># 输入lei, 则会报not defined的错</span></div><div class="line"><span class="comment"># 需要输入‘lei’,才能正常运行</span></div><div class="line">name = input(<span class="string">"What is your name?"</span>)</div><div class="line"><span class="keyword">print</span> <span class="string">"Hi "</span>+name</div></pre></td></tr></table></figure>
-<ul>
-<li>raw_input则把所有的输入当作原始数据(raw data)</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">x = raw_input(<span class="string">"x:"</span>)</div><div class="line">y = raw_input(<span class="string">"y:"</span>)</div><div class="line"><span class="keyword">print</span> float(x)*float(y)</div><div class="line"></div><div class="line"><span class="comment"># 输入lei，能正常运行</span></div><div class="line">name = raw_input(<span class="string">"What is your name?"</span>)</div><div class="line"><span class="keyword">print</span> <span class="string">"Hi "</span>+name</div></pre></td></tr></table></figure>
-<ul>
-<li>一般来说尽可能使用raw_input函数，除非对input有特殊需求。</li>
-</ul>
-<h3 id="5-Modules"><a href="#5-Modules" class="headerlink" title="5. Modules"></a>5. Modules</h3><ul>
-<li>通过<code>import 模块</code>导入模块，则<code>模块.函数</code>方式进行调用。另外也可以通过变量来引用函数。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 导入模块</span></div><div class="line"><span class="keyword">import</span> math</div><div class="line"><span class="keyword">print</span> math.sqrt(<span class="number">9</span>)</div><div class="line"></div><div class="line"><span class="comment">#通过赋值给变量来进行调用</span></div><div class="line">func = math.sqrt</div><div class="line"><span class="keyword">print</span> func(<span class="number">9</span>)</div></pre></td></tr></table></figure>
-<ul>
-<li>通过<code>from 模块 import 函数</code>，则可直接使用函数。但是可能会存在命名冲突。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 导入模块</span></div><div class="line"><span class="keyword">from</span> math <span class="keyword">import</span> sqrt</div><div class="line"><span class="keyword">print</span> sqrt(<span class="number">9</span>)</div><div class="line"></div><div class="line"><span class="comment"># 命名冲突造成错误，建议不适用from...import...</span></div><div class="line"><span class="keyword">from</span> cmath <span class="keyword">import</span> sqrt</div><div class="line"><span class="keyword">from</span> math <span class="keyword">import</span> sqrt</div><div class="line"><span class="keyword">print</span> sqrt(<span class="number">-1</span>)		<span class="comment">#ValueError: math domain error</span></div></pre></td></tr></table></figure>
-<h3 id="6-Executing-Programs"><a href="#6-Executing-Programs" class="headerlink" title="6. Executing Programs"></a>6. Executing Programs</h3><ul>
-<li>命令行执行脚本：<code>python hello.py</code></li>
-<li>在UNIX中另一种实现方法：在首行前面加上<code>#!</code>，而后加上用于解释脚本的程序的绝对路径。例如：<code>#! /usr/bin/env python</code>。使脚本文件具有可执行属性:<code>chmod a+x hello.py</code>，<code>hello.py</code>即可运行。</li>
-</ul>
-<h3 id="7-Strings"><a href="#7-Strings" class="headerlink" title="7. Strings"></a>7. Strings</h3><ul>
-<li>单引号和双引号都存在的一个用处</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="string">"Let's go"</span>			</div><div class="line"><span class="comment">#输出Let's go</span></div><div class="line"><span class="keyword">print</span> <span class="string">'"Hello World", I said'</span>		</div><div class="line"><span class="comment">#输出"Hello World", I said</span></div></pre></td></tr></table></figure>
-<ul>
-<li>str、repr和反引号(`)可以把Python值转换为字符串：<ul>
-<li>str本质是一种类型，会把值转换成合理形式的字符串，以便用户理解。</li>
-<li>repr函数会创建一个字符串，以合法的Python表达式的形式来表示值。</li>
-<li>反引号在Python 3中以被弃用。</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="string">"hello "</span>+str(<span class="number">100</span>)</div><div class="line"><span class="keyword">print</span> <span class="string">"heool "</span>+`<span class="number">100</span>`</div><div class="line"><span class="keyword">print</span> <span class="string">"heool "</span>+repr(<span class="number">100</span>)</div></pre></td></tr></table></figure>
-<ul>
-<li>长字符串：需要一个非常长的字符串，需要跨多行，可以采用：三个引号，如<code>‘’‘hello world’‘’</code>，或者三个双引号，如<code>&quot;&quot;&quot;hello world&quot;&quot;&quot;</code>。在其中可以同时使用双引号和单引号，且不需要反斜杠进行转义。</li>
-<li>原始字符串：以<code>r</code>开头，可以放入任何字符，但最后一个字符不能是反斜杠。</li>
-<li>Unicode字符串：使用<code>u</code>前缀。Python中普通的字符串在内部是以8位的ASCII码存储，Unicode字符串是以16位Unicode字符存储。在Python 3中，所有字符串都是Unicode字符串。</li>
-</ul>
-
-          
+          <p>本文是《Python基础教程(第2版 修订版)》第 1 章 基础知识的笔记，简要介绍了Python中的基础知识，如变量、数字、表达式、获取用户输入、模块导入和命令行执行等。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/15/BeginPython笔记-1-Basic/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
