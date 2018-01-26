@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="BeginPython笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文是《Python基础教程(第2版 修订版)》第 3 章 字符串 的笔记，简要介绍了字符串基本操作、字符串格式化和字符串方法。">
+<meta name="keywords" content="BeginPython笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BeginPython笔记:5.String">
+<meta property="og:url" content="http://yoursite.com/2018/01/26/BeginPython笔记-5-String/index.html">
+<meta property="og:site_name" content="LeiHuang&#39;s Blog">
+<meta property="og:description" content="本文是《Python基础教程(第2版 修订版)》第 3 章 字符串 的笔记，简要介绍了字符串基本操作、字符串格式化和字符串方法。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-01-26T11:17:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BeginPython笔记:5.String">
+<meta name="twitter:description" content="本文是《Python基础教程(第2版 修订版)》第 3 章 字符串 的笔记，简要介绍了字符串基本操作、字符串格式化和字符串方法。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/26/BeginPython笔记-5-String/"/>
+
+
+
+
+
+  <title>BeginPython笔记:5.String | LeiHuang's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?fa63699072fd198a02e43cccf4d60faa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LeiHuang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">逆水行舟，不进则退。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/26/BeginPython笔记-5-String/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LeiHuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LeiHuang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">BeginPython笔记:5.String</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-26T19:14:18+08:00">
+                2018-01-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/BeginPython笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">BeginPython笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是《Python基础教程(第2版 修订版)》第 3 章 字符串 的笔记，简要介绍了字符串基本操作、字符串格式化和字符串方法。</p>
+<a id="more"></a>
+<h3 id="1-Basic-String-Operations"><a href="#1-Basic-String-Operations" class="headerlink" title="1. Basic String Operations"></a>1. Basic String Operations</h3><ul>
+<li>所有标准的序列操作，如索引、分片、乘法、判断成员资格、求长度、取最大值和最小值，均适用。</li>
+<li>字符串是不可变的，所以所有像分片赋值这样的操作是不合法的。</li>
+</ul>
+<h3 id="2-String-Formatting"><a href="#2-String-Formatting" class="headerlink" title="2. String Formatting"></a>2. String Formatting</h3><ul>
+<li>字符串格式化需要使用字符串格式化操作符，即<code>%</code>来实现。要在格式化字符串里输出<code>%</code>，则需要使用<code>%%</code>。</li>
+<li>只有元组和字典可以格式化一个以上的值，而列表或者其他的序列都会被解释为一个值。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">format_str = <span class="string">"hello, %s"</span></div><div class="line">value = <span class="string">"H"</span></div><div class="line"><span class="keyword">print</span> format_str % value	<span class="comment">#hello, H</span></div><div class="line"></div><div class="line">format_str = <span class="string">"the score is %s - %s"</span></div><div class="line">value = (<span class="number">2</span>,<span class="number">1</span>)</div><div class="line"><span class="keyword">print</span> format_str % value	<span class="comment">#the score is 2 - 1</span></div></pre></td></tr></table></figure>
+<ul>
+<li>string模块提供<code>模块字符串</code>来格式化值。<ul>
+<li><code>substitute</code>模块方法会用传递进来的关键字参数<code>foo</code>替换字符串中的<code>$foo</code></li>
+<li>如果替换字段是单词的一部分，那么参数名就必须用花括号括起来。</li>
+<li>可以使用<code>$$</code>插入美元符号。</li>
+<li>除关键字参数外，还可以使用字典变量提供值/名称对。</li>
+<li>方法<code>safe_substitute</code>不会因缺少值或者不正确使用$字符而报错。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">from</span> string <span class="keyword">import</span> Template</div><div class="line">s = Template(<span class="string">"$x is $x."</span>)</div><div class="line"><span class="keyword">print</span> s.substitute(x = <span class="string">"old"</span>)		<span class="comment">#old is old.</span></div><div class="line"></div><div class="line">s = Template(<span class="string">"$&#123;x&#125;est"</span>)</div><div class="line"><span class="keyword">print</span> s.substitute(x = <span class="string">"old"</span>)		<span class="comment">#oldest</span></div><div class="line"></div><div class="line">s = Template(<span class="string">"$name is $old"</span>)</div><div class="line">people1 = &#123;<span class="string">"name"</span>:<span class="string">"L"</span>,<span class="string">"old"</span>:<span class="number">12</span>&#125;</div><div class="line"><span class="keyword">print</span> s.substitute(people1)		<span class="comment">#L is 12</span></div><div class="line"></div><div class="line">people2 = &#123;<span class="string">"name"</span>:<span class="string">"H"</span>&#125;</div><div class="line"><span class="keyword">print</span> s.safe_substitute(people2)	<span class="comment">#H is $old</span></div><div class="line"><span class="keyword">print</span> s.substitute(people2)		<span class="comment">#error</span></div></pre></td></tr></table></figure>
+<ul>
+<li>基本的转换说明符：<ol>
+<li><code>%</code>字符：标记转换说明符的开始。</li>
+<li>转换标志：可选。<ul>
+<li><code>-</code>表示左对齐。</li>
+<li><code>+</code>表示在转换之前要加上正负号</li>
+<li><code>“ ”(空白字符)</code>表示正数之前保留空格。</li>
+<li><code>0</code>表示转换值若位数不够则用<code>0</code>填充。</li>
+</ul>
+</li>
+<li>最小字段宽度：可选。转换后的字符串至少应该具有该值指定的宽度。如果是<code>*</code>，则宽度从值元组中读出。</li>
+<li>点<code>.</code>后跟精度值：可选。如果转换的是实数，精度值就表示出现在小数点后的位数。如果转换的是字符串，则表示最大字段宽度。如果是 <code>*</code>，则精度从元组中读出。</li>
+<li>转换类型：<ul>
+<li><code>d, i</code>: 带符号的十进制整数</li>
+<li><code>o</code>: 不带符号的八进制</li>
+<li><code>u</code>: 不带符号的十进制</li>
+<li><code>x, X</code>: 不带符号的十六进制（小写，大写）</li>
+<li><code>e, E</code>: 科学计数法表示的浮点数（小写，大写）</li>
+<li><code>f, F</code>: 十进制浮点数</li>
+<li><code>g, G</code>: 如果指数大于-4或者小于精度值则和e(E)相同，其他情况与f(F)相同。</li>
+<li><code>C</code>: 单字符（接受整数或者单字符字符串）</li>
+<li><code>r</code>: 字符串（使用repr转换任意对象）</li>
+<li><code>s</code>: 字符串（使用str转换任意对象）</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">pi = <span class="number">3.14</span></div><div class="line"><span class="keyword">print</span> <span class="string">"%010.2f"</span> % pi			<span class="comment">#0000003.14</span></div><div class="line"><span class="keyword">print</span> <span class="string">"%0*.*f"</span> %(<span class="number">10</span>,<span class="number">2</span>,pi)		<span class="comment">#0000003.14</span></div></pre></td></tr></table></figure>
+<h3 id="3-String-Method"><a href="#3-String-Method" class="headerlink" title="3. String Method"></a>3. String Method</h3><ul>
+<li>虽然字符串方法都来源于string模块，但其中仍有一些不能作为字符串方法使用的常量和方法。例如，一些有用的字符串常量：<ul>
+<li><code>string.digits</code>: 包含数字0~9的字符串</li>
+<li><code>string.letters</code>: 包含所有字母（大写或小写）的字符串。</li>
+<li><code>string.lowercase</code>: 包含所有小写字母的字符串。</li>
+<li><code>string.uppercase</code>: 包含所有大写字母的字符串</li>
+<li><code>string.printable</code>: 包含所有可打印字符的字符串</li>
+<li><code>string.punctuation</code>: 包含所有标点的字符串。</li>
+<li>字母字符串常量与地区有关，即Python所匹配的语言。如果使用的是ASCII，那么可以在变量中使用ascii_ 前缀。Python3中，string.letters和其他内容都会被移除。可以使用string.ascii_letters代替。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-1-find"><a href="#3-1-find" class="headerlink" title="3.1 find"></a>3.1 find</h4><ul>
+<li><code>find</code>方法可以在一个较长的字符串中查找子串，返回子串所在位置的最左端索引。如果没有找到，则返回-1。可以指定起点和终点。</li>
+<li><code>in</code>操作符只能查找字符串中的单个字符。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">s = <span class="string">"hello,world"</span></div><div class="line"><span class="keyword">print</span> s.find(<span class="string">"l"</span>)		<span class="comment"># 2</span></div><div class="line"><span class="keyword">print</span> s.find(<span class="string">"l"</span>, <span class="number">4</span>)	<span class="comment"># 9</span></div></pre></td></tr></table></figure>
+<h4 id="3-2-join"><a href="#3-2-join" class="headerlink" title="3.2 join"></a>3.2 join</h4><ul>
+<li>用来连接序列中的元素。被连接的序列元素必须是字符串。是<code>split</code>方法的逆方法。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">s = [<span class="string">"1"</span>,<span class="string">"2"</span>,<span class="string">"3"</span>]</div><div class="line">flag = <span class="string">'+'</span></div><div class="line"><span class="keyword">print</span> flag.join(s)		<span class="comment">#1+2+3</span></div><div class="line"></div><div class="line">dirs = <span class="string">''</span>,<span class="string">'usr'</span>,<span class="string">'bin'</span></div><div class="line"><span class="keyword">print</span> <span class="string">'\\'</span>.join(dirs)	<span class="comment">#\usr\bin</span></div></pre></td></tr></table></figure>
+<h3 id="3-3-lower"><a href="#3-3-lower" class="headerlink" title="3.3 lower"></a>3.3 lower</h3><ul>
+<li><code>lower</code>方法返回字符串的小写字母版。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">s = <span class="string">"This's a book"</span></div><div class="line"><span class="keyword">print</span> s.lower()		<span class="comment">#this's a book</span></div></pre></td></tr></table></figure>
+<ul>
+<li><code>title</code>方法会将字符串转换为标题，即所有单词的首字母大写，其他的小写。string模块的<code>capword</code>函数也提供同样的功能。但是对首字母大写的规则不同。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> string</div><div class="line">s = <span class="string">"this's a book"</span></div><div class="line"><span class="keyword">print</span> s.title()				<span class="comment">#This'S A Book</span></div><div class="line"><span class="keyword">print</span> string.capwords(s)	<span class="comment">#This's A Book</span></div></pre></td></tr></table></figure>
+<h4 id="3-4-replace"><a href="#3-4-replace" class="headerlink" title="3.4 replace"></a>3.4 replace</h4><ul>
+<li><code>replace</code>方法返回某字符串的所有匹配项均被替换后得到的字符串。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">s = <span class="string">"hello, world"</span></div><div class="line"><span class="keyword">print</span> s.replace(<span class="string">'l'</span>, <span class="string">"T"</span>)</div><div class="line"><span class="comment">#heTTo, worTd</span></div></pre></td></tr></table></figure>
+<h4 id="3-5-split"><a href="#3-5-split" class="headerlink" title="3.5 split"></a>3.5 split</h4><ul>
+<li><code>split</code>方法用来将字符串分割成序列。如果不提供任何分隔符，则会把所有空格作为分隔符（空格、制表、换行等）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">s = <span class="string">"hello, world"</span></div><div class="line"><span class="keyword">print</span> s.split(<span class="string">','</span>)		<span class="comment">#['hello', ' world']</span></div><div class="line"><span class="keyword">print</span> s.split()			<span class="comment">#['hello,', 'world']</span></div></pre></td></tr></table></figure>
+<h4 id="3-6-strip"><a href="#3-6-strip" class="headerlink" title="3.6 strip"></a>3.6 strip</h4><ul>
+<li><code>strip</code>方法返回去除两侧（不包括内部）空格或指定字符后的字符串。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">s = <span class="string">"  ** hello, world **   "</span></div><div class="line"><span class="keyword">print</span> s				<span class="comment">#  ** hello, world **   </span></div><div class="line"><span class="keyword">print</span> s.strip()		<span class="comment">#** hello, world **</span></div><div class="line"><span class="keyword">print</span> s.strip(<span class="string">"*"</span>)	<span class="comment">#  ** hello, world **</span></div></pre></td></tr></table></figure>
+<h4 id="3-7-translate"><a href="#3-7-translate" class="headerlink" title="3.7 translate"></a>3.7 translate</h4><ul>
+<li><code>translate</code>方法可以替换字符串中的某些部分，与<code>replace</code>方法不同的是，该方法只处理单个字符。优势在于可以同时进行多个替换，有时效率会比<code>replace</code>方法高。</li>
+<li><code>translate</code>方法的第二个参数是可选的，用来指定需要删除的字符。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> string</div><div class="line"><span class="comment"># 首先需要提供一张转换表</span></div><div class="line">table = string.maketrans(<span class="string">"lo"</span>,<span class="string">"ku"</span>)</div><div class="line">s = <span class="string">"hello, world"</span></div><div class="line"><span class="keyword">print</span> s.translate(table)		<span class="comment">#hekku, wurkd</span></div><div class="line"><span class="keyword">print</span> s.translate(table, <span class="string">','</span>)	<span class="comment">#hekku wurkd</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>All article here are forbidden to reprint without my permission. 所有文章未经允许禁止转载。Thanks for reading.</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpeg" alt="LeiHuang WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpeg" alt="LeiHuang Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BeginPython笔记/" rel="tag"># BeginPython笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/24/BeginPython笔记-4-Tuples/" rel="next" title="BeginPython笔记:4.Tuples">
+                <i class="fa fa-chevron-left"></i> BeginPython笔记:4.Tuples
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">LeiHuang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/bosshuang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:myheromyjoe@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Basic-String-Operations"><span class="nav-text">1. Basic String Operations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-String-Formatting"><span class="nav-text">2. String Formatting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-String-Method"><span class="nav-text">3. String Method</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-find"><span class="nav-text">3.1 find</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-join"><span class="nav-text">3.2 join</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-lower"><span class="nav-text">3.3 lower</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-replace"><span class="nav-text">3.4 replace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-split"><span class="nav-text">3.5 split</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-strip"><span class="nav-text">3.6 strip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-7-translate"><span class="nav-text">3.7 translate</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LeiHuang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
