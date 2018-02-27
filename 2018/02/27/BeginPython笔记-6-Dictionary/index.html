@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="BeginPython笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文是《Python基础教程(第2版 修订版)》第 4 章 字典 的笔记，简要介绍了字典的创建、基本字典操作、字典的格式化字符串和字典方法。">
+<meta name="keywords" content="BeginPython笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BeginPython笔记:6.Dictionary">
+<meta property="og:url" content="http://yoursite.com/2018/02/27/BeginPython笔记-6-Dictionary/index.html">
+<meta property="og:site_name" content="LeiHuang&#39;s Blog">
+<meta property="og:description" content="本文是《Python基础教程(第2版 修订版)》第 4 章 字典 的笔记，简要介绍了字典的创建、基本字典操作、字典的格式化字符串和字典方法。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-27T15:39:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BeginPython笔记:6.Dictionary">
+<meta name="twitter:description" content="本文是《Python基础教程(第2版 修订版)》第 4 章 字典 的笔记，简要介绍了字典的创建、基本字典操作、字典的格式化字符串和字典方法。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/27/BeginPython笔记-6-Dictionary/"/>
+
+
+
+
+
+  <title>BeginPython笔记:6.Dictionary | LeiHuang's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?fa63699072fd198a02e43cccf4d60faa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LeiHuang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">逆水行舟，不进则退。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/27/BeginPython笔记-6-Dictionary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LeiHuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LeiHuang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">BeginPython笔记:6.Dictionary</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-27T23:38:13+08:00">
+                2018-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/BeginPython笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">BeginPython笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是《Python基础教程(第2版 修订版)》第 4 章 字典 的笔记，简要介绍了字典的创建、基本字典操作、字典的格式化字符串和字典方法。</p>
+<a id="more"></a>
+<h3 id="1-dict"><a href="#1-dict" class="headerlink" title="1. dict"></a>1. dict</h3><ul>
+<li><code>dict</code>函数可以通过映射或者键/值对的序列建立字典，也可以通过关键字参数来创建字典。不带任何参数时，则返回一个新的空字典。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># list中是元组</span></div><div class="line">items = [(<span class="string">'name'</span>,<span class="string">'L'</span>),(<span class="string">'age'</span>,<span class="number">10</span>)]</div><div class="line">d = dict(items)</div><div class="line"><span class="keyword">print</span> d		<span class="comment">#&#123;'age': 10, 'name': 'L'&#125;</span></div><div class="line"></div><div class="line"><span class="comment"># list中是list</span></div><div class="line">items = [[<span class="string">'name'</span>,<span class="string">'L'</span>],[<span class="string">'age'</span>,<span class="number">10</span>]]</div><div class="line">d = dict(items)</div><div class="line"><span class="keyword">print</span> d		<span class="comment">#&#123;'age': 10, 'name': 'L'&#125;</span></div><div class="line"></div><div class="line"><span class="comment"># 通过关键词参数创建</span></div><div class="line">d = dict(name = <span class="string">'L'</span>, age = <span class="number">10</span>)</div><div class="line"><span class="keyword">print</span> d		<span class="comment">#&#123;'age': 10, 'name': 'L'&#125;</span></div><div class="line"></div><div class="line"><span class="comment"># 不带参数</span></div><div class="line">d = dict()</div><div class="line"><span class="keyword">print</span> d	<span class="comment">#&#123;&#125;</span></div><div class="line"></div><div class="line"><span class="comment"># 用映射创建</span></div><div class="line">c = &#123;<span class="string">'age'</span>: <span class="number">10</span>, <span class="string">'name'</span>: <span class="string">'L'</span>&#125;</div><div class="line">d = dict(c)</div><div class="line"><span class="keyword">print</span> c		<span class="comment">#&#123;'age': 10, 'name': 'L'&#125;</span></div><div class="line"><span class="keyword">print</span> d		<span class="comment">#&#123;'age': 10, 'name': 'L'&#125;</span></div><div class="line"><span class="comment"># 修改新创建的字典，发现不会对原字典产生影响</span></div><div class="line">d[<span class="string">'age'</span>] = <span class="number">11</span></div><div class="line"><span class="keyword">print</span> d		<span class="comment">#&#123;'age': 11, 'name': 'L'&#125;</span></div><div class="line"><span class="keyword">print</span> c		<span class="comment">#&#123;'age': 10, 'name': 'L'&#125;</span></div></pre></td></tr></table></figure>
+<h3 id="2-Basic-Dictionary-Operations"><a href="#2-Basic-Dictionary-Operations" class="headerlink" title="2. Basic Dictionary Operations"></a>2. Basic Dictionary Operations</h3><ul>
+<li><code>len(d)</code>返回<code>d</code>中项（键-值对）的数量。</li>
+<li><code>d[k]</code>返回关联到键为<code>k</code>上的值。</li>
+<li><code>d[k]=v</code>将值<code>v</code>关联到键<code>k</code>上。</li>
+<li><code>del d[k]</code>删除键为<code>k</code>的项。</li>
+<li><code>k in d</code>检查<code>d</code>中是否有含有键为<code>k</code>的项。</li>
+<li>键类型：字典的键可以是任意的不可变类型。</li>
+</ul>
+<h3 id="3-String-Formatting-With-Dictionaries"><a href="#3-String-Formatting-With-Dictionaries" class="headerlink" title="3. String Formatting With Dictionaries"></a>3. String Formatting With Dictionaries</h3><figure class="highlight python"><table><tr><td class="code"><pre><div class="line">d = &#123;<span class="string">'age'</span>: <span class="number">10</span>, <span class="string">'name'</span>: <span class="string">'L'</span>&#125;</div><div class="line"><span class="keyword">print</span> <span class="string">"L is %(age)s"</span> % d		<span class="comment">#L is 10</span></div></pre></td></tr></table></figure>
+<h3 id="4-Dictionary-Methods"><a href="#4-Dictionary-Methods" class="headerlink" title="4. Dictionary Methods"></a>4. Dictionary Methods</h3><h4 id="4-1-clear"><a href="#4-1-clear" class="headerlink" title="4.1 clear"></a>4.1 clear</h4><ul>
+<li><code>clear</code>方法清除字典中所有的项。无返回值。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">d = &#123;<span class="string">'age'</span>: <span class="number">10</span>, <span class="string">'name'</span>: <span class="string">'L'</span>&#125;</div><div class="line">c = d.clear()</div><div class="line"><span class="keyword">print</span> d		<span class="comment">#&#123;&#125;</span></div><div class="line"><span class="keyword">print</span> c		<span class="comment">#None</span></div></pre></td></tr></table></figure>
+<ul>
+<li><code>clear</code>方法能够清空本身、其关联的字典和原始字典。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 用x = &#123;&#125; 或 y = &#123;&#125; 只能清空本身</span></div><div class="line">x = &#123;&#125;</div><div class="line">y = x	<span class="comment">#这是浅拷贝，本质上y和x是同一个dict</span></div><div class="line">x[<span class="string">'key'</span>] = <span class="string">'value'</span></div><div class="line"><span class="keyword">print</span> x		<span class="comment">#&#123;'key': 'value'&#125;</span></div><div class="line"><span class="keyword">print</span> y		<span class="comment">#&#123;'key': 'value'&#125;</span></div><div class="line">x = &#123;&#125;</div><div class="line"><span class="keyword">print</span> x		<span class="comment">#&#123;&#125;</span></div><div class="line"><span class="keyword">print</span> y		<span class="comment">#&#123;'key': 'value'&#125;</span></div><div class="line"></div><div class="line"><span class="comment"># 用clear方法能够清空本身及关联的字典</span></div><div class="line">x = &#123;&#125;</div><div class="line">y = x	<span class="comment">#这是浅拷贝，本质上y和x是同一个dict</span></div><div class="line">x[<span class="string">'key'</span>] = <span class="string">'value'</span></div><div class="line"><span class="keyword">print</span> x		<span class="comment">#&#123;'key': 'value'&#125;</span></div><div class="line"><span class="keyword">print</span> y		<span class="comment">#&#123;'key': 'value'&#125;</span></div><div class="line">x.clear()</div><div class="line"><span class="keyword">print</span> x		<span class="comment">#&#123;&#125;</span></div><div class="line"><span class="keyword">print</span> y		<span class="comment">#&#123;&#125;</span></div></pre></td></tr></table></figure>
+<h4 id="4-2-copy"><a href="#4-2-copy" class="headerlink" title="4.2 copy"></a>4.2 copy</h4><ul>
+<li><code>copy</code>方法返回一个相同键-值对的新字典。该方法实现的是浅复制。当在副本中替换值时，原始字典不会受到影响。但如果修改了某个值时，原始字典也会发生改变。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">d = &#123;<span class="string">'age'</span>: <span class="number">10</span>, <span class="string">'name'</span>: [<span class="string">'L'</span>,<span class="string">'M'</span>]&#125;</div><div class="line">c = d.copy()</div><div class="line"><span class="keyword">print</span> d		<span class="comment">#&#123;'age': 10, 'name': ['L', 'M']&#125;</span></div><div class="line"><span class="keyword">print</span> c		<span class="comment">#&#123;'age': 10, 'name': ['L', 'M']&#125;</span></div><div class="line">c[<span class="string">'age'</span>] = <span class="number">11</span></div><div class="line">c[<span class="string">'name'</span>].remove(<span class="string">'M'</span>)</div><div class="line"><span class="keyword">print</span> d		<span class="comment">#&#123;'age': 10, 'name': ['L']&#125;</span></div><div class="line"><span class="keyword">print</span> c		<span class="comment">#&#123;'age': 11, 'name': ['L']&#125;</span></div></pre></td></tr></table></figure>
+<ul>
+<li>可以使用<code>copy</code>模块中的<code>deepcopy</code>函数进行深度复制以避免该问题。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> copy</div><div class="line">d = &#123;<span class="string">'age'</span>: <span class="number">10</span>, <span class="string">'name'</span>: [<span class="string">'L'</span>,<span class="string">'M'</span>]&#125;</div><div class="line">c = copy.deepcopy(d)</div><div class="line">c[<span class="string">'age'</span>] = <span class="number">11</span></div><div class="line">c[<span class="string">'name'</span>].remove(<span class="string">'M'</span>)</div><div class="line"><span class="keyword">print</span> d	<span class="comment">#&#123;'age': 10, 'name': ['L', 'M']&#125;</span></div><div class="line"><span class="keyword">print</span> c	<span class="comment">#&#123;'age': 11, 'name': ['L']&#125;</span></div></pre></td></tr></table></figure>
+<h4 id="4-3-fromkeys"><a href="#4-3-fromkeys" class="headerlink" title="4.3 fromkeys"></a>4.3 fromkeys</h4><ul>
+<li><code>fromkeys</code>方法使用给定的键建立新的字典，对应的默认值为<code>None</code>，也可以自己提供默认值。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">keys = [<span class="string">'name'</span>,<span class="string">'age'</span>]</div><div class="line"><span class="comment">#该方式首先会创建一个字典，再调用fromkeys建立另一个字典，较多余且浪费</span></div><div class="line"><span class="keyword">print</span> &#123;&#125;.fromkeys(keys)	</div><div class="line"><span class="comment">#&#123;'age': None, 'name': None&#125;</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> dict.fromkeys(keys)</div><div class="line"><span class="comment">#&#123;'age': None, 'name': None&#125;</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> dict.fromkeys(keys,<span class="string">'F'</span>)</div><div class="line"><span class="comment">#&#123;'age': 'F', 'name': 'F'&#125;</span></div></pre></td></tr></table></figure>
+<h4 id="4-4-get"><a href="#4-4-get" class="headerlink" title="4.4 get"></a>4.4 get</h4><ul>
+<li>一般来说，当访问字典中不存在的项时会报错。而使用<code>get</code>方法时，则不会，会返回<code>None</code>，也可以自定义默认值。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">x = &#123;&#125;</div><div class="line"><span class="keyword">print</span> x.get(<span class="string">'name'</span>)			<span class="comment">#None</span></div><div class="line"><span class="keyword">print</span> x.get(<span class="string">'name'</span>,<span class="string">'L'</span>)		<span class="comment">#L，即自定义的默认值</span></div></pre></td></tr></table></figure>
+<h4 id="4-5-has-key"><a href="#4-5-has-key" class="headerlink" title="4.5 has_key"></a>4.5 has_key</h4><ul>
+<li><code>has_key</code>方法可以检查字典中是否含有特定的键，同<code>k in d</code>。Python3中不包括这个函数。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">x = &#123;<span class="string">'name'</span>:<span class="string">'L'</span>&#125;</div><div class="line"><span class="keyword">print</span> x.has_key(<span class="string">'name'</span>)		<span class="comment">#True</span></div><div class="line"><span class="keyword">print</span> x.has_key(<span class="string">'age'</span>)		<span class="comment">#False</span></div></pre></td></tr></table></figure>
+<h4 id="4-6-items、iteritems"><a href="#4-6-items、iteritems" class="headerlink" title="4.6 items、iteritems"></a>4.6 items、iteritems</h4><ul>
+<li><code>items</code>方法将字典所有的项以列表方式返回，列表中的每一项都表示（键，值）对的形式。但是项在返回时并不遵循特定的次序。</li>
+<li><code>iteritems</code>方法则返回一个迭代器对象，而非列表。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">d = &#123;<span class="string">'age'</span>: <span class="number">10</span>, <span class="string">'name'</span>: [<span class="string">'L'</span>,<span class="string">'M'</span>]&#125;</div><div class="line"><span class="keyword">print</span> d.items()	<span class="comment">#[('age', 10), ('name', ['L', 'M'])]</span></div><div class="line"></div><div class="line">it = d.iteritems()</div><div class="line"><span class="keyword">print</span> it</div><div class="line"><span class="comment">#&lt;dictionary-itemiterator object at 0x10ce4f8e8&gt;</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> list(it)	<span class="comment">#[('age', 10), ('name', ['L', 'M'])]</span></div></pre></td></tr></table></figure>
+<h4 id="4-7-keys、iterkeys"><a href="#4-7-keys、iterkeys" class="headerlink" title="4.7 keys、iterkeys"></a>4.7 keys、iterkeys</h4><ul>
+<li><code>keys</code>方法将字典中的键以列表的形式返回。<code>iterkeys</code>则返回针对键的迭代器。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">d = &#123;<span class="string">'age'</span>: <span class="number">10</span>, <span class="string">'name'</span>: [<span class="string">'L'</span>,<span class="string">'M'</span>]&#125;</div><div class="line"><span class="keyword">print</span> d.keys()		<span class="comment">#['age', 'name']</span></div><div class="line">it = d.iterkeys()</div><div class="line"><span class="keyword">print</span> it	</div><div class="line"><span class="comment">#&lt;dictionary-keyiterator object at 0x10accd940&gt;</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> list(it)		<span class="comment">#['age', 'name']</span></div></pre></td></tr></table></figure>
+<h4 id="4-8-pop"><a href="#4-8-pop" class="headerlink" title="4.8 pop"></a>4.8 pop</h4><ul>
+<li><code>pop</code>方法用来获得对应于给定键的值，然后将这个键-值从字典中移除。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">d = &#123;<span class="string">'age'</span>: <span class="number">10</span>, <span class="string">'name'</span>: [<span class="string">'L'</span>,<span class="string">'M'</span>]&#125;</div><div class="line">c = d.pop(<span class="string">'name'</span>)</div><div class="line"><span class="keyword">print</span> c		<span class="comment">#['L', 'M']</span></div><div class="line"><span class="keyword">print</span> d		<span class="comment">#&#123;'age': 10&#125;</span></div></pre></td></tr></table></figure>
+<h4 id="4-9-popitem"><a href="#4-9-popitem" class="headerlink" title="4.9 popitem"></a>4.9 popitem</h4><ul>
+<li><code>popitem</code>方法会随机删除字典中的项，并返回项。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">d = &#123;<span class="string">'age'</span>: <span class="number">10</span>, <span class="string">'name'</span>: [<span class="string">'L'</span>,<span class="string">'M'</span>]&#125;</div><div class="line"><span class="keyword">print</span> d.popitem()		<span class="comment">#('age', 10)</span></div><div class="line"><span class="keyword">print</span> d		<span class="comment">#&#123;'name': ['L', 'M']&#125;</span></div></pre></td></tr></table></figure>
+<h4 id="4-10-setdefault"><a href="#4-10-setdefault" class="headerlink" title="4.10 setdefault"></a>4.10 setdefault</h4><ul>
+<li><code>setdefault</code>方法在键不存在的时候，会返回默认值，同时相应地更新字典。若存在，则返回值，且不改变字典。默认值默认为<code>None</code>，可修改。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">d = &#123;&#125;</div><div class="line"><span class="keyword">print</span> d.setdefault(<span class="string">'name'</span>)		<span class="comment">#None</span></div><div class="line"><span class="keyword">print</span> d		<span class="comment">#&#123;'name': None&#125;</span></div><div class="line"></div><div class="line"><span class="comment">#此时`name`在d内已经存在</span></div><div class="line"><span class="keyword">print</span> d.setdefault(<span class="string">'name'</span>,<span class="string">'L'</span>)	<span class="comment">#None</span></div><div class="line"><span class="keyword">print</span> d		<span class="comment">#&#123;'name': None&#125;</span></div></pre></td></tr></table></figure>
+<h4 id="4-11-update"><a href="#4-11-update" class="headerlink" title="4.11 update"></a>4.11 update</h4><ul>
+<li><code>update</code>方法利用一个字典项更新另一个字典。提供的字典中的项会被添加到旧的字典中，而相同的键会进行覆盖。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">d = &#123;<span class="string">'age'</span>: <span class="number">10</span>, <span class="string">'name'</span>: <span class="string">'L'</span>&#125;</div><div class="line">c = &#123;<span class="string">'age'</span>: <span class="number">11</span>, <span class="string">'address'</span>:<span class="string">'M'</span>&#125;</div><div class="line">d.update(c)</div><div class="line"><span class="keyword">print</span> d	<span class="comment">#&#123;'age': 11, 'name': 'L', 'address': 'M'&#125;</span></div><div class="line"><span class="keyword">print</span> c	<span class="comment">#&#123;'age': 11, 'address': 'M'&#125;</span></div></pre></td></tr></table></figure>
+<ul>
+<li><code>update</code>方法可以使用与调用<code>dict</code>函数（或者类型构造函数）同样的方式进行调用，即<code>uodate</code>方法可以和映射、拥有（键-值）对的队列（或者其他可迭代的对象）以及关键字参数一起调用。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">d = &#123;<span class="string">'age'</span>: <span class="number">10</span>, <span class="string">'name'</span>: <span class="string">'L'</span>&#125;</div><div class="line">d.update(name= <span class="string">'X'</span>)</div><div class="line"><span class="keyword">print</span> d		<span class="comment">#&#123;'age': 10, 'name': 'X'&#125;</span></div><div class="line">tems = [(<span class="string">'name'</span>,<span class="string">'L'</span>),(<span class="string">'age'</span>,<span class="number">11</span>)]</div><div class="line">d.update(tems)</div><div class="line"><span class="keyword">print</span> d		<span class="comment">#&#123;'age': 11, 'name': 'L'&#125;</span></div></pre></td></tr></table></figure>
+<h4 id="4-12-values、itervalues"><a href="#4-12-values、itervalues" class="headerlink" title="4.12 values、itervalues"></a>4.12 values、itervalues</h4><ul>
+<li><code>values</code>方法以列表形式返回字典中的值，且可以包含重复的元素。<code>itervalues</code>方法则返回值的迭代器。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">d = &#123;<span class="string">'age'</span>: <span class="number">10</span>, <span class="string">'name'</span>: <span class="string">'L'</span>&#125;</div><div class="line"><span class="keyword">print</span> d.values()		<span class="comment">#[10, 'L']</span></div><div class="line">it = d.values()</div><div class="line"><span class="keyword">print</span> it	</div><div class="line"><span class="comment">#&lt;dictionary-valueiterator object at 0x10b7668e8&gt;</span></div><div class="line"><span class="keyword">print</span> list(it)	<span class="comment">#[10, 'L']</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>All article here are forbidden to reprint without my permission. 所有文章未经允许禁止转载。Thanks for reading.</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpeg" alt="LeiHuang WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpeg" alt="LeiHuang Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BeginPython笔记/" rel="tag"># BeginPython笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/26/BeginPython笔记-5-String/" rel="next" title="BeginPython笔记:5.String">
+                <i class="fa fa-chevron-left"></i> BeginPython笔记:5.String
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">LeiHuang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/bosshuang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:myheromyjoe@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-dict"><span class="nav-text">1. dict</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Basic-Dictionary-Operations"><span class="nav-text">2. Basic Dictionary Operations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-String-Formatting-With-Dictionaries"><span class="nav-text">3. String Formatting With Dictionaries</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Dictionary-Methods"><span class="nav-text">4. Dictionary Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-clear"><span class="nav-text">4.1 clear</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-copy"><span class="nav-text">4.2 copy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-fromkeys"><span class="nav-text">4.3 fromkeys</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-get"><span class="nav-text">4.4 get</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-has-key"><span class="nav-text">4.5 has_key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-6-items、iteritems"><span class="nav-text">4.6 items、iteritems</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-7-keys、iterkeys"><span class="nav-text">4.7 keys、iterkeys</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-8-pop"><span class="nav-text">4.8 pop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-9-popitem"><span class="nav-text">4.9 popitem</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-10-setdefault"><span class="nav-text">4.10 setdefault</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-11-update"><span class="nav-text">4.11 update</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-12-values、itervalues"><span class="nav-text">4.12 values、itervalues</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LeiHuang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
