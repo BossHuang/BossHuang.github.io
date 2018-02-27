@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="LeiHuang&#39;s Blog">
 <meta property="og:description" content="本文是《Python基础教程(第2版 修订版)》第 4 章 字典 的笔记，简要介绍了字典的创建、基本字典操作、字典的格式化字符串和字典方法。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-02-27T15:39:33.000Z">
+<meta property="og:updated_time" content="2018-02-27T15:59:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BeginPython笔记:6.Dictionary">
 <meta name="twitter:description" content="本文是《Python基础教程(第2版 修订版)》第 4 章 字典 的笔记，简要介绍了字典的创建、基本字典操作、字典的格式化字符串和字典方法。">
@@ -444,7 +444,7 @@
 <h4 id="4-12-values、itervalues"><a href="#4-12-values、itervalues" class="headerlink" title="4.12 values、itervalues"></a>4.12 values、itervalues</h4><ul>
 <li><code>values</code>方法以列表形式返回字典中的值，且可以包含重复的元素。<code>itervalues</code>方法则返回值的迭代器。</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">d = &#123;<span class="string">'age'</span>: <span class="number">10</span>, <span class="string">'name'</span>: <span class="string">'L'</span>&#125;</div><div class="line"><span class="keyword">print</span> d.values()		<span class="comment">#[10, 'L']</span></div><div class="line">it = d.values()</div><div class="line"><span class="keyword">print</span> it	</div><div class="line"><span class="comment">#&lt;dictionary-valueiterator object at 0x10b7668e8&gt;</span></div><div class="line"><span class="keyword">print</span> list(it)	<span class="comment">#[10, 'L']</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">d = &#123;<span class="string">'age'</span>: <span class="number">10</span>, <span class="string">'name'</span>: <span class="string">'L'</span>&#125;</div><div class="line"><span class="keyword">print</span> d.values()		<span class="comment">#[10, 'L']</span></div><div class="line">it = d.itervalues()</div><div class="line"><span class="keyword">print</span> it	</div><div class="line"><span class="comment">#&lt;dictionary-valueiterator object at 0x10b7668e8&gt;</span></div><div class="line"><span class="keyword">print</span> list(it)	<span class="comment">#[10, 'L']</span></div></pre></td></tr></table></figure>
 
       
     </div>
