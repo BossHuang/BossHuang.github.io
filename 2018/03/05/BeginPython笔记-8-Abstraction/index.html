@@ -77,18 +77,18 @@
 
 
 
-<meta name="description" content="本文是《Python基础教程(第2版 修订版)》第 2 章 元组 部分的笔记，简要介绍了元组的概念、基本操作和存在的意义。">
+<meta name="description" content="本文是《Python基础教程(第2版 修订版)》第 6 章 抽象 的笔记，简要介绍了Python中函数创建、函数的参数、作用域和函数式编程等内容。">
 <meta name="keywords" content="BeginPython笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BeginPython笔记:4.Tuples">
-<meta property="og:url" content="http://yoursite.com/2018/01/24/BeginPython笔记-4-Tuples/index.html">
+<meta property="og:title" content="BeginPython笔记:8.Abstraction">
+<meta property="og:url" content="http://yoursite.com/2018/03/05/BeginPython笔记-8-Abstraction/index.html">
 <meta property="og:site_name" content="LeiHuang&#39;s Blog">
-<meta property="og:description" content="本文是《Python基础教程(第2版 修订版)》第 2 章 元组 部分的笔记，简要介绍了元组的概念、基本操作和存在的意义。">
+<meta property="og:description" content="本文是《Python基础教程(第2版 修订版)》第 6 章 抽象 的笔记，简要介绍了Python中函数创建、函数的参数、作用域和函数式编程等内容。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-01-24T10:25:33.000Z">
+<meta property="og:updated_time" content="2018-03-05T14:48:23.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BeginPython笔记:4.Tuples">
-<meta name="twitter:description" content="本文是《Python基础教程(第2版 修订版)》第 2 章 元组 部分的笔记，简要介绍了元组的概念、基本操作和存在的意义。">
+<meta name="twitter:title" content="BeginPython笔记:8.Abstraction">
+<meta name="twitter:description" content="本文是《Python基础教程(第2版 修订版)》第 6 章 抽象 的笔记，简要介绍了Python中函数创建、函数的参数、作用域和函数式编程等内容。">
 
 
 
@@ -118,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/01/24/BeginPython笔记-4-Tuples/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/05/BeginPython笔记-8-Abstraction/"/>
 
 
 
 
 
-  <title>BeginPython笔记:4.Tuples | LeiHuang's Blog</title>
+  <title>BeginPython笔记:8.Abstraction | LeiHuang's Blog</title>
   
 
 
@@ -271,7 +271,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/24/BeginPython笔记-4-Tuples/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/05/BeginPython笔记-8-Abstraction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LeiHuang">
@@ -288,7 +288,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">BeginPython笔记:4.Tuples</h1>
+          <h1 class="post-title" itemprop="name headline">BeginPython笔记:8.Abstraction</h1>
         
 
         <div class="post-meta">
@@ -300,8 +300,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-24T18:18:06+08:00">
-                2018-01-24
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-05T22:47:11+08:00">
+                2018-03-05
               </time>
             
 
@@ -369,29 +369,62 @@
       
 
       
-        <p>本文是《Python基础教程(第2版 修订版)》第 2 章 元组 部分的笔记，简要介绍了元组的概念、基本操作和存在的意义。</p>
+        <p>本文是《Python基础教程(第2版 修订版)》第 6 章 抽象 的笔记，简要介绍了Python中函数创建、函数的参数、作用域和函数式编程等内容。</p>
 <a id="more"></a>
-<h3 id="1-Tuple"><a href="#1-Tuple" class="headerlink" title="1. Tuple"></a>1. Tuple</h3><ul>
-<li>元组和列表一样，也是一种序列，唯一不同是元组不能修改。元组和列表在技术实现上有一些不同，且元组没有像列表一样的方法。</li>
-<li>用逗号分隔一些值，会自动创建元组。</li>
-<li>空元组可以用没有包含内容的两个圆括号表示</li>
-<li>实现包含一个值的元组，只需加一个逗号</li>
+<h3 id="1-Create-Functions"><a href="#1-Create-Functions" class="headerlink" title="1. Create Functions"></a>1. Create Functions</h3><ul>
+<li>一般来说，内建的<code>callable</code>函数可以判断函数是否可调用。但在Python3中不再可用，需要使用<code>hasattr(func, __call__)</code>代替.</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span></div><div class="line">(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">2</span>,</div><div class="line">(<span class="number">2</span>,)</div><div class="line"></div><div class="line"><span class="keyword">print</span> <span class="number">3</span>*(<span class="number">4</span>+<span class="number">2</span>)	 	<span class="comment">#18</span></div><div class="line"><span class="keyword">print</span> <span class="number">3</span>*(<span class="number">4</span>+<span class="number">2</span>,) 		<span class="comment">#(6, 6, 6)</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> math</div><div class="line">x = <span class="number">1</span></div><div class="line">y = math.sqrt</div><div class="line"><span class="keyword">print</span> callable(x)	<span class="comment">#False</span></div><div class="line"><span class="keyword">print</span> callable(y)	<span class="comment">#True</span></div></pre></td></tr></table></figure>
 <ul>
-<li>tuple以一个序列作为参数并把它转换成元组</li>
+<li>文档字符串：在函数开头写下字符串，便会作为函数的一部分进行存储。<code>__doc__</code>是函数的属性，可以通过其对文档字符串进行访问。内建的<code>help</code>函数可以在交互式解释器中使用。</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">print</span> tuple([<span class="number">1</span>,<span class="number">2</span>])		<span class="comment">#(1, 2)</span></div><div class="line"><span class="keyword">print</span> tuple(<span class="string">"hello"</span>)	<span class="comment">#('h', 'e', 'l', 'l', 'o')</span></div></pre></td></tr></table></figure>
-<h3 id="2-Basic-Tuple-Operations"><a href="#2-Basic-Tuple-Operations" class="headerlink" title="2. Basic Tuple Operations"></a>2. Basic Tuple Operations</h3><ul>
-<li>元组除了创建元组和访问元组元素之外，没有太多的其他操作。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">x = <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span></div><div class="line"><span class="keyword">print</span> x[<span class="number">1</span>]	<span class="comment">#2</span></div><div class="line"><span class="keyword">print</span> x[<span class="number">0</span>:<span class="number">2</span>]	<span class="comment">#(1, 2)</span></div></pre></td></tr></table></figure>
-<h3 id="3-The-Point"><a href="#3-The-Point" class="headerlink" title="3. The Point"></a>3. The Point</h3><p>元组存在的意义：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">square</span><span class="params">(x)</span>:</span></div><div class="line">    <span class="string">'Calculate the square of x.'</span></div><div class="line">    <span class="keyword">return</span> x*x</div><div class="line"></div><div class="line"><span class="keyword">print</span> square.__doc__</div><div class="line"><span class="comment">#Calculate the square of x.</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>help(square)</div><div class="line">Help on function square <span class="keyword">in</span> module __main__:</div><div class="line"></div><div class="line">square(x)</div><div class="line">    Calculate the square of x.</div></pre></td></tr></table></figure>
 <ul>
-<li>在映射中当做键使用，而列表则不行。</li>
-<li>元组作为很多内建函数和方法的返回值存在，也就是必须对其进行处理。</li>
+<li>没有<code>return</code>语句或者有但没有跟任何值的函数不返回值。此时，<code>return</code>语句只起到结束函数的作用。</li>
 </ul>
-
+<h3 id="2-Parameters"><a href="#2-Parameters" class="headerlink" title="2. Parameters"></a>2. Parameters</h3><ul>
+<li>当参数是字符串、数字和元组等不可变的，即只能被新的值覆盖时，函数内部把参数赋值的时候，函数外的变量不会发生改变。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">addOne</span><span class="params">(x)</span>:</span></div><div class="line">    x += <span class="number">1</span></div><div class="line">x = <span class="number">3</span></div><div class="line">addOne(x)</div><div class="line"><span class="keyword">print</span> x		<span class="comment">#3</span></div></pre></td></tr></table></figure>
+<ul>
+<li>当参数是可变的数据结构，如列表、字典的时候，函数外的参数也会发生改变。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">addOne</span><span class="params">(x)</span>:</span></div><div class="line">    x[<span class="number">0</span>] += <span class="number">1</span></div><div class="line">x = [<span class="number">1</span>,<span class="number">2</span>]</div><div class="line">addOne(x)</div><div class="line"><span class="keyword">print</span> x	<span class="comment">#[2,2]</span></div></pre></td></tr></table></figure>
+<ul>
+<li>关键字参数：使用参数名提供的参数。其作用在于可以明确每个参数的作用，同时可以提供默认值。</li>
+<li>只要把位置参数放置在关键字参数前就可以联合使用。一般来说，只有在强制要求的参数个数比可修改的具有默认值的参数个数少的时候，才考虑混合使用。</li>
+<li>通过收集其余的参数的方式可以方便用户提供任意数量的参数。<code>*</code>收集剩余的位置参数，<code>**</code>收集剩余的关键字参数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">export</span><span class="params">(x, y = <span class="number">2</span>, *z, **n)</span>:</span></div><div class="line">    <span class="keyword">print</span> x</div><div class="line">    <span class="keyword">print</span> y</div><div class="line">    <span class="keyword">print</span> z</div><div class="line">    <span class="keyword">print</span> n</div><div class="line"></div><div class="line">export(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, t = <span class="number">2</span>)</div><div class="line"><span class="comment">#1</span></div><div class="line"><span class="comment">#2</span></div><div class="line"><span class="comment">#(3, 4)</span></div><div class="line"><span class="comment">#&#123;'t': 2&#125;</span></div><div class="line"></div><div class="line">export(<span class="number">1</span>)</div><div class="line"><span class="comment">#1</span></div><div class="line"><span class="comment">#2</span></div><div class="line"><span class="comment">#()</span></div><div class="line"><span class="comment">#&#123;&#125;</span></div></pre></td></tr></table></figure>
+<ul>
+<li>参数收集的逆过程：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">cal1</span><span class="params">(x,y)</span>:</span></div><div class="line">    <span class="keyword">print</span> x+y</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">cal2</span><span class="params">(x=<span class="number">1</span>,y=<span class="number">2</span>)</span>:</span></div><div class="line">    <span class="keyword">print</span> x+y</div><div class="line">    </div><div class="line">par1 = (<span class="number">3</span>,<span class="number">4</span>)</div><div class="line">cal1(*par1)	<span class="comment">#7</span></div><div class="line"></div><div class="line">par2 = &#123;<span class="string">'x'</span>:<span class="number">5</span>,<span class="string">'y'</span>:<span class="number">1</span>&#125;</div><div class="line">cal2(**par2)	<span class="comment">#6</span></div></pre></td></tr></table></figure>
+<h3 id="3-Scoping"><a href="#3-Scoping" class="headerlink" title="3. Scoping"></a>3. Scoping</h3><ul>
+<li>除全局作用域外，每个函数调用都会创建一个新的作用域。</li>
+<li>如果全局变量和局部变量同名，则全局变量会被局部变量屏蔽。可以使用<code>globals</code>函数获取全局变量值，该函数的近亲是<code>vars</code>，它可以返回全局变量的字典（<code>locals</code>返回局部变量的字典）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">addOne</span><span class="params">(y)</span>:</span></div><div class="line">    <span class="keyword">print</span> y+globals()[<span class="string">'x'</span>]		<span class="comment">#4</span></div><div class="line"></div><div class="line">    <span class="keyword">global</span> x		<span class="comment">#声明为全局变量</span></div><div class="line">    x += <span class="number">1</span></div><div class="line">    <span class="keyword">print</span> x	<span class="comment">#3</span></div><div class="line">    <span class="keyword">print</span> y	<span class="comment">#2</span></div><div class="line">    </div><div class="line">x = <span class="number">2</span></div><div class="line">scope = vars()</div><div class="line"><span class="keyword">print</span> scope[<span class="string">'x'</span>]		<span class="comment">#2</span></div><div class="line"></div><div class="line">addOne(x)</div></pre></td></tr></table></figure>
+<ul>
+<li>嵌套作用域。Python的函数可以嵌套的，即可以将一个函数放在另一个里面。例如需要一个函数创建另一个：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">addX</span><span class="params">(x)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">addY</span><span class="params">(y)</span>:</span></div><div class="line">        <span class="keyword">return</span> x+y</div><div class="line">    <span class="keyword">return</span> addY</div></pre></td></tr></table></figure>
+<ul>
+<li>返回的是函数本身，并没有被调用。同时返回的函数还可以访问它定义所在的作用域。每次调用外层函数，内部的函数会被重新绑定。这种存储子封闭作用域的行为叫做<strong>闭包</strong>。</li>
+<li>外部作用域的变量一般来说是不能进行重新赋值的。但在Python3中<code>nonlocal</code>关键字可以让用户对外部作用域的变量进行赋值。</li>
+</ul>
+<h3 id="4-函数式编程"><a href="#4-函数式编程" class="headerlink" title="4. 函数式编程"></a>4. 函数式编程</h3><ul>
+<li><code>map</code>: <code>map</code>函数可以将序列中的元素全部传递给一个函数。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">print</span> map(str, range(<span class="number">3</span>))</div><div class="line"><span class="comment">#['0', '1', '2']</span></div><div class="line"><span class="comment">#等价于[str(i) for i in range(3)]</span></div></pre></td></tr></table></figure>
+<ul>
+<li><code>filter</code>: <code>filter</code>函数可以基于一个返回布尔值的函数对元素进行过滤。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(x)</span>:</span></div><div class="line">    <span class="keyword">if</span> x &gt; <span class="number">1</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> filter(func, range(<span class="number">3</span>))	<span class="comment">#[2]</span></div></pre></td></tr></table></figure>
+<ul>
+<li><code>reduce</code>: 该函数会将序列给定的前两个元素与给定的函数联合使用，并且将它的返回值和下一个元素继续联合使用，直到整个序列都处理完毕，并且得到一个最终结果。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">print</span> reduce(<span class="keyword">lambda</span> x,y:x+y,range(<span class="number">3</span>))	<span class="comment">#3</span></div></pre></td></tr></table></figure>
       
     </div>
     
@@ -450,8 +483,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/23/BeginPython笔记-3-Lists/" rel="next" title="BeginPython笔记:3.Lists">
-                <i class="fa fa-chevron-left"></i> BeginPython笔记:3.Lists
+              <a href="/2018/03/04/BeginPython笔记-7-Condition-Loops-and-Statement/" rel="next" title="BeginPython笔记:7.Condition, Loops and Statement">
+                <i class="fa fa-chevron-left"></i> BeginPython笔记:7.Condition, Loops and Statement
               </a>
             
           </div>
@@ -459,10 +492,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/26/BeginPython笔记-5-String/" rel="prev" title="BeginPython笔记:5.String">
-                BeginPython笔记:5.String <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -606,7 +635,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Tuple"><span class="nav-text">1. Tuple</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Basic-Tuple-Operations"><span class="nav-text">2. Basic Tuple Operations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-The-Point"><span class="nav-text">3. The Point</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Create-Functions"><span class="nav-text">1. Create Functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Parameters"><span class="nav-text">2. Parameters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Scoping"><span class="nav-text">3. Scoping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-函数式编程"><span class="nav-text">4. 函数式编程</span></a></li></ol></div>
             
 
           </div>
