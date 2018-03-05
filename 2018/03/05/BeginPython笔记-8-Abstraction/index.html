@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="LeiHuang&#39;s Blog">
 <meta property="og:description" content="本文是《Python基础教程(第2版 修订版)》第 6 章 抽象 的笔记，简要介绍了Python中函数创建、函数的参数、作用域和函数式编程等内容。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-03-05T14:48:23.000Z">
+<meta property="og:updated_time" content="2018-03-05T14:54:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BeginPython笔记:8.Abstraction">
 <meta name="twitter:description" content="本文是《Python基础教程(第2版 修订版)》第 6 章 抽象 的笔记，简要介绍了Python中函数创建、函数的参数、作用域和函数式编程等内容。">
@@ -385,11 +385,11 @@
 <h3 id="2-Parameters"><a href="#2-Parameters" class="headerlink" title="2. Parameters"></a>2. Parameters</h3><ul>
 <li>当参数是字符串、数字和元组等不可变的，即只能被新的值覆盖时，函数内部把参数赋值的时候，函数外的变量不会发生改变。</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">addOne</span><span class="params">(x)</span>:</span></div><div class="line">    x += <span class="number">1</span></div><div class="line">x = <span class="number">3</span></div><div class="line">addOne(x)</div><div class="line"><span class="keyword">print</span> x		<span class="comment">#3</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">addOne</span><span class="params">(x)</span>:</span></div><div class="line">    x += <span class="number">1</span></div><div class="line">    </div><div class="line">x = <span class="number">3</span></div><div class="line">addOne(x)</div><div class="line"><span class="keyword">print</span> x		<span class="comment">#3</span></div></pre></td></tr></table></figure>
 <ul>
 <li>当参数是可变的数据结构，如列表、字典的时候，函数外的参数也会发生改变。</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">addOne</span><span class="params">(x)</span>:</span></div><div class="line">    x[<span class="number">0</span>] += <span class="number">1</span></div><div class="line">x = [<span class="number">1</span>,<span class="number">2</span>]</div><div class="line">addOne(x)</div><div class="line"><span class="keyword">print</span> x	<span class="comment">#[2,2]</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">addOne</span><span class="params">(x)</span>:</span></div><div class="line">    x[<span class="number">0</span>] += <span class="number">1</span></div><div class="line">    </div><div class="line">x = [<span class="number">1</span>,<span class="number">2</span>]</div><div class="line">addOne(x)</div><div class="line"><span class="keyword">print</span> x	<span class="comment">#[2,2]</span></div></pre></td></tr></table></figure>
 <ul>
 <li>关键字参数：使用参数名提供的参数。其作用在于可以明确每个参数的作用，同时可以提供默认值。</li>
 <li>只要把位置参数放置在关键字参数前就可以联合使用。一般来说，只有在强制要求的参数个数比可修改的具有默认值的参数个数少的时候，才考虑混合使用。</li>
