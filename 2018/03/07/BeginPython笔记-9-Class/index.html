@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="BeginPython笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文是《Python基础教程(第2版 修订版)》第 7 章 更加抽象 和 第9章 魔法方法、属性和迭代器 的笔记，简要介绍了Python中类的创建、私有特性、类命名空间、超类和构造方法、成员访问、属性、迭代器、生成器以及如何进行面向对象设计等内容。">
+<meta name="keywords" content="BeginPython笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BeginPython笔记:9.Class">
+<meta property="og:url" content="http://yoursite.com/2018/03/07/BeginPython笔记-9-Class/index.html">
+<meta property="og:site_name" content="LeiHuang&#39;s Blog">
+<meta property="og:description" content="本文是《Python基础教程(第2版 修订版)》第 7 章 更加抽象 和 第9章 魔法方法、属性和迭代器 的笔记，简要介绍了Python中类的创建、私有特性、类命名空间、超类和构造方法、成员访问、属性、迭代器、生成器以及如何进行面向对象设计等内容。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-03-07T14:36:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BeginPython笔记:9.Class">
+<meta name="twitter:description" content="本文是《Python基础教程(第2版 修订版)》第 7 章 更加抽象 和 第9章 魔法方法、属性和迭代器 的笔记，简要介绍了Python中类的创建、私有特性、类命名空间、超类和构造方法、成员访问、属性、迭代器、生成器以及如何进行面向对象设计等内容。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/07/BeginPython笔记-9-Class/"/>
+
+
+
+
+
+  <title>BeginPython笔记:9.Class | LeiHuang's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?fa63699072fd198a02e43cccf4d60faa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LeiHuang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">逆水行舟，不进则退。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/07/BeginPython笔记-9-Class/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LeiHuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LeiHuang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">BeginPython笔记:9.Class</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-07T22:31:51+08:00">
+                2018-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/BeginPython笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">BeginPython笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是《Python基础教程(第2版 修订版)》第 7 章 更加抽象 和 第9章 魔法方法、属性和迭代器 的笔记，简要介绍了Python中类的创建、私有特性、类命名空间、超类和构造方法、成员访问、属性、迭代器、生成器以及如何进行面向对象设计等内容。</p>
+<a id="more"></a>
+<h3 id="1-Objects"><a href="#1-Objects" class="headerlink" title="1. Objects"></a>1. Objects</h3><ul>
+<li>对象<code>object</code>可以看作是数据及一系列可以操作这些数据的方法所组成的集合。</li>
+<li>多态<code>polymorphism</code>，即鸭子类型<code>duck typing</code><ul>
+<li>意味着可以对不同类型的对象使用相同的操作。该操作会根据对象类型的不同而表现出不同的行为。</li>
+<li>很多内建运算符和函数都有多态的性质。</li>
+<li>唯一能毁掉多态的就是使用函数显式地检查类型，比如<code>type</code>、<code>instance</code>以及<code>issubclass</code>函数等。</li>
+</ul>
+</li>
+<li>封装<code>encapsulate</code>：对外部世界隐藏对象的工作细节。多态可以让用户对于不知道是什么类的对象进行方法调用，而封装是可以不用关心对象是如何构建而直接进行使用。</li>
+<li>继承<code>inheritance</code>：以通用的类为基础建立专门的类对象。</li>
+</ul>
+<h3 id="2-Classes"><a href="#2-Classes" class="headerlink" title="2. Classes"></a>2. Classes</h3><h4 id="2-1-create-class"><a href="#2-1-create-class" class="headerlink" title="2.1 create class"></a>2.1 create class</h4><ul>
+<li><p>在旧版本的Python中，内建的对象是基于类型的，自定义的对象是基于类的，可以创建类但不能创建类型。而后期的版本对这种界限开始模糊，可以创建内建类型的子类或子类型，而这些类型的行为更类似于类。在Python3中不用再担心该问题，也不需要显式地子类化<code>Object</code>或者将元类设置为<code>type</code>，所有的类都会隐式地成为<code>Object</code>的子类。</p>
+</li>
+<li><p>为了确保类是新型的，需要在模块或脚本开始的地方放置赋值语句 <code>__metaclass__ = type</code>。或者（直接或间接）子类化内建类<code>object</code>或其他新式类。</p>
+</li>
+<li>还可以在类的作用域中对<code>__metaclass__</code>变量赋值。这样只会为这个类设定元类，即其他类或类型的类。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">NewStyle</span><span class="params">(object)</span>:</span></div><div class="line">	more code here</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">OldStyle</span>:</span></div><div class="line">	more code here</div></pre></td></tr></table></figure>
+<ul>
+<li>创建类：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">__metaclass__ = type</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">()</span>:</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">setName</span><span class="params">(self, name)</span>:</span></div><div class="line">		self.name = name</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">getName</span><span class="params">(self)</span>:</span></div><div class="line">		<span class="keyword">return</span> self.name</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">greet</span><span class="params">(self)</span>:</span></div><div class="line">		<span class="keyword">print</span> <span class="string">"I'm %s"</span> % self.name</div><div class="line"></div><div class="line">man = Person()</div><div class="line">man.setName(<span class="string">"L"</span>)</div><div class="line">man.greet()	<span class="comment">#I'm L</span></div><div class="line">	</div><div class="line"><span class="comment">#特性可以从外部访问，但不建议如此使用</span></div><div class="line"><span class="keyword">print</span> man.name	<span class="comment">#L</span></div></pre></td></tr></table></figure>
+<ul>
+<li><code>self</code>参数正是方法和函数的区别。方法（绑定方法）会将其第一个参数绑定到所属的实例上，因而不用显示地提供该参数。也可以将特性绑定到一个普通函数上，此时便不会有<code>self</code>参数。</li>
+</ul>
+<h4 id="2-2-使用私有特性"><a href="#2-2-使用私有特性" class="headerlink" title="2.2 使用私有特性"></a>2.2 使用私有特性</h4><ul>
+<li>只要在名字前加双下划线便可让方法或特性变为私有。</li>
+<li>在类的内部定义中，所有双下划线开始的名字都会被“翻译”成前面加上单下划线和类名的形式。因此实际上还是能在类外访问这些私有方法。这里我测试了下在PyCharm里不行，但在命令行里可以。</li>
+<li>如果不需要使用但是也不想让其他对象访问内部数据，可以使用单下划线。例如有单下划线的名字不会被<code>import</code>语句导入。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">P</span>:</span></div><div class="line"><span class="meta">... </span>    <span class="function"><span class="keyword">def</span> <span class="title">__in</span><span class="params">(self)</span>:</span></div><div class="line"><span class="meta">... </span>        <span class="keyword">print</span> <span class="string">"in"</span></div><div class="line"><span class="meta">... </span>    <span class="function"><span class="keyword">def</span> <span class="title">out</span><span class="params">(self)</span>:</span></div><div class="line"><span class="meta">... </span>        <span class="keyword">print</span> <span class="string">"out"</span></div><div class="line"><span class="meta">... </span>        self.__in()</div><div class="line"><span class="meta">... </span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>s = P()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>s.out()</div><div class="line">out</div><div class="line"><span class="keyword">in</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>s._P__in()</div><div class="line"><span class="keyword">in</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>P._P__in</div><div class="line">&lt;unbound method P.__in&gt;</div></pre></td></tr></table></figure>
+<h4 id="2-3-类命名空间"><a href="#2-3-类命名空间" class="headerlink" title="2.3 类命名空间"></a>2.3 类命名空间</h4><ul>
+<li>所有位于<code>class</code>语句中的代码都在该命名空间内。类作用域内的变量可以被所有实例访问。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MemberCount</span><span class="params">()</span>:</span></div><div class="line">	members = <span class="number">0</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">init</span><span class="params">(self)</span>:</span></div><div class="line">		MemberCount.members += <span class="number">1</span></div><div class="line">	</div><div class="line">m1 = MemberCount()</div><div class="line">m1.init()</div><div class="line"><span class="keyword">print</span> MemberCount.members	<span class="comment">#1</span></div><div class="line">m2 = MemberCount()			</div><div class="line">m2.init()		</div><div class="line"><span class="keyword">print</span> MemberCount.members	<span class="comment">#2</span></div><div class="line">	</div><div class="line"><span class="comment">#赋值新值。会屏蔽类范围内的变量</span></div><div class="line">m1.members = <span class="string">"T"</span></div><div class="line"><span class="keyword">print</span> m1.members		<span class="comment">#T</span></div><div class="line"><span class="keyword">print</span> m2.members		<span class="comment">#2</span></div></pre></td></tr></table></figure>
+<h4 id="2-4-superclass"><a href="#2-4-superclass" class="headerlink" title="2.4 superclass"></a>2.4 superclass</h4><ul>
+<li>使用超类：将其他类名写在<code>class</code>语句后的圆括号内可以指定超类。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Father</span><span class="params">()</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">pass</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">pass</span></div><div class="line">    </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sun</span><span class="params">(Father)</span>:</span>  <span class="comment">#Sun是Father的子类</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init</span><span class="params">(self)</span>:</span> <span class="comment">#重写超类中的init函数</span></div><div class="line">        <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<ul>
+<li>多重继承：<ul>
+<li>如果一个方法从多个超类继承，则先继承的类中的方法会重写后继承的类中的方法。</li>
+<li>方法判定顺序<code>MRO，Method Resolution Order</code>：如果超类们共享一个超类，在查找给定方法或属性时访问超类的顺序。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Father</span><span class="params">()</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">pass</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Mother</span><span class="params">()</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">pass</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">say</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sun</span><span class="params">(Father, Mother)</span>:</span>  <span class="comment">#多重继承</span></div><div class="line">    <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<ul>
+<li>内建的<code>issubclass</code>函数：查看一个类是否是另一个的子类。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">print</span> issubclass(Sun, Father)		<span class="comment">#True</span></div><div class="line"><span class="keyword">print</span> issubclass(Father, Sun)		<span class="comment">#False</span></div><div class="line"><span class="keyword">print</span> issubclass(Mother, Father)	<span class="comment">#False</span></div></pre></td></tr></table></figure>
+<ul>
+<li>要知道已知类的基类，即超类，可以直接使用<code>__bases__</code>。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="keyword">print</span> Sun.__bases__		</div><div class="line"><span class="comment">#(&lt;class __main__.Father at 0x10bde0328&gt;, &lt;class __main__.Mother at 0x10bde0390&gt;)</span></div></pre></td></tr></table></figure>
+<ul>
+<li>可以使用<code>isinstance</code>方法检查一个对象是否是一个类的实例。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">s = Sun()</div><div class="line"><span class="keyword">print</span> isinstance(s, Sun)	<span class="comment">#True</span></div></pre></td></tr></table></figure>
+<ul>
+<li>要知道一个对象属于哪个类，可以使用<code>__class__</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">s = Sun()</div><div class="line"><span class="keyword">print</span> s.__class__		<span class="comment">#__main__.Sun</span></div></pre></td></tr></table></figure>
+<h4 id="2-5-interface-and-introspection-接口与内省"><a href="#2-5-interface-and-introspection-接口与内省" class="headerlink" title="2.5 interface and introspection 接口与内省"></a>2.5 interface and introspection 接口与内省</h4><ul>
+<li>在处理多态对象时，只要关心它的接口或协议即可，即公开的方法和特性。在Python中，不用显式地指定对象必须包含哪些方法才能作为参数接收。</li>
+<li>一般来说，只需要让对象符合当前的接口，即实现当前的方法即可。当然除了调用方法，还可以检查所需方法是否已经存在。若不存在，就需要做些事情。</li>
+<li><code>hasattr()</code>函数可以检查对象是否有该特性。而<code>callable</code>函数可以检查是否可以调用，在Python3中已不可用，用<code>hasattr(x, &#39;__call__&#39;)</code>代替<code>callable(x)</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">sun = Sun()</div><div class="line"><span class="keyword">print</span> hasattr(sun,<span class="string">'say'</span>)		<span class="comment">#True</span></div><div class="line"><span class="keyword">print</span> hasattr(sun, <span class="string">'look'</span>)		<span class="comment">#False</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> callable(getattr(sun,<span class="string">'say'</span>))	<span class="comment">#True</span></div><div class="line"><span class="keyword">print</span> hasattr(getattr(sun, <span class="string">'say'</span>), <span class="string">'__call__'</span>) <span class="comment">#True</span></div></pre></td></tr></table></figure>
+<h3 id="3-Thoughts-on-Object-Oriented-Design"><a href="#3-Thoughts-on-Object-Oriented-Design" class="headerlink" title="3. Thoughts on Object-Oriented Design"></a>3. Thoughts on Object-Oriented Design</h3><ul>
+<li>当考虑需要什么类以及类要有什么方法时，可以尝试下面的方法，得到面向对象模型的草图。<ol>
+<li>写下问题的描述，即程序要做什么。把所有名词、动词和形容词加下划线。</li>
+<li>对于所有名词，用作可能的类。</li>
+<li>对于所有的动词，用作可能的方法。</li>
+<li>对于所有的形容词，用作可能的特性。</li>
+<li>把所有的方法和特性分配到类。</li>
+</ol>
+</li>
+<li>还可以考虑类和对象之间的关系（如继承或协作）以及它们的作用，以精炼模型。<ol>
+<li>写下一系列的使用实例，即程序应用时的场景，试着包括所有的功能。</li>
+<li>一步步考虑每个使用实例，保证模型包括所有需要的东西。如有遗漏，则进行添加。</li>
+</ol>
+</li>
+</ul>
+<h3 id="4-Constructors-构造方法"><a href="#4-Constructors-构造方法" class="headerlink" title="4. Constructors 构造方法"></a>4. Constructors 构造方法</h3><ul>
+<li>当一个对象被创建后，会立即调用构造方法<code>__init__</code>。与之对应的是析构方法<code>__del__</code>，在对象要被垃圾回收之前调用。因发生具体调用的时间不可知，故应尽量避免使用。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, v = <span class="number">2</span>)</span>:</span></div><div class="line">    	 <span class="comment">#构造方法</span></div><div class="line">        self.value = v</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">"A"</span></div><div class="line">        <span class="keyword">print</span> self.value</div><div class="line">a = A()</div><div class="line">a.hello()</div><div class="line"><span class="comment">#A</span></div><div class="line"><span class="comment">#2</span></div></pre></td></tr></table></figure>
+<ul>
+<li>如果一个类的构造方法被重写，那么就需要调用超类的构造方法，否则该对象可能不会被正确初始化，无法调用超类中的方法。</li>
+</ul>
+<h4 id="4-1-调用未绑定的超类构造方法"><a href="#4-1-调用未绑定的超类构造方法" class="headerlink" title="4.1 调用未绑定的超类构造方法"></a>4.1 调用未绑定的超类构造方法</h4><ul>
+<li>在调用一个实例方法时，该方法的<code>self</code>参数会被自动绑定到实例上，即绑定方法。直接调用类的方法，如<code>A.__init__</code>，就没有实例会被绑定，即未绑定方法，这样可以自由地提供需要的<code>self</code>参数。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, v = <span class="number">2</span>)</span>:</span></div><div class="line">        self.value = v</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">"A"</span></div><div class="line">        <span class="keyword">print</span> self.value</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(A)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, n = <span class="number">1</span>)</span>:</span></div><div class="line">    	 <span class="comment">#调用未绑定的超类构造方法</span></div><div class="line">        A.__init__(self, <span class="number">3</span>)	</div><div class="line">        self.num = n</div><div class="line">b = B()</div><div class="line">b.hello()</div><div class="line"><span class="comment">#A</span></div><div class="line"><span class="comment">#3</span></div></pre></td></tr></table></figure>
+<h4 id="4-2-使用super函数调用超类的构造方法"><a href="#4-2-使用super函数调用超类的构造方法" class="headerlink" title="4.2 使用super函数调用超类的构造方法"></a>4.2 使用super函数调用超类的构造方法</h4><ul>
+<li>当前类和对象可以作为<code>super</code>函数的参数使用，调用函数返回的对象的任何方法都是超类的方法。<code>super</code>函数是新式类中的函数。在Python3中，<code>super</code>函数可以不带任何参数进行调用。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">(object)</span>:</span>	<span class="comment">#使用新式类</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, v = <span class="number">2</span>)</span>:</span></div><div class="line">        self.value = v</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">"A"</span></div><div class="line">        <span class="keyword">print</span> self.value</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(A)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, n = <span class="number">1</span>)</span>:</span></div><div class="line">    	 <span class="comment">#使用super函数</span></div><div class="line">        super(B, self).__init__(<span class="number">3</span>)	</div><div class="line">        self.num = n</div><div class="line">b = B()</div><div class="line">b.hello()</div><div class="line"><span class="comment">#A</span></div><div class="line"><span class="comment">#3</span></div></pre></td></tr></table></figure>
+<ul>
+<li><code>super</code>函数返回的是一个<code>super</code>对象。该对象负责进行方法解析。当对其特性进行访问时，它会查找所有的超类，包括超类的超类，直到找到所需的特性或引发<code>AttributeError</code>异常为止。</li>
+<li>即使类继承多个超类，也只需要调用一次<code>super</code>函数，但要确保所有的超类的构造方法都使用了<code>super</code>函数。</li>
+<li>大多数情况下，使用<code>super</code>函数比调用超类的未绑定的构造方法更好。</li>
+</ul>
+<h3 id="5-Item-Access-成员访问"><a href="#5-Item-Access-成员访问" class="headerlink" title="5. Item Access 成员访问"></a>5. Item Access 成员访问</h3><ul>
+<li>规则<code>protocol</code>：用来描述管理某种形式的行为的规则。规则说明了应该实现何种方法和这些方法应该做什么。Python中的多态性是基于对象的行为的。</li>
+</ul>
+<h4 id="5-1-基本的序列和映射规则"><a href="#5-1-基本的序列和映射规则" class="headerlink" title="5.1 基本的序列和映射规则"></a>5.1 基本的序列和映射规则</h4><ul>
+<li>序列和映射是对象的集合。如果要实现它们基本的行为（规则），若对象是不可变的，则需要实现2个方法，若是可变的，则需要实现4个。</li>
+<li><code>__len__(self)</code>：返回集合中所含项目的数量。<ul>
+<li>对于序列，即元素的个数。</li>
+<li>对于映射，即键——值对的数量。</li>
+<li>如果<code>__len__</code>返回0，且没有重写<code>__nonzero__</code>，则对象会被当做一个布尔变量中的假值进行处理。</li>
+</ul>
+</li>
+<li><code>__getitem__(self, key)</code>：返回所给键对应的值。<ul>
+<li>对于序列，键应该是<code>0 ~ n-1</code>的整数，<code>n</code>是序列的长度。</li>
+<li>对于映射，可以使用任何类型的键。</li>
+</ul>
+</li>
+<li><code>__setitem__(self, key, value)</code>：按照一定的方式存储和<code>key</code>相关的<code>value</code>，该值可以使用<code>__getitem__</code>获取。只能为可以修改的对象定义该方法。</li>
+<li><code>__delitem__(self, key)</code>：该方法在对一部分对象使用<code>del</code>语句时会被调用，同时必须删除和键相关的键。只能为可修改的对象定义该方法。</li>
+<li>对上述方法的附加要求：<ul>
+<li>对于序列，如果键是负数，则从末尾开始计数。</li>
+<li>如果键是不合适的类型，则应该引发一个<code>TypeError</code>异常。</li>
+<li>如果序列的索引是正确的类型，但超出了范围，则应该引发一个<code>IndexError</code>异常。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#创建一个无穷序列</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">checkIndex</span><span class="params">(key)</span>:</span></div><div class="line">	<span class="string">'''</span></div><div class="line"><span class="string">	检查所给键是否可接受。</span></div><div class="line"><span class="string">	如果不是整数，会引发TypeError。如果是负数，会引发IndexError</span></div><div class="line"><span class="string">	'''</span></div><div class="line">    <span class="keyword">if</span> <span class="keyword">not</span> isinstance(key, (int, long)):</div><div class="line">        <span class="keyword">raise</span> TypeError</div><div class="line">    <span class="keyword">if</span> key &lt; <span class="number">0</span>:</div><div class="line">        <span class="keyword">raise</span> IndexError</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ArithmeticSequence</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, start = <span class="number">0</span>, step = <span class="number">2</span>)</span>:</span></div><div class="line">    	 <span class="string">'''</span></div><div class="line"><span class="string">    	 初始化序列</span></div><div class="line"><span class="string">    	 '''</span></div><div class="line">        self.start = start</div><div class="line">        self.step = step</div><div class="line">        self.changed = &#123;&#125;</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, key)</span>:</span></div><div class="line">        checkIndex(key)</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            <span class="keyword">return</span> self.changed[key]</div><div class="line">        <span class="keyword">except</span> KeyError:</div><div class="line">            <span class="keyword">return</span> self.start + key*self.step</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setitem__</span><span class="params">(self, key, value)</span>:</span></div><div class="line">        checkIndex(key)</div><div class="line">        self.changed[key] = value</div><div class="line"></div><div class="line">s = ArithmeticSequence(<span class="number">2</span>, <span class="number">3</span>)</div><div class="line"><span class="keyword">print</span> s[<span class="number">1</span>]	</div><div class="line"><span class="comment">#5</span></div></pre></td></tr></table></figure>
+<h4 id="5-2-子类化列表、字典和字符串"><a href="#5-2-子类化列表、字典和字符串" class="headerlink" title="5.2 子类化列表、字典和字符串"></a>5.2 子类化列表、字典和字符串</h4><ul>
+<li>如果类的行为和内建类型的行为接近，可以通过子类化内建类型实现。标准库中<code>List</code>、<code>String</code>、<code>Dict</code>可以直接使用。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterList</span><span class="params">(list)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args)</span>:</span></div><div class="line">        super(CounterList, self).__init__(*args)</div><div class="line">        self.count = <span class="number">0</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, index)</span>:</span></div><div class="line">        self.count += <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> super(CounterList, self).__getitem__(index)</div><div class="line">c = CounterList(range(<span class="number">3</span>))</div><div class="line"><span class="keyword">print</span> c[<span class="number">0</span>]	<span class="comment">#0</span></div><div class="line"><span class="keyword">print</span> c.count	 <span class="comment">#1</span></div></pre></td></tr></table></figure>
+<h3 id="6-Properties-属性"><a href="#6-Properties-属性" class="headerlink" title="6. Properties 属性"></a>6. Properties 属性</h3><ul>
+<li>通过访问器定义的特性称为属性。</li>
+</ul>
+<h4 id="6-1-property函数"><a href="#6-1-property函数" class="headerlink" title="6.1 property函数"></a>6.1 property函数</h4><ul>
+<li><p><code>property</code>函数可以用0、1、3或4个参数来调用。4个参数分别叫做<code>fget</code>、<code>fset</code>、<code>fdel</code>和<code>doc</code>.</p>
+<ul>
+<li>如果没有参数，产生的属性既不可读，也不可写。</li>
+<li>如果只使用一个参数(一个取值方法)，产生的属性是只读的。</li>
+<li>第3个参数（可选）是一个用于删除特性的方法（它不需要参数）。</li>
+<li>第4个参数（可选）是一个文档字符串。</li>
+<li>如果想要一个属性是只写的，并且有一个文档字符串，可以使用关键字参数的方式来实现。</li>
+</ul>
+</li>
+<li><p><code>property</code>函数的工作原理</p>
+<ul>
+<li><code>property</code>是拥有很多特殊方法的类。</li>
+<li>涉及的方法是<code>__get__</code>、<code>__set__</code>和<code>__delete__</code>。这3个方法合在一起，就定义了<strong>描述符规则</strong>。实现其中任一方法的对象，即描述符。</li>
+<li>描述符的特殊之处在于是如何被访问的。例如，程序读取一个特性时，如果该特性被绑定到实现了<code>__get__</code>方法的对象上，那么就会调用<code>__get__</code>方法，而不是返回对象。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">__metaclass__ = type</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        self.width = <span class="number">0</span></div><div class="line">        self.height = <span class="number">0</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setSize</span><span class="params">(self, size)</span>:</span></div><div class="line">        self.width, self.height = size</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getSize</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.width, self.height</div><div class="line">    size = property(getSize, setSize)</div><div class="line"></div><div class="line">r = Rectangle()</div><div class="line">r.size = (<span class="number">5</span>,<span class="number">6</span>)</div><div class="line"><span class="keyword">print</span> r.width, r.height		</div><div class="line"><span class="comment">#5 6</span></div><div class="line">r.width = <span class="number">7</span></div><div class="line"><span class="keyword">print</span> r.size		</div><div class="line"><span class="comment">#(7, 6)</span></div></pre></td></tr></table></figure>
+<ul>
+<li><code>property</code>函数创建了<code>size</code>属性，其中访问器函数作为参数。这样就不用担心<code>size</code>的实现问题。其他属性也可以同样处理。</li>
+<li>使用<code>property</code>函数的缘由：<ul>
+<li>案例中，<code>getSize</code>和<code>setSize</code>方法是名为<code>size</code>的假想特性的访问器方法，<code>size</code>是由<code>width</code>和<code>height</code>组成的元组。如果后续改变类的实现，<code>size</code>成真的特性，需要做大量的修改。</li>
+<li>把所有的属性放到访问器方法中，访问器方法仅仅实现返回和存储，且要写较多访问器方法，不合适。</li>
+</ul>
+</li>
+</ul>
+<h4 id="6-2-静态方法和类成员方法"><a href="#6-2-静态方法和类成员方法" class="headerlink" title="6.2 静态方法和类成员方法"></a>6.2 静态方法和类成员方法</h4><ul>
+<li>静态方法和类成员方法在大部分情况下，可以使用函数或者绑定方法代替。</li>
+<li>静态方法在创建时会被装入<code>staticmethod</code>类型的对象中。其定义没有<code>self</code>参数，且能够被类本身直接调用。</li>
+<li>类成员方法在创建时会被装入<code>classmethod</code>类型的对象中。在定义时需要名为<code>cls</code>的参数。类成员方法可以直接用类的具体对象调用，<code>cls</code>参数会自动绑定到类。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">__metaclass__ = type</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sm</span><span class="params">()</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">"static method"</span></div><div class="line">    sm = staticmethod(sm)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">cm</span><span class="params">(cls)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">"class method"</span></div><div class="line">    cm = classmethod(cm)</div><div class="line"></div><div class="line">A.cm()		<span class="comment">#class method</span></div><div class="line">A.sm()		<span class="comment">#static method</span></div></pre></td></tr></table></figure>
+<ul>
+<li>装饰器<code>decorator</code>：能对任何可调用的对象进行包装，可用于方法和函数。</li>
+<li>多个装饰器应用时的顺序与指定顺序相反。</li>
+<li>可以使用装饰器替换上例的手动包装和替换方法。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">__metaclass__ = type</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></div><div class="line"><span class="meta">    @staticmethod</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sm</span><span class="params">()</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">"static method"</span></div><div class="line"></div><div class="line"><span class="meta">    @classmethod</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">cm</span><span class="params">(cls)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">"class method"</span></div><div class="line"></div><div class="line">A.cm()		<span class="comment">#class method</span></div><div class="line">A.sm()		<span class="comment">#static method</span></div></pre></td></tr></table></figure>
+<h4 id="6-3-getattr-、-setattr-等"><a href="#6-3-getattr-、-setattr-等" class="headerlink" title="6.3 __getattr__、__setattr__等"></a>6.3 <code>__getattr__</code>、<code>__setattr__</code>等</h4><ul>
+<li>拦截<code>intercept</code>对象的所有特性访问，在访问特性的时候执行一些代码，需要实现一些方法。<ul>
+<li><code>__getattribute__(self, name)</code>：当特性<code>name</code>被访问时会自动调用（只能在新式类中使用）。</li>
+<li><code>__getattr__(self, name)</code>：当特性被访问且对象没有相应的特性时被自动调用。</li>
+<li><code>__setattr__(self, name, value)</code>：当试图给特性赋值时会被自动调动。</li>
+<li><code>__delattr__(self, name)</code>：当试图删除特性name时。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        self.width = <span class="number">0</span></div><div class="line">        self.height = <span class="number">0</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setattr__</span><span class="params">(self, key, value)</span>:</span></div><div class="line">        <span class="keyword">if</span> key == <span class="string">'size'</span>:</div><div class="line">            self.width, self.height = value</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            self.__dict__[key] = value</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getattr__</span><span class="params">(self, item)</span>:</span></div><div class="line">        <span class="keyword">if</span> item == <span class="string">'size'</span>:</div><div class="line">            <span class="keyword">return</span> self.width, self.height</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">raise</span> AttributeError</div><div class="line"></div><div class="line">r = Rectangle()</div><div class="line"><span class="keyword">print</span> r.size		<span class="comment">#(0, 0)</span></div></pre></td></tr></table></figure>
+<ul>
+<li>当属性不是<code>size</code>时，<code>__dict__</code>方法会被用来代替普通的特性赋值操作，以避免<code>__setattr__</code>被再次调用而程序进入死循环。<code>__dict__</code>方法包含一个字典，该字典里面是所有实例的属性。</li>
+<li>因为<code>__getattribute__</code>拦截所有特性的访问（在新式类中），也拦截对<code>__dict__</code>的访问。所以访问<code>__getattribute__</code>中与<code>self</code>相关的特性时，使用超类的<code>__getattribute__</code>（使用<code>super</code>函数）是唯一安全的途径。</li>
+</ul>
+<h3 id="7-Iterators-迭代器"><a href="#7-Iterators-迭代器" class="headerlink" title="7. Iterators 迭代器"></a>7. Iterators 迭代器</h3><ul>
+<li>只要对象实现了<code>__iter__</code>方法，即迭代器规则，就能对对象进行迭代。</li>
+<li><code>__iter__</code>方法会返回一个迭代器，即具有<code>next</code>方法的对象。<ul>
+<li><code>next</code>方法在调用时不需要任何参数。</li>
+<li>在调用<code>next</code>方法时，迭代器会返回它的下一个值。</li>
+<li>如果<code>next</code>方法被调用，但迭代器没有值可以返回，会引发一个<code>StopIteration</code>异常。</li>
+</ul>
+</li>
+<li>在Python3中，迭代器对象应该实现<code>__next__</code>方法，而不是<code>next</code>。新的内建函数<code>next</code>函数可以访问该方法。</li>
+<li>一个实现了<code>__iter__</code>方法的对象是可迭代的，一个实现了<code>next</code>方法的对象是迭代器。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fibs</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        self.a = <span class="number">0</span></div><div class="line">        self.b = <span class="number">1</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">next</span><span class="params">(self)</span>:</span></div><div class="line">        self.a, self.b = self.b, self.a+self.b</div><div class="line">        <span class="keyword">return</span> self.a</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self</div><div class="line"></div><div class="line">fibs = Fibs()</div><div class="line"><span class="keyword">for</span> f <span class="keyword">in</span> fibs:</div><div class="line">    <span class="keyword">if</span> f &gt; <span class="number">10</span>:</div><div class="line">        <span class="keyword">print</span> f</div><div class="line">        <span class="keyword">break</span></div><div class="line"><span class="comment">#13</span></div></pre></td></tr></table></figure>
+<ul>
+<li>内建函数<code>iter</code>可以从可迭代对象中获得迭代器。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">it = iter([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</div><div class="line"><span class="keyword">print</span> it.next()		<span class="comment">#1</span></div><div class="line"><span class="keyword">print</span> it.next()		<span class="comment">#2</span></div></pre></td></tr></table></figure>
+<ul>
+<li>除了在迭代器和可迭代对象上进行迭代外，还能转换为序列。在大部分能使用序列的情况下，都能使用迭代器替换，除了索引和分片操作。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestIterator</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        self.v = <span class="number">0</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">next</span><span class="params">(self)</span>:</span></div><div class="line">        self.v += <span class="number">1</span></div><div class="line">        <span class="keyword">if</span> self.v &gt; <span class="number">5</span>:</div><div class="line">            <span class="keyword">raise</span> StopIteration</div><div class="line">        <span class="keyword">return</span> self.v</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self</div><div class="line"></div><div class="line">tt = TestIterator()</div><div class="line"><span class="keyword">print</span> list(tt)		<span class="comment">#[1, 2, 3, 4, 5]</span></div></pre></td></tr></table></figure>
+<h3 id="8-Generators-生成器"><a href="#8-Generators-生成器" class="headerlink" title="8. Generators 生成器"></a>8. Generators 生成器</h3><ul>
+<li>生成器是一种用普通的函数语法定义的迭代器。任何包含<code>yield</code>语法的函数即为生成器。</li>
+<li>生成器每次使用<code>yield</code>语句产生一个值，函数就会被冻结。即函数停在那个点等待被重新唤醒。被重新唤醒后就从停止的那点开始执行。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">flatten</span><span class="params">(nested)</span>:</span></div><div class="line">    <span class="keyword">for</span> sublist <span class="keyword">in</span> nested:</div><div class="line">        <span class="keyword">for</span> element <span class="keyword">in</span> sublist:</div><div class="line">            <span class="keyword">yield</span> element</div><div class="line">a = [[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>]]</div><div class="line"><span class="keyword">print</span> flatten(a)		</div><div class="line"><span class="comment">#&lt;generator object flatten at 0x103959410&gt;</span></div><div class="line"><span class="keyword">print</span> list(flatten(a))		<span class="comment">#[1, 2, 3, 4]</span></div></pre></td></tr></table></figure>
+<ul>
+<li>生成器推导式，即生成器表达式，返回的是生成器。生成器推导式可以在当前的圆括号内直接使用。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">r = (i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>))</div><div class="line"><span class="keyword">print</span> r</div><div class="line"><span class="comment">#&lt;generator object &lt;genexpr&gt; at 0x109768410&gt;</span></div><div class="line"><span class="keyword">print</span> r.next()		<span class="comment">#0</span></div><div class="line"><span class="keyword">print</span> sum(i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>))	<span class="comment">#45</span></div></pre></td></tr></table></figure>
+<ul>
+<li>当生成器被调用时，在函数体内的代码不会被执行，会返回一个迭代器。每次请求一个值，都会执行生成器中的代码，直到遇到一个<code>yield</code>或者<code>return</code>语句，即生成一个值或不再生成任何东西。</li>
+</ul>
+<ul>
+<li>生成器的特征是在开始运行后为生成器提供值的能力。表现为生成器和“外部世界”进行交流的渠道，需要注意两点：<ul>
+<li>外部作用域访问生成器的<code>send</code>方法，就像访问<code>next</code>方法一样，不同在于前者使用一个参数（要发送的“消息”——任意对象）。</li>
+<li>在内部则挂起生成器，<code>yield</code>作为表达式而不是语句使用。当生成器重新运行时，<code>yield</code>方法返回一个值，即外部通过<code>send</code>方法发送的值。如果<code>next</code>方法被使用，那么<code>yield</code>方法返回<code>None</code>。</li>
+</ul>
+</li>
+<li>使用<code>send</code>方法只有在生成器挂起后才有意义，即<code>yield</code>函数第一次被执行后。如果需要对刚启动的生成器使用<code>send</code>方法，则可以将<code>None</code>作为其参数进行调用。</li>
+</ul>
+<pre><code class="python"><span class="function"><span class="keyword">def</span> <span class="title">repeater</span><span class="params">(value)</span>:</span>
+    <span class="keyword">while</span> <span class="keyword">True</span>:
+        <span class="comment">#在使用返回值时，安全起见还是要闭合yield表达式</span>
+        new = (<span class="keyword">yield</span> value)            
+        <span class="keyword">if</span> new <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:
+            value = new
+r = repeater(<span class="number">42</span>)
+<span class="keyword">print</span> r.next()            <span class="comment">#42</span>
+<span class="keyword">print</span> r.send(<span class="string">"hello"</span>)    <span class="comment">#hello</span>
+</code></pre>
+<ul>
+<li>生成器还有其他两个方法：<ul>
+<li><code>throw</code>方法（使用异常类型调用，还有可选的值以及回测对象）：用于在生成器内引发一个异常，即在<code>yield</code>表达式中。</li>
+<li><code>close</code>方法用于停止生成器，调用时不用参数。</li>
+</ul>
+</li>
+<li><code>close</code>方法也是建立在异常的基础上的。在需要的时候也会由Python垃圾收集器调用。它在<code>yield</code>运行处引发一个<code>GeneratorExit</code>异常。所以，如果需要在生成器内进行代码清理的话，则可以将<code>yield</code>语句放在<code>try/finally</code>语句中。如果需要的话，还可以继续捕捉<code>GeneratorExit</code>异常，但随后必须将其重新引发或引发另一个异常或直接返回。在生成器的<code>close</code>方法被调用后再通过生成器生成一个值会导致<code>RuntimeError</code>异常。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>All article here are forbidden to reprint without my permission. 所有文章未经允许禁止转载。Thanks for reading.</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpeg" alt="LeiHuang WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpeg" alt="LeiHuang Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BeginPython笔记/" rel="tag"># BeginPython笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/05/BeginPython笔记-8-Abstraction/" rel="next" title="BeginPython笔记:8.Abstraction">
+                <i class="fa fa-chevron-left"></i> BeginPython笔记:8.Abstraction
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">LeiHuang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/bosshuang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:myheromyjoe@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Objects"><span class="nav-text">1. Objects</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Classes"><span class="nav-text">2. Classes</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-create-class"><span class="nav-text">2.1 create class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-使用私有特性"><span class="nav-text">2.2 使用私有特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-类命名空间"><span class="nav-text">2.3 类命名空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-superclass"><span class="nav-text">2.4 superclass</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-interface-and-introspection-接口与内省"><span class="nav-text">2.5 interface and introspection 接口与内省</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Thoughts-on-Object-Oriented-Design"><span class="nav-text">3. Thoughts on Object-Oriented Design</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Constructors-构造方法"><span class="nav-text">4. Constructors 构造方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-调用未绑定的超类构造方法"><span class="nav-text">4.1 调用未绑定的超类构造方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-使用super函数调用超类的构造方法"><span class="nav-text">4.2 使用super函数调用超类的构造方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Item-Access-成员访问"><span class="nav-text">5. Item Access 成员访问</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-基本的序列和映射规则"><span class="nav-text">5.1 基本的序列和映射规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-子类化列表、字典和字符串"><span class="nav-text">5.2 子类化列表、字典和字符串</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Properties-属性"><span class="nav-text">6. Properties 属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-property函数"><span class="nav-text">6.1 property函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-静态方法和类成员方法"><span class="nav-text">6.2 静态方法和类成员方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-3-getattr-、-setattr-等"><span class="nav-text">6.3 __getattr__、__setattr__等</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-Iterators-迭代器"><span class="nav-text">7. Iterators 迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-Generators-生成器"><span class="nav-text">8. Generators 生成器</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LeiHuang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
