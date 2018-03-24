@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="BeginPython笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文是《Python基础教程(第2版 修订版)》第 8 章 异常 的笔记，简要介绍了Python中异常引发、内建异常和异常捕捉等内容。">
+<meta name="keywords" content="BeginPython笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BeginPython笔记:10.Exception">
+<meta property="og:url" content="http://yoursite.com/2018/03/24/BeginPython笔记-10-Exception/index.html">
+<meta property="og:site_name" content="LeiHuang&#39;s Blog">
+<meta property="og:description" content="本文是《Python基础教程(第2版 修订版)》第 8 章 异常 的笔记，简要介绍了Python中异常引发、内建异常和异常捕捉等内容。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-03-24T12:43:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BeginPython笔记:10.Exception">
+<meta name="twitter:description" content="本文是《Python基础教程(第2版 修订版)》第 8 章 异常 的笔记，简要介绍了Python中异常引发、内建异常和异常捕捉等内容。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/24/BeginPython笔记-10-Exception/"/>
+
+
+
+
+
+  <title>BeginPython笔记:10.Exception | LeiHuang's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?fa63699072fd198a02e43cccf4d60faa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LeiHuang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">逆水行舟，不进则退。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/24/BeginPython笔记-10-Exception/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LeiHuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LeiHuang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">BeginPython笔记:10.Exception</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-24T20:41:03+08:00">
+                2018-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/BeginPython笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">BeginPython笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是《Python基础教程(第2版 修订版)》第 8 章 异常 的笔记，简要介绍了Python中异常引发、内建异常和异常捕捉等内容。</p>
+<a id="more"></a>
+<h3 id="1-Making-Things-Go-Wrong"><a href="#1-Making-Things-Go-Wrong" class="headerlink" title="1. Making Things Go Wrong"></a>1. Making Things Go Wrong</h3><ul>
+<li>Python用异常对象来表示异常情况。遇到错误后，会引发异常。如果异常对象未被处理或捕捉，程序就会用回溯（<code>traceback</code>，一种错误信息）终止执行。</li>
+<li>每个异常都是一些类的实例。这些实例可以被引发，并且有很多方法进行捕捉，使程序可以进行处理，而不是崩溃。</li>
+<li>为了引发异常，可以使用一个类，即<code>Exception</code>的子类，或者实例参数调用<code>raise</code>语句。使用类时，程序会自动创建类的一个实例。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">raise</span> Exception</div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</div><div class="line">Exception</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">raise</span> Exception(<span class="string">"hello"</span>)</div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</div><div class="line">Exception: hello</div></pre></td></tr></table></figure>
+<ul>
+<li><p>一些内建异常：</p>
+<ul>
+<li><code>Exception</code>：所有异常的基类。</li>
+<li><code>AttributeError</code>：特征引用或赋值失败时引发。</li>
+<li><code>IOError</code>：试图打开不存在的文件（包括其他情况）时引发。</li>
+<li><code>IndexError</code>：在使用序列中不存在的索引时引发。</li>
+<li><code>KeyError</code>：在使用映射中不存在的键时引发。</li>
+<li><code>NameError</code>：在找不到名字（变量）时引发。</li>
+<li><code>SyntaxError</code>：在代码为错误形式时引发。</li>
+<li><code>TypeError</code>：在内建操作或者函数应用于错误类型的对象时引发。</li>
+<li><code>ValueError</code>：在内建操作或者函数应用于正确类型的对象，但该对象使用不合适的值时引发。</li>
+<li><code>ZeroDivisionError</code>：在除法或者模除操作的第二个参数为0时引发。</li>
+</ul>
+</li>
+<li><p>内建的异常类有很多，都可以在<code>exceptions</code>模块和内建的命名空间中找到。</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> exceptions</div><div class="line"><span class="keyword">print</span> dir(exceptions)</div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">['ArithmeticError', 'AssertionError', 'AttributeError', 'BaseException', 'BufferError', 'BytesWarning', 'DeprecationWarning', 'EOFError', 'EnvironmentError', 'Exception', 'FloatingPointError', 'FutureWarning', 'GeneratorExit', 'IOError', 'ImportError', 'ImportWarning', 'IndentationError', 'IndexError', 'KeyError', 'KeyboardInterrupt', 'LookupError', 'MemoryError', 'NameError', 'NotImplementedError', 'OSError', 'OverflowError', 'PendingDeprecationWarning', 'ReferenceError', 'RuntimeError', 'RuntimeWarning', 'StandardError', 'StopIteration', 'SyntaxError', 'SyntaxWarning', 'SystemError', 'SystemExit', 'TabError', 'TypeError', 'UnboundLocalError', 'UnicodeDecodeError', 'UnicodeEncodeError', 'UnicodeError', 'UnicodeTranslateError', 'UnicodeWarning', 'UserWarning', 'ValueError', 'Warning', 'ZeroDivisionError', '__doc__', '__name__', '__package__']</span></div><div class="line"><span class="string">'''</span></div></pre></td></tr></table></figure>
+<ul>
+<li>自定义异常类：只要从<code>Exception</code>类或者其他内建的异常类继承即可。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SomeCustomException</span><span class="params">(Exception)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<h3 id="2-Catching-Exceptions"><a href="#2-Catching-Exceptions" class="headerlink" title="2. Catching Exceptions"></a>2. Catching Exceptions</h3><ul>
+<li><p>异常捕捉的几种方式：</p>
+<ul>
+<li><p>多个<code>except</code>语句</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">division</span><span class="params">(x,y)</span>:</span></div><div class="line">  		<span class="keyword">try</span>:</div><div class="line">      		<span class="keyword">return</span> x/y</div><div class="line">  		<span class="keyword">except</span> ZeroDivisionError:</div><div class="line">      		<span class="keyword">print</span> <span class="string">"y can not be 0"</span></div><div class="line">  		<span class="keyword">except</span> TypeError:</div><div class="line">      		<span class="keyword">print</span> <span class="string">"x or y is not a number"</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>用一个块捕捉多个异常</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">division</span><span class="params">(x,y)</span>:</span></div><div class="line">  		<span class="keyword">try</span>:</div><div class="line">      		<span class="keyword">return</span> x/y</div><div class="line">  		<span class="keyword">except</span> (ZeroDivisionError, TypeError):</div><div class="line">      		<span class="keyword">print</span> <span class="string">"x or y is wrong"</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>全捕捉：</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">division</span><span class="params">(x,y)</span>:</span></div><div class="line">  		<span class="keyword">try</span>:</div><div class="line">      		<span class="keyword">return</span> x/y</div><div class="line">  		<span class="keyword">except</span>:</div><div class="line">      		<span class="keyword">print</span> <span class="string">"x or y is wrong"</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>如果希望在<code>except</code>子句中访问异常对象本身，需要提供两个参数。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#python2</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">division</span><span class="params">(x,y)</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        <span class="keyword">return</span> x/y</div><div class="line">    <span class="keyword">except</span> Exception, e:</div><div class="line">        <span class="keyword">print</span> e</div><div class="line">        </div><div class="line">division(<span class="number">1</span>,<span class="number">0</span>)</div><div class="line"><span class="comment">#integer division or modulo by zero</span></div><div class="line"></div><div class="line"><span class="comment">#在Python3中的语法如下：</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">division</span><span class="params">(x,y)</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        <span class="keyword">return</span> x/y</div><div class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:	<span class="comment">#此处不同</span></div><div class="line">        print(e)</div><div class="line">        </div><div class="line">division(<span class="number">1</span>,<span class="number">0</span>)</div><div class="line"><span class="comment">#division by zero</span></div></pre></td></tr></table></figure>
+<ul>
+<li><code>else</code>子句：没有坏事发生时执行。</li>
+<li><code>finally</code>子句：用来在可能的异常后进行处理。如关闭文件等。</li>
+<li><code>try</code>、<code>except</code>、<code>finally</code>和<code>else</code>可以在同一个语句中组合使用，或者其中3个。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">division</span><span class="params">(x,y)</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        <span class="keyword">print</span> <span class="string">"try"</span></div><div class="line">        <span class="keyword">return</span> x/y</div><div class="line">    <span class="keyword">except</span>:</div><div class="line">        <span class="keyword">print</span> <span class="string">"except"</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">print</span> <span class="string">"else"</span></div><div class="line">    <span class="keyword">finally</span>:</div><div class="line">        <span class="keyword">print</span> <span class="string">"finally"</span></div><div class="line"></div><div class="line">division(<span class="number">1</span>,<span class="number">0</span>)</div><div class="line"><span class="comment">#try</span></div><div class="line"><span class="comment">#except</span></div><div class="line"><span class="comment">#finally</span></div><div class="line">division(<span class="number">1</span>,<span class="number">2.0</span>)</div><div class="line"><span class="comment">#try</span></div><div class="line"><span class="comment">#finally</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># else语句的执行</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">division</span><span class="params">(x,y)</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        <span class="keyword">print</span> x/y</div><div class="line">        <span class="comment">#return x/y</span></div><div class="line">    <span class="keyword">except</span>:</div><div class="line">        <span class="keyword">print</span> <span class="string">"except"</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">print</span> <span class="string">"else"</span></div><div class="line">    <span class="keyword">finally</span>:</div><div class="line">        <span class="keyword">print</span> <span class="string">"finally"</span></div><div class="line"></div><div class="line">division(<span class="number">1</span>,<span class="number">0</span>)</div><div class="line"><span class="comment">#except</span></div><div class="line"><span class="comment">#finally</span></div><div class="line">division(<span class="number">1</span>,<span class="number">2.0</span>)</div><div class="line"><span class="comment">#0.5</span></div><div class="line"><span class="comment">#else</span></div><div class="line"><span class="comment">#finally</span></div></pre></td></tr></table></figure>
+<ul>
+<li>如果捕捉到了异常，但是想重新引发，即传递异常而不处理，那么可以调用不带参数的<code>raise</code>，还可以在捕捉到异常时显式地提供具体异常。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">division</span><span class="params">(x,y)</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        <span class="keyword">return</span> x/y</div><div class="line">    <span class="keyword">except</span>:</div><div class="line">        <span class="keyword">if</span> y == <span class="number">0</span>:</div><div class="line">            <span class="keyword">print</span> <span class="string">"y can not be zero"</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">raise</span></div><div class="line"></div><div class="line">division(<span class="number">1</span>,<span class="number">0</span>)</div><div class="line"><span class="comment">#y can not be zero</span></div><div class="line">division(<span class="string">'1'</span>,<span class="number">2</span>)</div><div class="line"><span class="comment">#TypeError: unsupported operand type(s) for /: 'str' and 'int'</span></div></pre></td></tr></table></figure>
+<ul>
+<li>如果异常在函数内引发而不被处理，它会传播到函数调用的地方。如果依然没有被处理，则会继续传播，直至主程序。如果依然没有被处理，那么程序会带着栈跟踪中止。如果知道某段代码可能会导致某种异常，但也不希望程序以堆栈跟踪的形式中止，那么就需要<code>try/except</code>语句进行处理。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>All article here are forbidden to reprint without my permission. 所有文章未经允许禁止转载。Thanks for reading.</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpeg" alt="LeiHuang WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpeg" alt="LeiHuang Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BeginPython笔记/" rel="tag"># BeginPython笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/07/BeginPython笔记-9-Class/" rel="next" title="BeginPython笔记:9.Class">
+                <i class="fa fa-chevron-left"></i> BeginPython笔记:9.Class
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">LeiHuang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/bosshuang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:myheromyjoe@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Making-Things-Go-Wrong"><span class="nav-text">1. Making Things Go Wrong</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Catching-Exceptions"><span class="nav-text">2. Catching Exceptions</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LeiHuang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
