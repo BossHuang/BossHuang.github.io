@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="BeginPython笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文是《Python基础教程(第2版 修订版)》第 10 章 自带电池 的笔记，简要介绍了Python中模块的使用和常用模块等内容。">
+<meta name="keywords" content="BeginPython笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BeginPython笔记:11.Modules">
+<meta property="og:url" content="http://yoursite.com/2018/06/21/BeginPython笔记-11-Modules/index.html">
+<meta property="og:site_name" content="LeiHuang&#39;s Blog">
+<meta property="og:description" content="本文是《Python基础教程(第2版 修订版)》第 10 章 自带电池 的笔记，简要介绍了Python中模块的使用和常用模块等内容。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-06-21T14:52:23.383Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BeginPython笔记:11.Modules">
+<meta name="twitter:description" content="本文是《Python基础教程(第2版 修订版)》第 10 章 自带电池 的笔记，简要介绍了Python中模块的使用和常用模块等内容。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/21/BeginPython笔记-11-Modules/"/>
+
+
+
+
+
+  <title>BeginPython笔记:11.Modules | LeiHuang's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?fa63699072fd198a02e43cccf4d60faa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LeiHuang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">逆水行舟，不进则退。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/21/BeginPython笔记-11-Modules/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LeiHuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LeiHuang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">BeginPython笔记:11.Modules</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-21T22:45:32+08:00">
+                2018-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/BeginPython笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">BeginPython笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是《Python基础教程(第2版 修订版)》第 10 章 自带电池 的笔记，简要介绍了Python中模块的使用和常用模块等内容。</p>
+<a id="more"></a>
+<h3 id="1-Modules"><a href="#1-Modules" class="headerlink" title="1. Modules"></a>1. Modules</h3><ul>
+<li><code>Python</code>中的模块只会被导入一次。</li>
+<li>因为导入模块并不意味着在导入时执行某些操作，更主要用于定义。因此只需要定义一次，导入模块一次和多次的效果是一样的。</li>
+<li>导入模块时，会看到以<code>.pyc</code>为扩展名的新文件出现，该文件是经过处理（编译）的，已经转换成<code>Python</code>能够更有效处理的文件。如果稍后导入同一模块，<code>Python</code>会导入<code>.pyc</code>文件而不是<code>.py</code>文件。</li>
+<li>只导入一次可以解决两个模块互相导入带来的问题。</li>
+<li>如果需要重新载入模块，可以使用内建的<code>reload</code>函数。带有一个参数，即要重新载入的模块，返回重新载入的模块。在<code>Python3</code>中已经去掉<code>reload</code>函数，虽然使用<code>exec</code>能实现同样的功能，但应尽量避免。</li>
+<li>已经通过实例化<code>module</code>模块中的<code>class</code>类创建了一个对象<code>object</code>，然后重新载入<code>module</code>模块，那么就无法重新创建引用<code>module</code>的对象<code>object</code>，<code>object</code>仍是旧版本<code>class</code>类的实例。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#Hi.py</span></div><div class="line"><span class="keyword">print</span> <span class="string">"hi"</span></div><div class="line"></div><div class="line"><span class="comment">#modules.py</span></div><div class="line"><span class="keyword">print</span> <span class="string">"---"</span></div><div class="line"><span class="keyword">import</span> Hi</div><div class="line"><span class="keyword">print</span> <span class="string">"---"</span></div><div class="line"><span class="keyword">import</span> Hi</div><div class="line"><span class="keyword">print</span> <span class="string">"---"</span></div><div class="line">Hi = reload(Hi)</div><div class="line"><span class="keyword">print</span> <span class="string">"---"</span></div><div class="line"></div><div class="line"><span class="comment">#---</span></div><div class="line"><span class="comment">#hi</span></div><div class="line"><span class="comment">#---</span></div><div class="line"><span class="comment">#---</span></div><div class="line"><span class="comment">#hi</span></div><div class="line"><span class="comment">#---</span></div></pre></td></tr></table></figure>
+<ul>
+<li>可以在模块中定义函数，增加测试代码</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#Hi2.py</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">Hello</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"Hello"</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    Hello()</div><div class="line"></div><div class="line"><span class="comment">#modules.py</span></div><div class="line"><span class="keyword">import</span> Hi2</div><div class="line">Hi2.Hello()</div><div class="line"><span class="comment">#Hello</span></div></pre></td></tr></table></figure>
+<ul>
+<li>当模块存储在文件中时（扩展名为<code>.py</code>），包就是模块所在的目录。在该目录下必须包含名为<code>__init__.py</code>的文件，<code>Python</code>才会将其作为包对待。如果将其作为普通模块导入，文件的内容即包的内容。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#在HelloWorld目录下创建了__init__.py、Hello.py、World.py三个文件。</span></div><div class="line"><span class="comment">#Hello.py</span></div><div class="line"><span class="keyword">print</span> <span class="string">"Hello"</span></div><div class="line"></div><div class="line"><span class="comment">#World.py</span></div><div class="line"><span class="keyword">print</span> <span class="string">"World"</span></div><div class="line"></div><div class="line"><span class="comment">#可以通过以下几种方式导入</span></div><div class="line"><span class="keyword">import</span> HelloWorld</div><div class="line"><span class="keyword">from</span> HelloWrold <span class="keyword">import</span> Hello	</div><div class="line"><span class="comment">#Hello</span></div><div class="line"><span class="keyword">import</span> HelloWrold.World</div><div class="line"><span class="comment">#World</span></div></pre></td></tr></table></figure>
+<ul>
+<li>探究模块：查看模块中包含的内容可以使用<code>dir</code>函数。该函数会将对象的所有特性以及模块的所有函数、类、变量等列出。    </li>
+<li><code>__all__</code>定义了模块的公有接口。即<code>from module import *</code>会导入的函数。如果没有设定<code>__all__</code>，用<code>import *</code>默认导入模块中不以下划线开头的全局名称。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> copy</div><div class="line"><span class="keyword">print</span> [n <span class="keyword">for</span> n <span class="keyword">in</span> dir(copy) <span class="keyword">if</span> <span class="keyword">not</span> n.startswith(<span class="string">'_'</span>)]</div><div class="line"><span class="comment">#['Error', 'PyStringMap', 'copy', 'deepcopy', 'dispatch_table', 'error', 'name', 't', 'weakref']</span></div><div class="line">	</div><div class="line"><span class="keyword">print</span> copy.__all__</div><div class="line"><span class="comment">#['Error', 'copy', 'deepcopy']</span></div></pre></td></tr></table></figure>
+<ul>
+<li><code>help</code>函数与直接检查文档字符串相比，会获得更多的信息。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> copy.copy.__doc__</div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">Shallow copy operation on arbitrary Python objects.</span></div><div class="line"><span class="string">   See the module's __doc__ string for more info.</span></div><div class="line"><span class="string">'''</span></div><div class="line">	</div><div class="line">help(copy.copy)</div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">Help on function copy in module copy:</span></div><div class="line"><span class="string">copy(x)</span></div><div class="line"><span class="string">   Shallow copy operation on arbitrary Python objects.</span></div><div class="line"><span class="string">   See the module's __doc__ string for more info.</span></div><div class="line"><span class="string">'''</span></div></pre></td></tr></table></figure>
+<ul>
+<li>想要知道函数的精确描述，可以使用<code>__doc__</code>获得。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> range.__doc__</div><div class="line"></div><div class="line"><span class="comment">#会得到如下对range函数的描述：</span></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">range(stop) -&gt; list of integers</span></div><div class="line"><span class="string">range(start, stop[, step]) -&gt; list of integers</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">Return a list containing an arithmetic progression of integers.</span></div><div class="line"><span class="string">range(i, j) returns [i, i+1, i+2, ..., j-1]; start (!) defaults to 0.</span></div><div class="line"><span class="string">When step is given, it specifies the increment (or decrement).</span></div><div class="line"><span class="string">For example, range(4) returns [0, 1, 2, 3].  The end point is omitted!</span></div><div class="line"><span class="string">These are exactly the valid indices for a list of 4 elements.</span></div><div class="line"><span class="string">'''</span></div></pre></td></tr></table></figure>
+<ul>
+<li>想要查看模块的源代码，一种方法可以检查<code>sys.path</code>，另一种可以检查模块的<code>__file__</code>属性。但是也有一些模块不包含任何可以阅读的<code>Python</code>源代码，一种可能是已经融入到<code>Python</code>解释器内，如<code>sys</code>模块，另一种可能是由<code>C</code>语言编写。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> copy</div><div class="line"><span class="keyword">print</span> copy.__file__</div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/copy.pyc</span></div><div class="line"><span class="string">'''</span></div></pre></td></tr></table></figure>
+<h3 id="2-Some-Standard-Library"><a href="#2-Some-Standard-Library" class="headerlink" title="2. Some Standard Library"></a>2. Some Standard Library</h3><h4 id="2-1-sys"><a href="#2-1-sys" class="headerlink" title="2.1 sys"></a>2.1 sys</h4><ul>
+<li><code>sys</code>模块能够访问与<code>Python</code>解释器相关的变量和函数。</li>
+<li><code>sys</code>模块中一些重要的函数和变量：<ul>
+<li><code>argv</code>：命令行参数，包括脚本名称。包含传递到<code>Python</code>解释器的参数。</li>
+<li><code>exit([arg])</code>：退出当前的程序，可选参数为给定的返回值或者错误信息。如果在<code>try/finally</code>中调用，<code>finally</code>子句还是会被执行。</li>
+<li><code>modules</code>：映射模块名字到载入模块的字典。即将模块名映射到实际存在的模块上，且只应用于已导入的模块。</li>
+<li><code>path</code>：查找模块所在目录的目录名列表。</li>
+<li><code>platform</code>：解释器正在其上运行的“平台”名称。</li>
+<li><code>stdin</code>：标准输入流，一个类文件<code>file-like</code>对象.</li>
+<li><code>stdout</code>：标准输出流，一个类文件对象。</li>
+<li><code>stderr</code>：标准错误流，一个类文件对象。</li>
+</ul>
+</li>
+<li><code>Python</code>利用<code>sys.stdin</code>获得输入，<code>sys.stdout</code>输出。</li>
+<li>当通过命令行调用<code>Python</code>脚本时，会在后面加上参数，即命令行参数。这些参数会放置在<code>sys.argv</code>列表中。<code>sys.argv[0]</code>是脚本名。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#testArgv.py</span></div><div class="line"><span class="keyword">import</span> sys</div><div class="line">parameter = sys.argv</div><div class="line"></div><div class="line"><span class="keyword">print</span> parameter[<span class="number">0</span>]</div><div class="line"><span class="keyword">print</span> parameter[<span class="number">1</span>]</div><div class="line"></div><div class="line"><span class="comment">#用命令行进行调用</span></div><div class="line">python testArgv.py Hello World</div><div class="line"><span class="comment">#输出</span></div><div class="line">testArgv.py</div><div class="line">Hello</div></pre></td></tr></table></figure>
+<h4 id="2-2-os"><a href="#2-2-os" class="headerlink" title="2.2 os"></a>2.2 os</h4><ul>
+<li><code>os</code>模块提供了访问多个操作系统服务的功能。<code>os</code>和其子模块<code>os.path</code>还包括一些用于检查、构造、删除目录和文件的函数，以及一些处理路径的函数。</li>
+<li><code>os</code>模块中一些重要的函数和变量：<ul>
+<li><code>environ</code>：对环境变量进行映射。也可以更改系统环境变量，但并非所有系统都支持。</li>
+<li><code>system(command)</code>：在子<code>shell</code>中执行操作系统命令。</li>
+<li><code>sep</code>：路径中的分隔符。</li>
+<li><code>pathsep</code>：分隔路径的分隔符。</li>
+<li><code>linesep</code>：文本文件的字符串分隔符（<code>\n</code>、<code>\r</code>、<code>\r\n</code>）。</li>
+<li><code>urandom(n)</code>：返回<code>n</code>字节的加密强随机数据。</li>
+</ul>
+</li>
+<li><code>sep</code>中的分隔符：<code>UNIX</code>以及<code>Mac OS X</code>中命令行版本的<code>Python</code>的是<code>/</code>，<code>Windows</code>的是<code>\\</code>，<code>Mac OS</code>中的是<code>:</code>。</li>
+<li><code>pathsep</code>中的分隔符：<code>UNIX</code>以及<code>Mac OS X</code>中命令行版本的<code>Python</code>的是<code>:</code>，<code>Windows</code>的是<code>:</code>，<code>Mac OS</code>中的是<code>::</code>。</li>
+<li>字符串分隔符：<code>UNIX</code>以及<code>Mac OS X</code>中命令行版本的<code>Python</code>的是<code>\n</code>，<code>Windows</code>的是<code>\r\n</code>，<code>Mac OS</code>中的是<code>\r</code>。</li>
+<li><code>urandom</code>函数使用一个依赖于系统的随机数源。如果正在使用的平台不支持，则会得到<code>NotImplementedError</code>异常。</li>
+<li><code>os.system</code>函数用于运行外部程序。也有一些函数可以执行外部程序，例如<code>execv</code>，它会退出<code>Python</code>解释器，并且将控制权交给被执行程序；<code>popen</code>可以创建与程序连接的文件。在<code>Windows</code>中由<code>os.system</code>或者<code>os.startfile</code>启动外部程序后，<code>Python</code>程序仍会继续运行。而在<code>UNIX</code>中，则会中止，等待<code>os.system</code>命令完成。</li>
+</ul>
+<h4 id="2-3-fileimput"><a href="#2-3-fileimput" class="headerlink" title="2.3 fileimput"></a>2.3 fileimput</h4><ul>
+<li><code>fileinput</code>模块中重要的函数：<ul>
+<li><code>input([files[, inplace[, backup]])</code>：便于遍历多个输入流中的行。</li>
+<li><code>filename()</code>：返回当前文件的名称。</li>
+<li><code>lineno()</code>：返回当前（累计）的行数。</li>
+<li><code>filelineno()</code>：返回当前文件的行数。</li>
+<li><code>isfirstline()</code>：检查当前行是否是文件的第一行。</li>
+<li><code>isstdin()</code>：检查最后一行是否来自<code>sys.stdin</code>。</li>
+<li><code>nextfile()</code>：关闭当前文件，移动到下一个文件。</li>
+<li><code>close()</code>：关闭序列。</li>
+</ul>
+</li>
+<li><code>fileinput.input</code>会返回可用于<code>for</code>循环遍历的对象。<code>inplace=True</code>可以进行原地处理，但很容易破坏文件。在进行原地处理时，<code>backup</code>参数会将文件名扩展备份到通过原始文件创建的文件中。</li>
+</ul>
+<h4 id="2-4-Sets"><a href="#2-4-Sets" class="headerlink" title="2.4 Sets"></a>2.4 Sets</h4><ul>
+<li>集合由序列或其他可迭代对象构建。除了检查成员资格外，可以使用标准的集合操作。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">a = set([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])</div><div class="line">b = set([<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>])</div><div class="line"></div><div class="line"><span class="comment">#交集：set([1, 2, 3, 4, 5])</span></div><div class="line"><span class="keyword">print</span> a.union(b)</div><div class="line"><span class="keyword">print</span> a | b</div><div class="line"></div><div class="line"><span class="comment">#并集：set([2, 3, 4])</span></div><div class="line"><span class="keyword">print</span> a.intersection(b)</div><div class="line"><span class="keyword">print</span> a &amp; b</div><div class="line"></div><div class="line"><span class="comment">#差集：set([1])。a有b没有。</span></div><div class="line"><span class="keyword">print</span> a.difference(b)</div><div class="line"><span class="keyword">print</span> a - b</div><div class="line"></div><div class="line"><span class="comment">#异或：set([1, 5])</span></div><div class="line"><span class="keyword">print</span> a.symmetric_difference(b)</div><div class="line"><span class="keyword">print</span> a ^ b</div><div class="line"></div><div class="line">c = a &amp; b</div><div class="line"><span class="keyword">print</span> c.issubset(a)		<span class="comment">#True</span></div><div class="line"><span class="keyword">print</span> c.issuperset(a)	<span class="comment">#False</span></div><div class="line"><span class="keyword">print</span> a.copy() <span class="keyword">is</span> a		<span class="comment">#False</span></div><div class="line"><span class="keyword">print</span> a.copy() == a		<span class="comment">#True</span></div></pre></td></tr></table></figure>
+<ul>
+<li>集合可变，因此不能作为字典的键。</li>
+<li>集合本身只能包含不可变（可散列）的值。需要实现包含集合的集合，需要<code>frozenset</code>类型，用于代表不可变的集合。<code>frozenset</code>构造函数会创建给定集合的副本，因此作为其他集合的成员或字典的键均可用。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">a = set([<span class="number">1</span>,<span class="number">2</span>])</div><div class="line">b = set([<span class="number">2</span>,<span class="number">3</span>])</div><div class="line">a.add(frozenset(b))</div><div class="line"><span class="keyword">print</span> a</div><div class="line"><span class="comment">#set([1, 2, frozenset([2, 3])])</span></div></pre></td></tr></table></figure>
+<h4 id="2-5-Heaps"><a href="#2-5-Heaps" class="headerlink" title="2.5 Heaps"></a>2.5 Heaps</h4><ul>
+<li>堆是优先队列的一种。使用优先队列，能够以任意顺序增加对象，并且在任何时间找到最小的元素。效率会比列表的<code>min</code>方法高。</li>
+<li><code>Python</code>中没有独立的堆类型。只有一个包含一些堆操作函数的模块。</li>
+<li><code>heapq</code>模块中重要的函数：<ul>
+<li><code>heappush(heap, x)</code>：将<code>x</code>入堆。</li>
+<li><code>heappop(heap)</code>：将堆中最小的元素弹出。</li>
+<li><code>heapify(heap)</code>：将<code>heap</code>属性强制应用到任意一个列表。</li>
+<li><code>heapreplace(heap, x)</code>：将堆中最小的元素弹出，同时将<code>x</code>入堆。</li>
+<li><code>nlargest(n, iter)</code>：返回<code>iter</code>中第<code>n</code>大的元素。</li>
+<li><code>nsmallest(n, iter)</code>：返回<code>iter</code>中第<code>n</code>小得元素。</li>
+</ul>
+</li>
+<li><code>heappush</code>函数用于增加堆的项。但是只能用于通过各种堆函数建立的列表中。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> heapq <span class="keyword">import</span> *</div><div class="line">data = [<span class="number">4</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">6</span>]</div><div class="line">heap = []</div><div class="line"><span class="keyword">for</span> num <span class="keyword">in</span> data:</div><div class="line">    heappush(heap, num)</div><div class="line"><span class="keyword">print</span> heap	<span class="comment">#[1, 4, 3, 6]</span></div></pre></td></tr></table></figure>
+<ul>
+<li><code>heapify</code>函数使用任意列表作为参数，并且通过尽可能少的移位操作，将其转换为合法的堆。如果没有用<code>heappush</code>建立堆，那么在使用<code>heappush</code>和<code>heappop</code>前需要使用这个函数。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> heapq <span class="keyword">import</span> *</div><div class="line">data = [<span class="number">4</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">6</span>]</div><div class="line">heapify(data)</div><div class="line"><span class="keyword">print</span> data		<span class="comment">#[1, 4, 3, 6]</span></div></pre></td></tr></table></figure>
+<ul>
+<li><code>heapreplace</code>函数弹出最小的元素，并且将新元素入堆。会比使用<code>heappush</code>和<code>heappop</code>高效。</li>
+</ul>
+<h4 id="2-6-Deques"><a href="#2-6-Deques" class="headerlink" title="2.6 Deques"></a>2.6 Deques</h4><ul>
+<li>双端队列<code>double-ended queue, 即deque</code>在需要按照元素增加顺序来移除元素时非常有用。<code>collections</code>模块中的<code>deque</code>类型。</li>
+<li>双端队列能够在开头（左侧）增加和弹出元素。而且还能旋转<code>rotate</code>元素，即左移或右移，同时头尾相连。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</div><div class="line">q = deque(range((<span class="number">3</span>)))</div><div class="line"></div><div class="line"><span class="comment">#左插</span></div><div class="line">q.append(<span class="number">5</span>)</div><div class="line"><span class="comment">#右插</span></div><div class="line">q.appendleft(<span class="number">6</span>)</div><div class="line"><span class="keyword">print</span> q	</div><div class="line"><span class="comment">#deque([6, 0, 1, 2, 5])</span></div><div class="line"></div><div class="line"><span class="comment">#弹出右边的元素</span></div><div class="line"><span class="keyword">print</span> q.pop()			<span class="comment">#5</span></div><div class="line"><span class="comment">#弹出左边的元素</span></div><div class="line"><span class="keyword">print</span> q.popleft()	<span class="comment">#6</span></div><div class="line"><span class="keyword">print</span> q		<span class="comment">#deque([0, 1, 2])</span></div><div class="line"></div><div class="line"><span class="comment">#右移1个元素</span></div><div class="line">q.rotate(<span class="number">1</span>)</div><div class="line"><span class="keyword">print</span> q		<span class="comment">#deque([2, 0, 1])</span></div><div class="line"></div><div class="line"><span class="comment">#左移2个元素</span></div><div class="line">q.rotate(<span class="number">-2</span>)</div><div class="line"><span class="keyword">print</span> q		<span class="comment">#deque([1, 2, 0])</span></div></pre></td></tr></table></figure>
+<h4 id="2-7-time"><a href="#2-7-time" class="headerlink" title="2.7 time"></a>2.7 time</h4><ul>
+<li><code>time</code>模块所包含的函数能够实现以下功能：获取当前时间、操作时间和日期、从字符串读取时间以及格式化时间为字符串。</li>
+<li>日期可以是实数或者包含有<code>9</code>个整数的元组，例如<code>(2008, 1, 21, 12, 2, 56, 0, 21, 0)</code>，即<code>2008</code>年<code>1</code>月<code>21</code>日<code>12</code>时<code>2</code>分<code>56</code>秒，星期一，当年的第<code>21</code>天，无夏令时。</li>
+<li><p><code>Python</code>中日期元组的字段含义：</p>
+<ul>
+<li><code>0</code>：年，如<code>2008</code></li>
+<li><code>1</code>：月，范围<code>1~12</code></li>
+<li><code>2</code>：日，范围<code>1~31</code></li>
+<li><code>3</code>：时，范围<code>0~23</code></li>
+<li><code>4</code>：分，范围<code>0~59</code></li>
+<li><code>5</code>：秒，范围<code>0~61</code>。应付闰秒和双闰秒</li>
+<li><code>6</code>：周，范围<code>0~6</code>。周一为<code>0</code></li>
+<li><code>7</code>：儒历日，范围<code>1~366</code></li>
+<li><code>8</code>：夏令时，<code>0、1或-1</code>。夏令时的数字是布尔值。当为<code>-1</code>时，<code>mktime</code>就会正常工作。</li>
+</ul>
+</li>
+<li><p><code>time</code>模块中重要的函数：</p>
+<ul>
+<li><code>asctime([tuple])</code>：将时间元组转换为字符串。</li>
+<li><code>localtime([secs])</code>：将秒数转换为日期元组，以本地时间为准。</li>
+<li><code>mktime(tuple)</code>：将时间元组转换为本地时间。</li>
+<li><code>sleep(secs)</code>：休眠（不做任何事情）<code>secs</code>秒。</li>
+<li><code>strptime(string[, format])</code>：将字符串解析为时间元组</li>
+<li><code>time()</code>：当地时间（新纪元开始后的秒数，以<code>UTC</code>为准）</li>
+</ul>
+</li>
+<li><p>函数<code>time.asctime</code>也能将当前时间格式化为字符串：</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">print</span> time.asctime()</div><div class="line"><span class="comment">#Tue Sep 26 20:55:03 2017</span></div></pre></td></tr></table></figure>
+<ul>
+<li><code>Python</code>还提供两个和时间相关的模块：<code>datetime</code>（支持日期和时间的算法）和<code>timeit</code>（帮助开发人员对代码段的执行时间进行计时）。</li>
+</ul>
+<h4 id="2-8-random"><a href="#2-8-random" class="headerlink" title="2.8 random"></a>2.8 random</h4><ul>
+<li><code>random</code>模块包括返回随机数的函数，可以用于模拟或用于任何产生随机输出的程序。如果需要真的随机性，应该使用<code>os</code>模块中的<code>urandom</code>函数。<code>random</code>模块中的<code>SystemRandom</code>类也是基于同种功能，可以让数据接近真正的随机数。</li>
+<li><p><code>random</code>模块中的一些重要函数：</p>
+<ul>
+<li><code>random()</code>：返回<code>0&lt;n&lt;=1</code>之间的随机实数<code>n</code>。</li>
+<li><code>getrandbits(n)</code>：以长整型形式返回<code>n</code>个随机位。适用于真正的随机事务，如加密。</li>
+<li><code>uniform(a, b)</code>：返回<code>a&lt;=n&lt;b</code>之间的随机（平均分布的）实数<code>n</code>。</li>
+<li><code>randrange([start], stop, [step])</code>：返回<code>range(start, stop, step)</code>中的随机数。</li>
+<li><code>choice(seq)</code>：从序列<code>seq</code>中返回随机元素。即从给定序列中（均一地）选择随机元素。</li>
+<li><code>shuffle(seq[, random])</code>：将给定（可变）序列的元素进行随机移位，每种排列的可能性近似相等的。</li>
+<li><code>sample(seq, n)</code>：从序列<code>seq</code>中选择<code>n</code>个随机且独立的元素，即确保元素互不相同。</li>
+</ul>
+</li>
+<li><p>案例一：</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> random</div><div class="line">timeBegin = time.mktime((<span class="number">2017</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>))</div><div class="line">timeEnd = time.mktime((<span class="number">2017</span>, <span class="number">7</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>))</div><div class="line">randTime = random.uniform(timeBegin, timeEnd)</div><div class="line"><span class="keyword">print</span> randTime	</div><div class="line"><span class="comment">#1493972497.47</span></div><div class="line"><span class="keyword">print</span> time.asctime(time.localtime(randTime))</div><div class="line"><span class="comment">#Fri May  5 16:21:37 2017</span></div></pre></td></tr></table></figure>
+<ul>
+<li>案例二：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="keyword">print</span> random.choice(a)		<span class="comment">#1</span></div><div class="line"></div><div class="line">random.shuffle(a)</div><div class="line"><span class="keyword">print</span> a</div><div class="line"><span class="comment">#[3, 4, 1, 2]</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> random.sample(a,<span class="number">2</span>)</div><div class="line"><span class="comment">#[2, 1]</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> a</div><div class="line"><span class="comment">#[3, 4, 1, 2]</span></div></pre></td></tr></table></figure>
+<h4 id="2-9-shelve"><a href="#2-9-shelve" class="headerlink" title="2.9 shelve"></a>2.9 shelve</h4><ul>
+<li><code>shelve</code>中唯一有趣的函数是<code>open</code>函数，在调用（使用文件名作为参数）的时候，会返回一个<code>Shelf</code>对象，可以用它来存储内容。只需要把它当做普通的字典来操作即可，但键一定要作为字符串。在完成工作，并且将内容存储到磁盘中后，调用的它的<code>close</code>方法。</li>
+<li>潜在的陷阱：<code>shelve.open</code>函数返回的对象并不是普通的映射。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> shelve</div><div class="line"><span class="comment">#首次运行后会自动生成该文件，且是二进制文件</span></div><div class="line">s = shelve.open(<span class="string">'test.dat'</span>)</div><div class="line"><span class="comment"># 列表['a','b']存储在键x下</span></div><div class="line">s[<span class="string">'x'</span>] = [<span class="string">'a'</span>,<span class="string">'b'</span>]</div><div class="line"><span class="keyword">print</span> s[<span class="string">'x'</span>]</div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">['a', 'b']</span></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="comment"># 获取存储的表示，并且根据它来创建新的列表。</span></div><div class="line"><span class="comment"># 'd'被添加到这个副本中，修改的版本还没有被保存</span></div><div class="line">s[<span class="string">'x'</span>].append(<span class="string">'d'</span>)</div><div class="line"><span class="comment"># 最终，再次获得原始版本，即没有'd'</span></div><div class="line"><span class="keyword">print</span> s[<span class="string">'x'</span>]</div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">['a', 'b']</span></div><div class="line"><span class="string">'''</span></div></pre></td></tr></table></figure>
+<ul>
+<li>正确使用<code>shelve</code>模块修改存储的对象，必须将临时变量绑定到获得的副本上，并且在它被修改后重新存储这个副本。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> shelve</div><div class="line">s = shelve.open(<span class="string">'test.dat'</span>)</div><div class="line">s[<span class="string">'x'</span>] = [<span class="string">'a'</span>,<span class="string">'b'</span>]	</div><div class="line"><span class="keyword">print</span> s[<span class="string">'x'</span>]		<span class="comment">#['a', 'b']</span></div><div class="line">temp = s[<span class="string">'x'</span>]</div><div class="line">temp.append(<span class="string">'d'</span>)</div><div class="line">s[<span class="string">'x'</span>] = temp</div><div class="line"><span class="keyword">print</span> s[<span class="string">'x'</span>]		<span class="comment">#['a', 'b', 'd']</span></div></pre></td></tr></table></figure>
+<ul>
+<li>另一种办法：将<code>open</code>函数的<code>writeback</code>参数设定为<code>True</code>。那么所有从<code>shelf</code>读取或赋值到<code>shelf</code>的数据结构都会保存在内存中，并且只有在关闭<code>shelf</code>的时候才会写回到磁盘中。适用于处理的数据不大，并且不想考虑这些问题时。</li>
+</ul>
+<h4 id="2-10-re"><a href="#2-10-re" class="headerlink" title="2.10 re"></a>2.10 re</h4><ul>
+<li><code>re</code>模块包括对正则表达式<code>regular expression</code>的支持。</li>
+<li><p>正则表达式是可以匹配文本片段的模式。可用于搜索文本中的模式、用计算好的值替换特定模式、将文本分段。</p>
+</li>
+<li><p>通配符：</p>
+<ul>
+<li>即<code>.</code>点号。可用于匹配除换行符外的任意单个字符。</li>
+</ul>
+</li>
+<li><p>特殊字符：</p>
+<ul>
+<li>需要对特殊字符进行转义。如<code>&#39;baidu\\.com&#39;</code> ，两个反斜杠的目的在于需要两个级别的转义：通过解析器转义和通过<code>re</code>模块转义。或者使用原始字符串，如 <code>r&#39;baidu\.com&#39;</code>。</li>
+</ul>
+</li>
+<li><p>字符集：</p>
+<ul>
+<li>可以使用中括号括住字符串来创建字符集。字符集可以匹配它所包含的任意字符。</li>
+<li>如<code>[0-9a-zA-Z]</code>可以匹配任意大小写字母和数字。<code>[\^abc]</code>匹配除了<code>a</code>、<code>b</code>、<code>c</code>之外的任何字符。</li>
+<li>一般来说，需要把特殊字符在模式中用作文本字符，则需要进行转义。</li>
+</ul>
+</li>
+<li><p>选择符和子模式：</p>
+<ul>
+<li>用于选择项的特殊字符：管道符号<code>|</code>, 如<code>r‘python|java’</code>。也可以模式的一部分，如<code>r&#39;py(t|g)&#39;</code></li>
+</ul>
+</li>
+<li>可选项和重复子模式：<ul>
+<li>在子模式后加上问号，则变成可选项，即可以可能出现在匹配字符串中。如<code>r&#39;(http://)?(www\.)?baidu.com&#39;</code></li>
+<li><code>(python)*</code>：允许模式重复<code>0</code>次或者多次。</li>
+<li><code>(python)+</code>：允许模式重复<code>1</code>次或者多次。</li>
+<li><code>(python){m, n}</code>：允许模式重复<code>m~n</code>次。</li>
+<li>所有重复运算符默认是贪婪模式。在其后加上<code>?</code>，则变成非贪婪模式。</li>
+</ul>
+</li>
+<li><p>字符串的开始和结尾：</p>
+<ul>
+<li>可以用脱字符<code>^</code>标记开始。用美元符号<code>$</code>标识结尾。</li>
+</ul>
+</li>
+<li><p><code>re</code>模块中的一些重要的函数：</p>
+<ul>
+<li><code>compile(pattern[, flags])</code>：根据包含正则表达式的字符串创建模式对象。</li>
+<li><code>search(pattern, string[, flags])</code>：在字符串内寻找第一个匹配给定正则表达式的子字符串。找到则返回<code>MatchObject</code>，值为<code>True</code>，否则返回<code>None</code>。</li>
+<li><code>match(pattern, string[, flags])</code>：在字符串的开始处匹配模式。</li>
+<li><code>split(pattern, string[, maxsplit=0])</code>：根据模式的匹配项来分隔字符串。<code>maxsplit</code>表示最大分割的次数。</li>
+<li><code>findall(pattern, string)</code>：列出字符串中模式的所有匹配项。</li>
+<li><code>sub(pat, repl, string[, count=0])</code>：将字符串中所有pat的匹配项用<code>repl</code>替换。</li>
+<li><code>escape(string)</code>：将字符串中所有特殊正则表达式字符转义。</li>
+</ul>
+</li>
+<li><p><code>re.compile</code>函数将正则表达式转换为模式对象。完成转换后再使用时就无需再转换。模式对象本身也有查找、匹配的函数。</p>
+</li>
+<li><code>re.search</code>函数会在给定字符串中寻找第一个匹配给定正则表达式的子字符串。找到则返回<code>MatchObejct</code>，否则为<code>None</code>。</li>
+<li><code>re.match</code>函数如果只是部分匹配，仍会返回匹配的结果，即<code>MatchObject</code>对象。如需要完全匹配，则要在模式结尾加上<code>$</code>。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">text = <span class="string">"alpha. beta. .... gama delta"</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> re.split(<span class="string">'[. ]+'</span>, text)</div><div class="line"><span class="comment">#['alpha', 'beta', 'gama', 'delta']</span></div><div class="line"><span class="keyword">print</span> re.split(<span class="string">'[. ]+'</span>, text, maxsplit=<span class="number">2</span>)</div><div class="line"><span class="comment">#['alpha', 'beta', 'gama delta']</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> re.findall(<span class="string">'[.?\-",]+'</span>, text)</div><div class="line"><span class="comment">#['.', '.', '....']</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> re.sub(<span class="string">"a"</span>,<span class="string">'A'</span>,text)</div><div class="line"><span class="comment">#AlphA. betA. .... gAmA deltA</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> re.escape(<span class="string">"www.baidu.com"</span>)</div><div class="line"><span class="comment">#www\.baidu\.com</span></div></pre></td></tr></table></figure>
+<ul>
+<li><p><code>re</code>模块中能对字符串进行模式匹配的函数找到匹配项的时候，会返回<code>MatchObject</code>对象。这些对象包括匹配模式的子字符串的信息。还包括了哪个模式匹配了子字符串哪部分的信息，即组。</p>
+</li>
+<li><p><code>re</code>匹配对象的重要方法:</p>
+<ul>
+<li><code>group([group1, ...])</code>：获取给定子模式（组）的匹配项。</li>
+<li><code>start([group])</code>：返给给定组的匹配项的开始位置。</li>
+<li><code>end([group])</code>：返给给定组的匹配项的结束位置（不包括组的结束位置）。</li>
+<li><code>span([group])</code>：返回一个组的开始和结束位置。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> re</div><div class="line">m = re.match(<span class="string">r'www\.(.)*\..&#123;3&#125;'</span>,<span class="string">'www.baidu.com'</span>)</div><div class="line"><span class="keyword">print</span> m.group(<span class="number">0</span>)		<span class="comment">#www.baidu.com</span></div><div class="line"><span class="keyword">print</span> m.group(<span class="number">1</span>)		<span class="comment">#u</span></div><div class="line"><span class="keyword">print</span> m.start(<span class="number">1</span>)		<span class="comment">#8</span></div><div class="line"><span class="keyword">print</span> m.end(<span class="number">1</span>)		<span class="comment">#9</span></div><div class="line"><span class="keyword">print</span> m.span(<span class="number">1</span>)		<span class="comment">#(8, 9)</span></div></pre></td></tr></table></figure>
+<h3 id="3-Other-Standard-Modules"><a href="#3-Other-Standard-Modules" class="headerlink" title="3 Other Standard Modules"></a>3 Other Standard Modules</h3><ul>
+<li><code>functools</code>：在<code>Python3.0</code>中，<code>filter</code>和<code>reduce</code>包含在该模块中。</li>
+<li><code>difflib</code>：可以计算两个序列的相似程度。创建简单的搜索程序。</li>
+<li><code>hashlib</code>：可以通过字符串计算小”签名“。该模块可以应用于大文本文件，以及加密和安全。</li>
+<li><code>csv</code>：可以用来存储表格式数据的简单格式。</li>
+<li><code>timeit</code>：衡量代码片段运行时间。</li>
+<li><code>profile</code>：与其伴随的<code>pstats</code>模块可以用于代码片段效率的全面分析。</li>
+<li><code>trace</code>：可以提供代码的总的分析，，即哪些被执行了，哪些没有。</li>
+<li><code>datetime</code>：支持特殊的日期和时间对象。</li>
+<li><code>itertools</code>：创建和联合迭代器。还包括将可迭代的对象链接起来、创建返回无限连续整数的迭代器，使得通过重复访问可迭代对象进行循环等。</li>
+<li><code>logging</code>：日志输出和管理。</li>
+<li><code>cmd</code>：可以编写命令行解释器。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>All article here are forbidden to reprint without my permission. 所有文章未经允许禁止转载。Thanks for reading.</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpeg" alt="LeiHuang WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpeg" alt="LeiHuang Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BeginPython笔记/" rel="tag"># BeginPython笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/24/BeginPython笔记-10-Exception/" rel="next" title="BeginPython笔记:10.Exception">
+                <i class="fa fa-chevron-left"></i> BeginPython笔记:10.Exception
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">LeiHuang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/bosshuang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:myheromyjoe@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Modules"><span class="nav-text">1. Modules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Some-Standard-Library"><span class="nav-text">2. Some Standard Library</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-sys"><span class="nav-text">2.1 sys</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-os"><span class="nav-text">2.2 os</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-fileimput"><span class="nav-text">2.3 fileimput</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-Sets"><span class="nav-text">2.4 Sets</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-Heaps"><span class="nav-text">2.5 Heaps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-Deques"><span class="nav-text">2.6 Deques</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-time"><span class="nav-text">2.7 time</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-8-random"><span class="nav-text">2.8 random</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-9-shelve"><span class="nav-text">2.9 shelve</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-10-re"><span class="nav-text">2.10 re</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Other-Standard-Modules"><span class="nav-text">3 Other Standard Modules</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LeiHuang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
