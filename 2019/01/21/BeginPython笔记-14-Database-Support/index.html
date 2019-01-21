@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="BeginPython笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文是《Python基础教程(第2版 修订版)》第 13 章 数据库支持 的笔记，简要介绍了Python中数据库编程接口的全局变量、异常、连接和游标、类型以及SQLite和PySQLite的使用等内容。">
+<meta name="keywords" content="BeginPython笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BeginPython笔记:14.Database Support">
+<meta property="og:url" content="http://yoursite.com/2019/01/21/BeginPython笔记-14-Database-Support/index.html">
+<meta property="og:site_name" content="LeiHuang&#39;s Blog">
+<meta property="og:description" content="本文是《Python基础教程(第2版 修订版)》第 13 章 数据库支持 的笔记，简要介绍了Python中数据库编程接口的全局变量、异常、连接和游标、类型以及SQLite和PySQLite的使用等内容。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-01-21T15:23:14.008Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BeginPython笔记:14.Database Support">
+<meta name="twitter:description" content="本文是《Python基础教程(第2版 修订版)》第 13 章 数据库支持 的笔记，简要介绍了Python中数据库编程接口的全局变量、异常、连接和游标、类型以及SQLite和PySQLite的使用等内容。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/01/21/BeginPython笔记-14-Database-Support/"/>
+
+
+
+
+
+  <title>BeginPython笔记:14.Database Support | LeiHuang's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?fa63699072fd198a02e43cccf4d60faa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LeiHuang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">逆水行舟，不进则退。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/21/BeginPython笔记-14-Database-Support/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LeiHuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LeiHuang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">BeginPython笔记:14.Database Support</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-21T23:22:02+08:00">
+                2019-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/BeginPython笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">BeginPython笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是《Python基础教程(第2版 修订版)》第 13 章 数据库支持 的笔记，简要介绍了Python中数据库编程接口的全局变量、异常、连接和游标、类型以及SQLite和PySQLite的使用等内容。</p>
+<a id="more"></a>
+<h3 id="1-The-Python-Database-API"><a href="#1-The-Python-Database-API" class="headerlink" title="1. The Python Database API"></a>1. The Python Database API</h3><ul>
+<li>支持<code>SQL</code>标准的数据库有很多，而且多数在<code>Python</code>中都有对应的客户端模块。</li>
+<li>在提供基本功能相同的不同模块之间进行切换时，会遇到接口<code>API</code>不同的问题。<code>Python</code>为了解决各个数据库模块之间的兼容性问题，已通过了一个标准的数据库编程接口<code>DB API</code>。</li>
+<li>目前<code>API</code>版本<code>2.0</code>定义在<code>PEP249</code>中的<a href="http://python.org/peps/pep-0249.html)" target="_blank" rel="external">Python Database API Specification v2.0</a>中。</li>
+</ul>
+<h4 id="1-1-Global-Variables"><a href="#1-1-Global-Variables" class="headerlink" title="1.1 Global Variables"></a>1.1 Global Variables</h4><ul>
+<li>任何支持<code>2.0</code>版本<code>DB API</code>的数据库模块都必须定义<code>3</code>个描述模块特性的全局变量：<ul>
+<li><code>apilevel</code>: 字符串常量，所使用的<code>Python DB API</code>版本。</li>
+<li><code>threadsafety</code>: 模块的线程安全等级。</li>
+<li><code>paramstyle</code>: 在<code>SQL</code>查询中使用的参数风格。</li>
+</ul>
+</li>
+<li>线程安全等级<code>threadsafety</code>是个取值范围为<code>0~3</code>的整数。<code>0</code>表示线程完全不共享模块，<code>3</code>表示模块是完全线程安全的。<code>1</code>表示线程本身是可以共享模块，但不对连接共享。如果不使用多线程，那么就不必担心这个变量。</li>
+<li>参数风格<code>paramstyle</code>表示在执行多次类似查询的时候，参数是如何被拼接到<code>SQL</code>查询中的。<ul>
+<li>值<code>format</code>表示标准的字符串格式化，可以使用基本的格式代码，即可以在参数中进行拼接的地方插入<code>%s</code>。</li>
+<li>值<code>pyformat</code>表示扩展的格式代码，用于字典拼接中。</li>
+<li>除此之外，还有三种结合方式：<code>qmark</code>表示使用问号，<code>numeric</code>表示使用<code>:1</code>或者<code>:2</code>格式的字段，数字表示参数的序号。<code>named</code>表示<code>:foobar</code>这样的字段，<code>foobar</code>为参数名。</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-2-Exceptions"><a href="#1-2-Exceptions" class="headerlink" title="1.2 Exceptions"></a>1.2 Exceptions</h4><ul>
+<li><code>API</code>中定义了一些异常类，以便尽可能进行错误处理。在给定的数据库模块中异常应该是全局可用的。</li>
+<li>在<code>DB API</code>中使用的异常：<ul>
+<li><code>StandardError</code>：所有异常的泛型基类</li>
+<li><code>Warning</code>：超类为<code>StandardError</code>。在非致命错误发生时引发。</li>
+<li><code>Error</code>：超类为<code>StandardError</code>。所有错误条件的泛型超类。</li>
+<li><code>InterfaceError</code>：超类为<code>Error</code>。关于接口而非数据库的错误。</li>
+<li><code>DatabaseError</code>：超类为<code>Error</code>。与数据库相关的错误的基类。</li>
+<li><code>DataError</code>：超类为<code>DatabaseError</code>。与数据相关的问题，比如值超出范围。</li>
+<li><code>OperationalError</code>：超类为<code>DatabaseError</code>。数据库内部操作错误。</li>
+<li><code>IntegrityError</code>：超类为<code>DatabaseError</code>。关系完整性受到影响，比如键检查失败。</li>
+<li><code>InternalError</code>：超类为<code>DatabaseError</code>。数据库内部错误，比如非法游标。</li>
+<li><code>ProgrammingError</code>：超类为<code>DatabaseError</code>。用户编程错误，比如未找到表。</li>
+<li><code>NotSupportedError</code>：超类为<code>DatabaseError</code>。请求不支持的特性，比如回滚。</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-3-Connections-and-Cursors"><a href="#1-3-Connections-and-Cursors" class="headerlink" title="1.3 Connections and Cursors"></a>1.3 Connections and Cursors</h4><ul>
+<li>连接数据库，需要使用<code>connect</code>函数。常用参数如下：<ul>
+<li><code>dsn</code>：不可选。数据库名称，给出该参数表示数据库依赖。</li>
+<li><code>user</code>：可选。用户名。</li>
+<li><code>password</code>：可选。用户密码。</li>
+<li><code>host</code>：可选。主机名。</li>
+<li><code>database</code>：可选。数据库名。</li>
+</ul>
+</li>
+<li><code>connect</code>函数返回连接对象，即和数据库的会话。连接对象支持的方法如下：<ul>
+<li><code>close()</code>：关闭连接之后，连接对象和它的游标均不可用。</li>
+<li><code>commit()</code>：提交挂起的事务。数据库不支持，则没有任何作用。</li>
+<li><code>rollback()</code>：回滚挂起事务。但并不是所有数据库都支持。</li>
+<li><code>cursor()</code>：返回连接的游标对象。</li>
+</ul>
+</li>
+<li>如果关闭了连接，但还有未提交的事务，则会隐式地回滚。如果不想完全依赖隐式回滚，那就需要在关闭连接前进行提交。此时连接会在垃圾收集时自动关闭，更安全的操作就是主动调用<code>close</code>方法。</li>
+<li>游标对象<code>cursor</code>方法。通过游标执行<code>SQL</code>查询并检查结果。游标对象支持的方法：<ul>
+<li><code>callproc(name[. params])</code>：使用给定的名称和参数调用已命名的数据库过程。</li>
+<li><code>close()</code>：关闭游标之后，游标不可用。</li>
+<li><code>execute(oper[. params])</code>：执行一个<code>SQL</code>操作，可能带有参数。</li>
+<li><code>executemany(oper, pseq)</code>：对序列中的每个参数集执行<code>SQL</code>操作。</li>
+<li><code>fetchone()</code>：把查询的结果集中的下一行保存为序列或者为<code>None</code>。</li>
+<li><code>fetchmany([size])</code>：获取查询结果集中的多行，默认尺寸为<code>arraysize</code>。</li>
+<li><code>fetchall()</code>：将所有剩余的行作为序列的序列。</li>
+<li><code>nextset()</code>：跳到下一个可用的结果集，可选。</li>
+<li><code>setinputsizes(sizes)</code>：为参数预先定义内存区域。</li>
+<li><code>setoutputsize(size[. col])</code>：为获取的大数据值设定缓冲区尺寸。</li>
+</ul>
+</li>
+<li>游标对象特性：<ul>
+<li><code>description</code>：结果列描述的序列，只读。</li>
+<li><code>rowcount</code>：结果中的行数，只读。</li>
+<li><code>arraysize</code>：<code>fetchmany</code>中返回的行数，默认为<code>1</code>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-4-Types"><a href="#1-4-Types" class="headerlink" title="1.4 Types"></a>1.4 Types</h4><ul>
+<li><code>DB API</code>定义了用于特殊类型和值的构造函数及常量（单例模式），以便对插入到列中的值的类型做出各种要求和限制。但一些模块并不是完全符合要求，例如<code>sqlite3</code>模块。</li>
+<li><code>DB API</code>构造函数和特殊值：<ul>
+<li><code>Date(year, month, day)</code>：创建保存日期值的对象。</li>
+<li><code>Time(hour, minute, second)</code>：创建保存时间值的对象。</li>
+<li><code>Timestamp(y, mon, d, h, min, s)</code>：创建保存时间戳值的对象。</li>
+<li><code>DateFromTicks(ticks)</code>：创建保存自新纪元以来秒数的对象。</li>
+<li><code>TimeFromTicks(ticks)</code>：创建保存来自秒数的时间值的对象。</li>
+<li><code>TimestampFromTicks(ticks)</code>：创建保存来自秒数的时间戳值的对象。</li>
+<li><code>Binary(string)</code>：创建保存二进制字符串值的对象。</li>
+<li><code>STRING</code>：描述基于字符串的列类型。</li>
+<li><code>BINARY</code>：描述二进制列。</li>
+<li><code>NUMBER</code>：描述数字列。</li>
+<li><code>DATETIME</code>：描述日期/时间列。</li>
+<li><code>ROWID</code>：描述行<code>ID</code>列</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-SQLite-and-PySQLite"><a href="#2-SQLite-and-PySQLite" class="headerlink" title="2. SQLite and PySQLite"></a>2. SQLite and PySQLite</h3><ul>
+<li>小型数据库引擎<code>SQLite</code>不需要作为独立的服务器运行，也不基于集中式数据库存储机制。而是直接在本地文件上运行。</li>
+<li>在每次修改数据库后都应当进行提交，而不是仅在准备关闭时。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#创建数据库、表并插入数据</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> sqlite3</div><div class="line"><span class="comment">#准备插入数据库中的数据</span></div><div class="line">DATAS = [[<span class="string">"Tom"</span>,<span class="number">100</span>],[<span class="string">"Jack"</span>,<span class="number">99</span>]]</div><div class="line"></div><div class="line"><span class="comment">#创建到数据库文件的连接。如果不存在该文件，则会自动创建。</span></div><div class="line">conn = sqlite3.connect(<span class="string">"databaseDemo.db"</span>)</div><div class="line"><span class="comment">#获得连接的游标</span></div><div class="line">curs = conn.cursor()</div><div class="line"></div><div class="line"><span class="comment">#创建一张学生成绩表，其中id为主键且能自增</span></div><div class="line">curs.execute(<span class="string">'''</span></div><div class="line"><span class="string">create table demo(</span></div><div class="line"><span class="string"> id INTEGER PRIMARY KEY AUTOINCREMENT,</span></div><div class="line"><span class="string"> name varchar(10),</span></div><div class="line"><span class="string"> score double</span></div><div class="line"><span class="string">)</span></div><div class="line"><span class="string">'''</span>)</div><div class="line"></div><div class="line"><span class="comment">#使用了paramstyle的问号版本</span></div><div class="line">query = <span class="string">'insert into demo VALUES (?, ?,?)'</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> data <span class="keyword">in</span> DATAS:</div><div class="line">    values = [<span class="keyword">None</span>]</div><div class="line">    values += data</div><div class="line">    <span class="keyword">print</span> values</div><div class="line">    <span class="comment">#执行insert语句</span></div><div class="line">    curs.execute(query, values)</div><div class="line"></div><div class="line">conn.commit()</div><div class="line">conn.close()</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#查询数据库</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> sqlite3</div><div class="line">conn = sqlite3.connect(<span class="string">"databaseDemo.db"</span>)</div><div class="line">curs = conn.cursor()</div><div class="line"></div><div class="line"><span class="comment">#查询</span></div><div class="line">query = <span class="string">'select * from demo'</span></div><div class="line">curs.execute(query)</div><div class="line"><span class="comment">#获取列名</span></div><div class="line">names = [d[<span class="number">0</span>] <span class="keyword">for</span> d <span class="keyword">in</span> curs.description]</div><div class="line"><span class="comment">#打印</span></div><div class="line"><span class="keyword">for</span> row <span class="keyword">in</span> curs.fetchall():</div><div class="line">    <span class="keyword">print</span> zip(names, row)</div><div class="line"><span class="comment">#[('id', 1), ('name', u'Tom'), ('score', 100.0)]</span></div><div class="line"><span class="comment">#[('id', 2), ('name', u'Jack'), ('score', 99.0)]</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>All article here are forbidden to reprint without my permission. 所有文章未经允许禁止转载。Thanks for reading.</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpeg" alt="LeiHuang WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpeg" alt="LeiHuang Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BeginPython笔记/" rel="tag"># BeginPython笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/17/BeginPython笔记-13-Graphical-User-Interfaces/" rel="next" title="BeginPython笔记:13.Graphical User Interfaces">
+                <i class="fa fa-chevron-left"></i> BeginPython笔记:13.Graphical User Interfaces
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">LeiHuang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/bosshuang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:myheromyjoe@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-The-Python-Database-API"><span class="nav-text">1. The Python Database API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-Global-Variables"><span class="nav-text">1.1 Global Variables</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-Exceptions"><span class="nav-text">1.2 Exceptions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-Connections-and-Cursors"><span class="nav-text">1.3 Connections and Cursors</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-Types"><span class="nav-text">1.4 Types</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SQLite-and-PySQLite"><span class="nav-text">2. SQLite and PySQLite</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LeiHuang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
