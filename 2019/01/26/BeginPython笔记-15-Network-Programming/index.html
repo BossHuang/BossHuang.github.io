@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="BeginPython笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文是《Python基础教程(第2版 修订版)》第 14 章 网络编程 的笔记，简要介绍了Python中的socket模块、SocketServer、同时处理多个连接时的三种方式以及Twisted的简要介绍等内容。">
+<meta name="keywords" content="BeginPython笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BeginPython笔记:15.Network Programming">
+<meta property="og:url" content="http://yoursite.com/2019/01/26/BeginPython笔记-15-Network-Programming/index.html">
+<meta property="og:site_name" content="LeiHuang&#39;s Blog">
+<meta property="og:description" content="本文是《Python基础教程(第2版 修订版)》第 14 章 网络编程 的笔记，简要介绍了Python中的socket模块、SocketServer、同时处理多个连接时的三种方式以及Twisted的简要介绍等内容。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-01-26T06:47:07.421Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BeginPython笔记:15.Network Programming">
+<meta name="twitter:description" content="本文是《Python基础教程(第2版 修订版)》第 14 章 网络编程 的笔记，简要介绍了Python中的socket模块、SocketServer、同时处理多个连接时的三种方式以及Twisted的简要介绍等内容。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/01/26/BeginPython笔记-15-Network-Programming/"/>
+
+
+
+
+
+  <title>BeginPython笔记:15.Network Programming | LeiHuang's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?fa63699072fd198a02e43cccf4d60faa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LeiHuang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">逆水行舟，不进则退。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/26/BeginPython笔记-15-Network-Programming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LeiHuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LeiHuang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">BeginPython笔记:15.Network Programming</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-26T14:35:36+08:00">
+                2019-01-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/BeginPython笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">BeginPython笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是《Python基础教程(第2版 修订版)》第 14 章 网络编程 的笔记，简要介绍了Python中的socket模块、SocketServer、同时处理多个连接时的三种方式以及Twisted的简要介绍等内容。</p>
+<a id="more"></a>
+<h3 id="1-Networking-Mudules"><a href="#1-Networking-Mudules" class="headerlink" title="1. Networking Mudules"></a>1. Networking Mudules</h3><p>诸多针对常见网络协议的库以及处理字节流的擅长使得<code>Python</code>成为一个很强大的网络编程工具。在编写程序时，可以重点关注程序的核心逻辑，而非网络实现细节。</p>
+<h4 id="1-1-The-socket-Module"><a href="#1-1-The-socket-Module" class="headerlink" title="1.1 The socket Module"></a>1.1 The socket Module</h4><ul>
+<li><code>socket</code>是网络编程中的一个基本组件，也是两个端点的程序之间的通信渠道。在<code>Python</code>中的大多数网络编程都隐藏了<code>socket</code>模块的基本细节，不需要直接和<code>socket</code>通信。</li>
+<li><code>socket</code>可分服务器<code>socket</code>和客户端<code>socket</code>。服务器端必须准备随时处理客户端的连接，同时还要处理多个连接。客户端只是简单地连接，完成事务，断开连接。</li>
+<li>一个<code>socket</code>是<code>socket</code>模块中<code>socket</code>类的一个实例。其实例化需要<code>3</code>个参数：第<code>1</code>个参数为地址族，默认为<code>socket.AF_INET</code>；第<code>2</code>个参数为流，默认为<code>socket.SOCK_STREAM</code>或数据报<code>sokcet.SOCK_DGRAM</code>；第<code>3</code>个参数为使用的协议，默认为<code>0</code>。</li>
+<li><code>socket</code>有两个方法用于传输数据。<code>send</code>方法使用字符串参数来发送数据。<code>recv</code>方法用一个所需的最大字节数做参数来接收数据。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#socket demo。</span></div><div class="line"><span class="comment">#这个demo是在同一台电脑上运行。</span></div><div class="line"><span class="comment">#先运行服务器端，再运行客户端。</span></div><div class="line"><span class="comment">#服务器端会输出Got connection from...</span></div><div class="line"><span class="comment">#客户端会输出Thank you for connecting</span></div><div class="line"></div><div class="line"><span class="comment">#一次只能连接一个客户端并处理请求，即同步。</span></div><div class="line"></div><div class="line"><span class="comment">#服务器端</span></div><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="comment">#实例化</span></div><div class="line">s = socket.socket()</div><div class="line"><span class="comment">#获得当前主机名</span></div><div class="line">host = socket.gethostname()</div><div class="line"><span class="comment">#端口号</span></div><div class="line">port = <span class="number">1234</span></div><div class="line"><span class="comment">#(host, port)即为一个地址</span></div><div class="line">s.bind((host, port))</div><div class="line"><span class="comment">#监听bind方法中的地址。参数只有一个，即允许排队等待的连接数目</span></div><div class="line">s.listen(<span class="number">5</span>)</div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">    <span class="comment">#接收客户端的连接。</span></div><div class="line">    <span class="comment">#返回(clinet, address)元组，即客户端的socket和地址</span></div><div class="line">    c, addr = s.accept()</div><div class="line">    <span class="keyword">print</span> <span class="string">"Got connection from"</span>, addr</div><div class="line">    c.send(<span class="string">"Thank you for connecting"</span>)</div><div class="line">    c.close()</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#socket demo。</span></div><div class="line"><span class="comment">#这个demo是在同一台电脑上运行。</span></div><div class="line"><span class="comment">#先运行服务器端，再运行客户端。</span></div><div class="line"><span class="comment">#服务器端会输出Got connection from...</span></div><div class="line"><span class="comment">#客户端会输出Thank you for connecting</span></div><div class="line"></div><div class="line"><span class="comment">#客户端</span></div><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="comment">#实例化</span></div><div class="line">s = socket.socket()</div><div class="line"></div><div class="line">host = socket.gethostname()</div><div class="line">port = <span class="number">1234</span></div><div class="line"></div><div class="line"><span class="comment">#connect传入的地址应当与服务器端bind方法中的地址一致</span></div><div class="line">s.connect((host, port))</div><div class="line"><span class="comment">#输出接收到的数据</span></div><div class="line"><span class="keyword">print</span> s.recv(<span class="number">1024</span>)</div></pre></td></tr></table></figure>
+<h4 id="1-2-The-urllib-and-urllib2-Modules"><a href="#1-2-The-urllib-and-urllib2-Modules" class="headerlink" title="1.2 The urllib and urllib2 Modules"></a>1.2 The urllib and urllib2 Modules</h4><ul>
+<li><code>urllib</code>和<code>urllib2</code>在功能上差不多。如果只使用简单的下载，<code>urllib</code>就够了。如果需要<code>HHTP</code>验证<code>HHTP authentication</code>或<code>cookie</code>，或者要为自己的协议编写扩展程序，<code>urllib2</code>更好。</li>
+<li>使用<code>urllib</code>模块中的<code>urlopen</code>可以以只读模式打开远程文件。返回的类文件对象支持<code>close</code>、<code>read</code>、<code>readline</code>、<code>readlines</code>和迭代等方法。</li>
+<li><code>urlretrieve</code>可以下载文件并在本地文件中存储一个文件的副本。<code>urlretrieve</code>返回一个元组<code>(filename, headers)</code>。<code>filename</code>是本地文件的名字，由<code>urllib</code>自动创建，也可以在调用<code>urlretrieve</code>时指定。<code>headers</code>包含一些远程文件的信息。</li>
+<li>使用<code>urlcleanup</code>函数可以清理临时文件，该函数会负责清理工作。使用<code>urlretrieve</code>下载文件时，如果没有指定文件名和路径，那么文件就会被放在临时位置。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> urlopen</div><div class="line"><span class="keyword">import</span>  re</div><div class="line">webpage = urlopen(<span class="string">"https://www.baidu.com"</span>)</div><div class="line">text = webpage.read()</div><div class="line"><span class="keyword">print</span> len(text)	</div><div class="line"><span class="comment">#227</span></div><div class="line"></div><div class="line"><span class="comment">#匹配URL</span></div><div class="line">p = <span class="string">r'(http(s)&#123;0,1&#125;://)?www\.[0-9a-zA-Z]+\.com'</span></div><div class="line">m = re.search(p, text, re.IGNORECASE)</div><div class="line"><span class="keyword">print</span> m.group()</div><div class="line"><span class="comment">#http://www.baidu.com</span></div></pre></td></tr></table></figure>
+<ul>
+<li><code>urllib</code>还提供了一些函数操作<code>URL</code>本身<ul>
+<li><code>quote(string[, safe])</code>返回一个字符串，其中所有的特殊字符都已被对<code>URL</code>友好的字符所代替。<code>safe</code>字符串包含了不应该采用这种方式编码的字符，默认为<code>/</code></li>
+<li><code>quote_plus(string[, safe])</code>功能与<code>quote(string[, safe])</code>类似，但用<code>+</code>代替空格。</li>
+<li><code>unquote(string)</code>与<code>quote</code>相反。</li>
+<li><code>unquote_plus(string)</code>与<code>quote_plus</code>相反。</li>
+<li><code>urlencode(query[, doseq])</code>把映射或者包含两个元素<code>(key, value)</code>的元组的序列转换成<code>URL</code>格式编码的字符串。</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-3-Other-Modules"><a href="#1-3-Other-Modules" class="headerlink" title="1.3 Other Modules"></a>1.3 Other Modules</h4><ul>
+<li>标准库中一些与网络相关的模块<ul>
+<li><code>asynchat</code>：<code>asyncore</code>的增强版本</li>
+<li><code>asyncore</code>：异步<code>socke</code>处理程序</li>
+<li><code>cgi</code>：基本的<code>CGI</code>支持</li>
+<li><code>Cookie</code>：<code>Cookie</code>对象操作，主要用于服务器</li>
+<li><code>cookielib</code>：客户端<code>cookie</code>支持</li>
+<li><code>email</code>：<code>E-mail</code>消息支持，包括<code>MIME</code></li>
+<li><code>ftplib</code>：<code>FTP</code>客户端模块</li>
+<li><code>gopherlib</code>：<code>gopher</code>客户端。一种采用菜单式驱动的信息查询工具，采用客户机/服务器模式</li>
+<li><code>httplib</code>：<code>HTTP</code>客户端模块</li>
+<li><code>imaplib</code>：<code>IMAP4</code>客户端模块</li>
+<li><code>mailbox</code>：读取几种邮箱的格式</li>
+<li><code>mailcap</code>：通过<code>mailcap</code>文件访问<code>MIME</code>配置</li>
+<li><code>mhlib</code>：访问<code>MH</code>邮箱</li>
+<li><code>nntplib</code>：<code>NNTP</code>客户端模块</li>
+<li><code>poplib</code>：<code>POP</code>客户端模块</li>
+<li><code>robotparser</code>：支持解析<code>Web</code>服务器的<code>robot</code>文件</li>
+<li><code>SimpleXMLRPCServer</code>：一个简单的<code>XML-RPC</code>服务器</li>
+<li><code>smtpd</code>：<code>SMTP</code>服务器模块</li>
+<li><code>smtplib</code>：<code>SMTP</code>客户端模块</li>
+<li><code>telnetlib</code>：<code>Telnet</code>客户端模块</li>
+<li><code>urlparse</code>：支持解析<code>URL</code></li>
+<li><code>xmlrpclib</code>：<code>XML-RPC</code>的客户端支持</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-SocketServer"><a href="#2-SocketServer" class="headerlink" title="2. SocketServer"></a>2. SocketServer</h3><ul>
+<li><code>SocketServer</code>模块是标准库中很多服务器框架的基础，包括<code>BaseHTTPServer</code>、<code>SimpleHTTPServer</code>、<code>CGIHTTPServer</code>、<code>SimpleXMLRPCServer</code>和<code>DocXMLRPCServer</code>。</li>
+<li><code>SocketServer</code>包含<code>4</code>个基本的类：针对<code>TCP</code>流式<code>socket</code>的<code>TCPServer</code>、针对<code>UDP</code>数据报<code>socket</code>的<code>UDPServer</code>和针对性不强的<code>UnixStreamServer</code>和<code>UnixDatagramServer</code>。通常很少用到后<code>3</code>个。</li>
+<li>编写一个使用<code>SocketServer</code>框架的服务器，可能会将大部分代码放在一个请求处理程序<code>request handler</code>中。每当服务器收到一个请求，就会实例化一个请求处理程序，并且它的各种处理方法<code>handler method</code>会在处理请求时被调用。具体调用哪个取决于特定的服务器和请求的处理程序类<code>handler class</code>。还可以子类化，使得服务器调用自定义的处理程序集。<ul>
+<li><code>BaseRequestHandler</code>类把所有操作都放到处理器的<code>handler</code>方法中。该方法被服务器调用时，就会访问<code>self.request</code>中的客户端<code>socket</code>。</li>
+<li>使用流，例如<code>TCPServer</code>，那么可以使用<code>StreamRequestHandler</code>类。使用<code>self.rfile</code>读取和<code>self.wfile</code>写入，就能使用这些类文件对象和客户机进行通信。</li>
+<li><code>SocketServer</code>框架中的其他类实现了对<code>HTTP</code>服务器的基本支持，包括对运行<code>CHI</code>脚本、<code>XML RPC</code>的支持。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#基于SocketServer的小型服务器。</span></div><div class="line"></div><div class="line"><span class="comment">#这个demo是在同一台电脑上运行。</span></div><div class="line"><span class="comment">#先运行服务器端，再运行客户端。</span></div><div class="line"><span class="comment">#服务器端会输出Got connection from...</span></div><div class="line"><span class="comment">#客户端会输出Thank you for connecting</span></div><div class="line"></div><div class="line"><span class="comment">#一次只能连接一个客户端并处理请求，即同步。</span></div><div class="line"></div><div class="line"><span class="comment">#服务器</span></div><div class="line"><span class="keyword">from</span> SocketServer <span class="keyword">import</span> TCPServer, StreamRequestHandler</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Handler</span><span class="params">(StreamRequestHandler)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle</span><span class="params">(self)</span>:</span></div><div class="line">    	<span class="comment">#获得对方的地址和端口号，只有在连接建立后才调用</span></div><div class="line">        addr = self.request.getpeername()</div><div class="line">        <span class="keyword">print</span> <span class="string">'Got connection from'</span>, addr</div><div class="line">        self.wfile.write(<span class="string">'Thank you for connecting'</span>)</div><div class="line"></div><div class="line">server = TCPServer((<span class="string">''</span>,<span class="number">1234</span>),Handler)</div><div class="line">server.serve_forever()</div></pre></td></tr></table></figure>
+<h3 id="3-Multiple-Connections"><a href="#3-Multiple-Connections" class="headerlink" title="3. Multiple Connections"></a>3. Multiple Connections</h3><ul>
+<li>如果需要同时处理多个连接，那么有三种主要方法：<ul>
+<li>分叉<code>Forking</code></li>
+<li>线程<code>Threading</code></li>
+<li>异步<code>I/O</code> <code>Asynchronous I/O</code></li>
+</ul>
+</li>
+<li>通过对<code>SocketServer</code>服务器使用混合类<code>mix-in class</code>，派生进程和线程很容易处理多个连接的问题。</li>
+</ul>
+<h4 id="3-1-Forking-and-Threading-with-SocketServer"><a href="#3-1-Forking-and-Threading-with-SocketServer" class="headerlink" title="3.1 Forking and Threading with SocketServer"></a>3.1 Forking and Threading with SocketServer</h4><ul>
+<li>分叉是一个<code>UNIX</code>术语，<code>Windows</code>不支持分叉。</li>
+<li>当分叉一个进程时，基本上是复制了它，都有自己的内存副本，并且分叉后的两个进程都从当前的执行点继续运行。一个进程成为父进程，另一个分叉出来的成为子进程。</li>
+<li>在一个使用分叉的服务器中，父进程监听连接，分叉出来的子进程处理客户端。当客户端的请求结束时，子进程退出。分叉的进程是并行运行的，因此客户端之间不必互相等待。</li>
+<li>分叉占据资源：每个分叉出来的进程都需要自己的内存，并且客户端连接很多的时候，分叉不能很好的分叉。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#使用分叉技术的服务器</span></div><div class="line"><span class="keyword">from</span> SocketServer <span class="keyword">import</span> TCPServer, ForkingMixIn, StreamRequestHandler</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Server</span><span class="params">(ForkingMixIn, TCPServer)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Handler</span><span class="params">(StreamRequestHandler)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle</span><span class="params">(self)</span>:</span></div><div class="line">        addr = self.request.getpeername()</div><div class="line">        <span class="keyword">print</span> <span class="string">'Got connection from '</span>, addr</div><div class="line">        self.wfile.write(<span class="string">'Thank you for connecting'</span>)</div><div class="line"></div><div class="line">server = Server((<span class="string">''</span>,<span class="number">1234</span>), Handler)</div><div class="line">server.serve_forever()</div></pre></td></tr></table></figure>
+<ul>
+<li>线程可以解决占用资源的问题。线程是轻量级的进程，所有线程都存在于相同的进程中，共享内存。但同时也产生了同步问题，即同一时间修改同一内容会造成冲突。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#使用了线程处理的服务器</span></div><div class="line"><span class="keyword">from</span> SocketServer <span class="keyword">import</span> TCPServer, ThreadingMixIn, StreamRequestHandler</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Server</span><span class="params">(ThreadingMixIn, TCPServer)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Handler</span><span class="params">(StreamRequestHandler)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle</span><span class="params">(self)</span>:</span></div><div class="line">        addr = self.request.getpeername()</div><div class="line">        <span class="keyword">print</span> <span class="string">'Get connection from '</span>,addr</div><div class="line">        self.wfile.write(<span class="string">'Thank you for connecting'</span>)</div><div class="line"></div><div class="line">server = Server((<span class="string">''</span>,<span class="number">1234</span>), Handler)</div><div class="line">server.serve_forever()</div></pre></td></tr></table></figure>
+<ul>
+<li>避免线程和分叉的另一个方法是转换到<code>Stackless Python</code>，一个为了能够在不同的上下文之间快速、方便切换而设计的<code>Python</code>版本，支持一个叫做微线程<code>microthreads</code>的类线程的并行形式。</li>
+</ul>
+<h4 id="3-2-Asynchronous-I-O-with-select-and-poll"><a href="#3-2-Asynchronous-I-O-with-select-and-poll" class="headerlink" title="3.2 Asynchronous I/O with select and poll"></a>3.2 Asynchronous I/O with select and poll</h4><ul>
+<li>当服务器和客户端通信时，分叉或线程的处理方式是一个程序等待数据，另一个并行的程序继续处理它自己的客户端。而异步<code>I/O</code>，则只处理在给定时间内真正要进行通信的客户端，不需要一直监听。也是<code>asyncore\asynchat</code>框架和<code>Twisted</code>框架采用的方法。</li>
+<li>该功能的基础是<code>select</code>模块中的<code>select</code>函数和<code>poll</code>函数。<code>poll</code>函数的伸缩性更好，但只能在<code>UNIX</code>系统中使用。</li>
+<li><code>select</code>函数需要<code>3</code>个序列作为参数，第<code>4</code>个参数为可选的以秒为单位的超时时间。这<code>3</code>个序列是文件描述符整数或者是带有返回这样整数的<code>fileno</code>方法的对象，用于输入、输出和异常情况。序列能包括文件对象（<code>Windows</code>中不行）或者套接字。超时时间如果未给定，则<code>select</code>会阻塞，即等待状态。如果给定，则最多阻塞给定的超时时间。如果为<code>0</code>，则给出一个连续的<code>poll</code>，即不阻塞。<code>select</code>的返回值是<code>3</code>个序列，每个代表相应参数的一个活动子集。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket, select</div><div class="line"></div><div class="line">s = socket.socket()</div><div class="line"></div><div class="line">host = socket.gethostname()</div><div class="line">port = <span class="number">1234</span></div><div class="line">s.bind((host,port))</div><div class="line"></div><div class="line">s.listen(<span class="number">5</span>)</div><div class="line">inputs = [s]</div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">    rs, ws, es = select.select(inputs,[],[])</div><div class="line">    <span class="keyword">for</span> r <span class="keyword">in</span> rs:</div><div class="line">        <span class="keyword">if</span> r <span class="keyword">is</span> s:</div><div class="line">            c, addr = s.accept()</div><div class="line">            <span class="keyword">print</span> <span class="string">'Got connection from'</span>, addr</div><div class="line">            inputs.append(r)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                data = r.recv(<span class="number">1024</span>)</div><div class="line">                disconnected = <span class="keyword">not</span> data</div><div class="line">            <span class="keyword">except</span> socket.error:</div><div class="line">                disconnected = <span class="keyword">True</span></div><div class="line"></div><div class="line">            <span class="keyword">if</span> disconnected:</div><div class="line">                <span class="keyword">print</span> r.getpeername(), <span class="string">'disconnected'</span></div><div class="line">                inputs.remove(r)</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                <span class="keyword">print</span> data</div></pre></td></tr></table></figure>
+<ul>
+<li>在调用<code>poll</code>时，会得到一个<code>poll</code>对象。然后可以使用<code>poll</code>对象的<code>register</code>方法注册一个文件描述符或者带有<code>fileno</code>方法的对象，注册后可以使用<code>unregister</code>方法移除注册的对象。注册对象后，可以调用带有可选的超时时间参数的<code>poll</code>方法，得到一个<code>(fd, event)</code>格式列表，<code>fd</code>是文件描述符，<code>event</code>是一个<code>bitmask</code>，一个整数，对应相应的事件。</li>
+<li><code>select</code>模块中的<code>polling</code>事件常量：<ul>
+<li><code>POLLIN</code>：读取来自文件描述符的数据</li>
+<li><code>POLLPRI</code>：读取来自文件描述符的紧急数据</li>
+<li><code>POLLOUT</code>：文件描述符已经准备好数据，写入时不会发生阻塞</li>
+<li><code>POLLERR</code>：与文件描述符有关的错误情况</li>
+<li><code>POLLHUP</code>：挂起，连接丢失</li>
+<li><code>POLLNVAL</code>：无效请求，连接没有打开</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#poll只能在UNIX系统中使用。</span></div><div class="line"><span class="comment">#MAC OS也未必可用，原因参看：https://stackoverflow.com/questions/19740471/cannot-use-python-select-poll-in-mac-os</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> socket, select</div><div class="line"></div><div class="line">s = socket.socket()</div><div class="line">host = socket.gethostname()</div><div class="line">port = <span class="number">1234</span></div><div class="line">s.bind((host,port))</div><div class="line"></div><div class="line">fdmap = &#123;s.fileno(): s&#125;</div><div class="line"></div><div class="line">s.listen(<span class="number">5</span>)</div><div class="line">p = select.poll()</div><div class="line">p.register(s)</div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">    events = p.poll()</div><div class="line">    <span class="keyword">for</span> fd, event <span class="keyword">in</span> events:</div><div class="line">        <span class="keyword">if</span> fd == s.fileno():</div><div class="line">            c,addr = s.accept()</div><div class="line">            <span class="keyword">print</span> <span class="string">'Got connection from '</span>, addr</div><div class="line">            p.register(c)</div><div class="line">            fdmap[c.fileno()] = c</div><div class="line">        <span class="keyword">elif</span> event &amp; select.POLLIN:</div><div class="line">            data = fdmap[fd].recv(<span class="number">1024</span>)</div><div class="line">            <span class="keyword">if</span> <span class="keyword">not</span> data:</div><div class="line">                <span class="keyword">print</span> fdmap[fd].getpeername(), <span class="string">'disconnected'</span></div><div class="line">                p.unregister(fd)</div><div class="line">                <span class="keyword">del</span> fdmap[fd]</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">print</span> data</div></pre></td></tr></table></figure>
+<h3 id="4-Twisted"><a href="#4-Twisted" class="headerlink" title="4. Twisted"></a>4. Twisted</h3><ul>
+<li><code>Twisted</code>是一个事件驱动的<code>Python</code>网络框架，支持<code>Web</code>服务器、客户机、<code>SSH2</code>、<code>SMTP</code>、<code>POP3</code>、<code>IMAP4</code>、<code>AIM</code>、<code>ICQ</code>、<code>IRC</code>、<code>MSN</code>、<code>Jabber</code>、<code>NNTP</code>和<code>DNS</code>等。</li>
+<li>事件处理程序在一个协议<code>protocol</code>中定义，在一个新的连接到达时，需要一个创建这种协议对象的工厂<code>factory</code>。创建一个通用的协议类的实例，可以使用<code>Twisted</code>自带的工厂。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> twisted.internet <span class="keyword">import</span> reactor</div><div class="line"><span class="keyword">from</span> twisted.internet.protocol <span class="keyword">import</span> Protocol, Factory</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SimpleLogger</span><span class="params">(Protocol)</span>:</span></div><div class="line">    <span class="comment">#得到一个连接后被调用</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connectionMade</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">'Got connection from '</span>,self.transport.client</div><div class="line">	 <span class="comment">#丢失连接后被调用</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connectionLost</span><span class="params">(self, reason)</span>:</span></div><div class="line">        <span class="keyword">print</span> self.transport.client, <span class="string">'disconnected'</span></div><div class="line">	 <span class="comment">#接受来自客户端的数据。可以用self.transport的write方法向客户端返回数据</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dataReceived</span><span class="params">(self, data)</span>:</span></div><div class="line">        <span class="keyword">print</span> data</div><div class="line"></div><div class="line">factory = Factory()</div><div class="line">factory.protocol = SimpleLogger</div><div class="line"></div><div class="line">reactor.listenTCP(<span class="number">1234</span>, factory)</div><div class="line">reactor.run()</div></pre></td></tr></table></figure>
+<ul>
+<li>很多情况下需要得到的是一行数据，而不是任意数据。<code>twisted.protocols.basic</code>模块中包含一个有用的预定义协议，是<code>LineReceiver</code>。它实现了<code>dataReceived</code>并且只要收到了一整行就调用事件处理程序<code>lineReceiver</code>。</li>
+<li>如果要在接受数据时做些事情，可以使用由<code>LineReceiver</code>定义的<code>rawDataReceiver</code>事件处理程序。也可以使用<code>lineReceiver</code>，但它依赖于<code>dataReceiver</code>的实现<code>LineReceiver</code>。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> twisted.internet <span class="keyword">import</span> reactor</div><div class="line"><span class="keyword">from</span> twisted.internet.protocol <span class="keyword">import</span> Factory</div><div class="line"><span class="keyword">from</span> twisted.protocols.basic <span class="keyword">import</span> LineReceiver</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SimpleLogger</span><span class="params">(LineReceiver)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connectionMade</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">'Got connection from '</span>, self.transport.client</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connectionLost</span><span class="params">(self, reason)</span>:</span></div><div class="line">        <span class="keyword">print</span> self.transport.client, <span class="string">'disconnected'</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">lineReceived</span><span class="params">(self, line)</span>:</span></div><div class="line">        <span class="keyword">print</span> line</div><div class="line"></div><div class="line">factory = Factory()</div><div class="line">factory.protocol = SimpleLogger</div><div class="line"></div><div class="line">reactor.listenTCP(<span class="number">1234</span>, factory)</div><div class="line">reactor.run()</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>All article here are forbidden to reprint without my permission. 所有文章未经允许禁止转载。Thanks for reading.</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpeg" alt="LeiHuang WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpeg" alt="LeiHuang Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BeginPython笔记/" rel="tag"># BeginPython笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/21/BeginPython笔记-14-Database-Support/" rel="next" title="BeginPython笔记:14.Database Support">
+                <i class="fa fa-chevron-left"></i> BeginPython笔记:14.Database Support
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">LeiHuang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/bosshuang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:myheromyjoe@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Networking-Mudules"><span class="nav-text">1. Networking Mudules</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-The-socket-Module"><span class="nav-text">1.1 The socket Module</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-The-urllib-and-urllib2-Modules"><span class="nav-text">1.2 The urllib and urllib2 Modules</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-Other-Modules"><span class="nav-text">1.3 Other Modules</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SocketServer"><span class="nav-text">2. SocketServer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Multiple-Connections"><span class="nav-text">3. Multiple Connections</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-Forking-and-Threading-with-SocketServer"><span class="nav-text">3.1 Forking and Threading with SocketServer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-Asynchronous-I-O-with-select-and-poll"><span class="nav-text">3.2 Asynchronous I/O with select and poll</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Twisted"><span class="nav-text">4. Twisted</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LeiHuang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
