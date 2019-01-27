@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="BeginPython笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文是《Python基础教程(第2版 修订版)》第 16 章 测试 的笔记，简要介绍了Python中的先测试后编码的思想、测试工具、源代码检查工具和性能测试工具等内容。">
+<meta name="keywords" content="BeginPython笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BeginPython笔记:16.Testing">
+<meta property="og:url" content="http://yoursite.com/2019/01/27/BeginPython笔记-16-Testing/index.html">
+<meta property="og:site_name" content="LeiHuang&#39;s Blog">
+<meta property="og:description" content="本文是《Python基础教程(第2版 修订版)》第 16 章 测试 的笔记，简要介绍了Python中的先测试后编码的思想、测试工具、源代码检查工具和性能测试工具等内容。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-01-27T14:38:34.543Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BeginPython笔记:16.Testing">
+<meta name="twitter:description" content="本文是《Python基础教程(第2版 修订版)》第 16 章 测试 的笔记，简要介绍了Python中的先测试后编码的思想、测试工具、源代码检查工具和性能测试工具等内容。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/01/27/BeginPython笔记-16-Testing/"/>
+
+
+
+
+
+  <title>BeginPython笔记:16.Testing | LeiHuang's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?fa63699072fd198a02e43cccf4d60faa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LeiHuang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">逆水行舟，不进则退。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/27/BeginPython笔记-16-Testing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LeiHuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LeiHuang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">BeginPython笔记:16.Testing</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-27T22:34:27+08:00">
+                2019-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/BeginPython笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">BeginPython笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是《Python基础教程(第2版 修订版)》第 16 章 测试 的笔记，简要介绍了Python中的先测试后编码的思想、测试工具、源代码检查工具和性能测试工具等内容。</p>
+<a id="more"></a>
+<h3 id="1-Test-First-Code-Later"><a href="#1-Test-First-Code-Later" class="headerlink" title="1. Test First, Code Later"></a>1. Test First, Code Later</h3><ul>
+<li>测试驱动编程：先测试再编码。测试驱动编码的理念是从编写测试程序开始，然后编写可以通过测试的程序。测试程序就是程序的需求说明。</li>
+<li>在开发软件的某部分前，必须首先知道软件要解决什么问题，要达到什么目的。</li>
+<li>测试驱动开发的过程：<ol>
+<li>指出需要的新特性，记录并为其编写一个测试。</li>
+<li>编写特性的骨架代码，使程序可以运行，不存在任何语法等方面的错误，但测试会失败。</li>
+<li>为特性的骨架编写哑代码，满足测试要求就行。</li>
+<li>重写代码，使其完成自己应该做的事，从而保证测试一直成功。</li>
+</ol>
+</li>
+<li>使其工作，使其更好，使其更快。</li>
+</ul>
+<h3 id="2-Tools-for-Testing"><a href="#2-Tools-for-Testing" class="headerlink" title="2. Tools for Testing"></a>2. Tools for Testing</h3><h4 id="2-1-doctest"><a href="#2-1-doctest" class="headerlink" title="2.1 doctest"></a>2.1 doctest</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#在模块doctest_demo，即doctest_demo.py中定义下面的内容</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">square</span><span class="params">(x)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line"><span class="string">    Square a number and returns the result</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">    &gt;&gt;&gt; square(2)</span></div><div class="line"><span class="string">    4</span></div><div class="line"><span class="string">    &gt;&gt;&gt; square(3)</span></div><div class="line"><span class="string">    9</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">    :param x:</span></div><div class="line"><span class="string">    :return: x*x</span></div><div class="line"><span class="string">    '''</span></div><div class="line">    <span class="keyword">return</span> x*x</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="keyword">import</span> doctest, doctest_demo</div><div class="line">    doctest.testmod(doctest_demo)</div></pre></td></tr></table></figure>
+<p>在命令行中运行<code>python doctest_demo.py -v</code>，可以得到以下信息</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Trying:</div><div class="line">    square(<span class="number">2</span>)</div><div class="line">Expecting:</div><div class="line">    <span class="number">4</span></div><div class="line">ok</div><div class="line">Trying:</div><div class="line">    square(<span class="number">3</span>)</div><div class="line">Expecting:</div><div class="line">    <span class="number">9</span></div><div class="line">ok</div><div class="line"><span class="number">1</span> items had no tests:</div><div class="line">    doctest_demo</div><div class="line"><span class="number">1</span> items passed all tests:</div><div class="line">   <span class="number">2</span> tests <span class="keyword">in</span> doctest_demo.square</div><div class="line"><span class="number">2</span> tests <span class="keyword">in</span> <span class="number">2</span> items.</div><div class="line"><span class="number">2</span> passed <span class="keyword">and</span> <span class="number">0</span> failed.</div><div class="line">Test passed.</div></pre></td></tr></table></figure>
+<ul>
+<li><code>doctest.testmod</code>函数会从一个模块中读取所有文档字符串，找出所有看起来像是在交互式解释器中输入的例子的文本，之后检查例子是否符合实际要求。</li>
+<li><code>testmod</code>函数检查模块的文档字符串，也检查函数的文档字符串。</li>
+</ul>
+<h4 id="2-2-unitest"><a href="#2-2-unitest" class="headerlink" title="2.2 unitest"></a>2.2 unitest</h4><ul>
+<li>标准库中也有其他的单元测试工具包，例如<code>py.test</code>和<code>nose</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> doctest_demo, unittest</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SquareTestCase</span><span class="params">(unittest.TestCase)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">testNumber</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">4</span>):</div><div class="line">            result = doctest_demo.square(i)</div><div class="line">            self.failUnless(i*i==result, <span class="string">'Error'</span>)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    unittest.main()</div></pre></td></tr></table></figure>
+<ul>
+<li><code>unittest.main</code>函数负责实际运行测试。它会实例化所有<code>TestCase</code>的子类，运行所有名字以<code>test</code>开头的方法。</li>
+<li>如果定义了<code>setUp</code>和<code>setDown</code>方法，则会在运行每个测试方法之前和之后执行，这样就可以为所有测试提供一般的初始化和清理代码，即测试装置<code>test fixture</code>。</li>
+<li><code>unittest</code>模块会区分由异常引发的错误和调用<code>failUnless</code>等函数而导致的失败。</li>
+<li>一些有用的<code>TestCase</code>方法：<ul>
+<li><code>assert_(expr[, msg])</code>：如果表达式为假，则失败，可选择给出信息。</li>
+<li><code>failUnless(expr[, msg])</code>：同<code>assert</code>。</li>
+<li><code>assertEqual(x, y[, msg])</code>：如果两个值不同则失败，在回溯中打印两个值。</li>
+<li><code>failUnlessEqual(x, y[, msg])</code>：同<code>assertEqual</code></li>
+<li><code>assertNotEqual(x, y[, msg])</code>：和<code>assertEqual</code>相反。</li>
+<li><code>failIfEqual(x, y[, msg])</code>：同<code>assertNotEqual</code>.</li>
+<li><code>assertAlmostEqual(x, y[, places[, msg]])</code>：类似于<code>assertEqual</code>，但对于<code>float</code>值来说，与<code>assertEqual</code>不完全相同。</li>
+<li><code>failUnlessAlmostEqual(x, y[, places[, msg]])</code>：同<code>assertAlmostEqual</code>。</li>
+<li><code>assertNotAlmostEqual(x, y[, places[, msg]])</code>：和<code>assertAlmostEqual</code>相反。</li>
+<li><code>failIfAlmostEqual(x, y[, msg])</code>：同<code>assertNotAlmostEqual</code>.</li>
+<li><code>assertRaises(exc, callable, ...)</code>：除非在调用时<code>callable</code>引发<code>exc</code>异常，否则失败。</li>
+<li><code>failUnlessRaises(exc, callable, ...)</code>：同<code>assertRaises</code>。</li>
+<li><code>failIf(expr[, msg])</code>：与<code>assert_</code>相反。</li>
+<li><code>fail([msg])</code>：无条件失败。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-Source-Code-Checking"><a href="#3-Source-Code-Checking" class="headerlink" title="3. Source Code Checking"></a>3. Source Code Checking</h3><ul>
+<li>源代码检查是一种寻找代码中普遍错误或者问题的方法。</li>
+<li><code>PyCheck</code>可以检查<code>Python</code>源代码、寻找提供的参数不满足函数要求等错误。<code>PyLint</code>支持大多数<code>PyCheck</code>拥有的特性，以及相当多的其他功能，如变量名称是否符合命名规范等。</li>
+<li>使用<code>PyChecker</code>检查文件，只需要使用文件名作为参数运行脚本即可，如<code>pychecker file.py</code>。</li>
+<li>使用<code>PyLint</code>，则使用模块或者包的名字，如<code>pylint module</code>。</li>
+<li><code>PyChecker</code>和<code>PyLint</code>都可以作为模块导入，分别是<code>pychecker.checker</code>和<code>pylint.lint</code>，但两者并不真正为程序设计。当导入<code>pychecker.checker</code>时，它会检查之后的代码，包括导入的模块，并且在标准输出中打印警告。<code>pylint.lint</code>模块有个叫做<code>Run</code>的非文档记录型函数，可以在<code>pylint</code>脚本本身中使用，也会打印警告而不是以某种方式返回警告。</li>
+<li><code>PyChecker</code>和<code>PyLint</code>建议作为命令行工具使用。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> unittest, doctest_demo</div><div class="line"><span class="keyword">from</span> subprocess <span class="keyword">import</span> Popen, PIPE</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SquareTestCase</span><span class="params">(unittest.TestCase)</span>:</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">testNumber</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">4</span>):</div><div class="line">            result = doctest_demo.square(i)</div><div class="line">            self.failUnless(i*i==result, <span class="string">'Error'</span>)</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">testWithPyChecker</span><span class="params">(self)</span>:</span></div><div class="line">        cmd = <span class="string">'pychecker'</span>, <span class="string">'-Q'</span>, doctest_demo.__file__.rstrip(<span class="string">'c'</span>)</div><div class="line">        pychecker = Popen(cmd, stdout=PIPE, stderr=PIPE)</div><div class="line">        self.assertEqual(pychecker.stdout.read(), <span class="string">''</span>)</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">testWithPylint</span><span class="params">(self)</span>:</span></div><div class="line">    	 <span class="comment">#-rn，即只显示警告和错误</span></div><div class="line">        cmd = <span class="string">'pylint'</span>, <span class="string">'-rn'</span>, <span class="string">'doctest_demo'</span></div><div class="line">        pylint = Popen(cmd, stdout=PIPE, stderr=PIPE)</div><div class="line">        self.assertEqual(pylint.stdout.read(), <span class="string">''</span>)</div><div class="line">    </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    unittest.main()</div></pre></td></tr></table></figure>
+<ul>
+<li>使用<code>subprocess</code>模块可以在<code>Python</code>中使用命令行工具。</li>
+<li>用<code>__file__</code>属性获取文件名，用<code>rstrip</code>剔除任何文件名末尾中可能出现的字符<code>c</code>，因为模块实际上来自.pyc文件。</li>
+<li>使用<code>assertEqual</code>函数能使从<code>stdout</code>特征读取的真正输出显示在<code>unittest</code>的失败信息中，也是一般使用<code>assertEqual</code>替代<code>failUnless</code>和<code>==</code>组合的主要原因。</li>
+</ul>
+<h3 id="4-Profiling"><a href="#4-Profiling" class="headerlink" title="4. Profiling"></a>4. Profiling</h3><ul>
+<li><code>Keep It Small and Simple</code></li>
+<li>标准库中有一个叫<code>profile</code>的分析模块，调用其<code>run</code>方法会打印出信息，包括各个函数和方法调用的次数，以及每个函数所花费的时间。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> profile</div><div class="line"><span class="keyword">from</span> doctest_demo <span class="keyword">import</span> square</div><div class="line">profile.run(<span class="string">'square(2)'</span>)</div><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">         4 function calls in 0.006 seconds</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">   Ordered by: standard name</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">   ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span></div><div class="line"><span class="string">        1    0.006    0.006    0.006    0.006 :0(setprofile)</span></div><div class="line"><span class="string">        1    0.000    0.000    0.000    0.000 &lt;string&gt;:1(&lt;module&gt;)</span></div><div class="line"><span class="string">        1    0.000    0.000    0.000    0.000 doctest_demo.py:3(square)</span></div><div class="line"><span class="string">        0    0.000             0.000          profile:0(profiler)</span></div><div class="line"><span class="string">        1    0.000    0.000    0.006    0.006 profile:0(square(2))</span></div><div class="line"><span class="string">'''</span></div></pre></td></tr></table></figure>
+<ul>
+<li>可以提供第二个参数，即文件名，如<code>square.profile</code>，这样结果会保存到该文件中，之后可以使用<code>pstats</code>模块检查分析结果</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pstats</div><div class="line">p = pstats.Stats(<span class="string">'square.profile'</span>)</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>All article here are forbidden to reprint without my permission. 所有文章未经允许禁止转载。Thanks for reading.</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpeg" alt="LeiHuang WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpeg" alt="LeiHuang Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BeginPython笔记/" rel="tag"># BeginPython笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/26/BeginPython笔记-15-Network-Programming/" rel="next" title="BeginPython笔记:15.Network Programming">
+                <i class="fa fa-chevron-left"></i> BeginPython笔记:15.Network Programming
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">LeiHuang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/bosshuang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:myheromyjoe@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Test-First-Code-Later"><span class="nav-text">1. Test First, Code Later</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Tools-for-Testing"><span class="nav-text">2. Tools for Testing</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-doctest"><span class="nav-text">2.1 doctest</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-unitest"><span class="nav-text">2.2 unitest</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Source-Code-Checking"><span class="nav-text">3. Source Code Checking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Profiling"><span class="nav-text">4. Profiling</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LeiHuang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
