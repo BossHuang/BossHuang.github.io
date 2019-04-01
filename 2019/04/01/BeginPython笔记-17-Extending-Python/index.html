@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="BeginPython笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文是《Python基础教程(第2版 修订版)》第 17 章 扩展Python 的笔记，简要介绍了借助C、Java等编程语言对Python进行扩展以提升程序效率等内容。">
+<meta name="keywords" content="BeginPython笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BeginPython笔记:17.Extending Python">
+<meta property="og:url" content="http://yoursite.com/2019/04/01/BeginPython笔记-17-Extending-Python/index.html">
+<meta property="og:site_name" content="LeiHuang&#39;s Blog">
+<meta property="og:description" content="本文是《Python基础教程(第2版 修订版)》第 17 章 扩展Python 的笔记，简要介绍了借助C、Java等编程语言对Python进行扩展以提升程序效率等内容。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-04-01T14:27:35.101Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BeginPython笔记:17.Extending Python">
+<meta name="twitter:description" content="本文是《Python基础教程(第2版 修订版)》第 17 章 扩展Python 的笔记，简要介绍了借助C、Java等编程语言对Python进行扩展以提升程序效率等内容。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/01/BeginPython笔记-17-Extending-Python/"/>
+
+
+
+
+
+  <title>BeginPython笔记:17.Extending Python | LeiHuang's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?fa63699072fd198a02e43cccf4d60faa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LeiHuang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">逆水行舟，不进则退。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/01/BeginPython笔记-17-Extending-Python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LeiHuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LeiHuang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">BeginPython笔记:17.Extending Python</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-01T21:23:35+08:00">
+                2019-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/BeginPython笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">BeginPython笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是《Python基础教程(第2版 修订版)》第 17 章 扩展Python 的笔记，简要介绍了借助C、Java等编程语言对Python进行扩展以提升程序效率等内容。</p>
+<a id="more"></a>
+<h3 id="1-Extend-Python"><a href="#1-Extend-Python" class="headerlink" title="1. Extend Python"></a>1. Extend Python</h3><ul>
+<li><code>Python</code>的优势在于易于使用且能帮助提高开发速度，但会牺牲程序的效率。</li>
+<li>解决程序运行速度的解决方案：<ol>
+<li>在<code>Python</code>中开发一个原型程序。</li>
+<li>分析程序并找出瓶颈。</li>
+<li>用<code>C</code>或者<code>C++</code>、<code>Java</code>等作为扩展来重写出现瓶颈的代码。</li>
+</ol>
+</li>
+<li>如果需要编写一些底层代码，用于与硬件进行交互，那么用<code>C</code>语言进行扩展是最好的选择。</li>
+<li>另一种常见的需要使用扩展的情况是遗留代码<code>legacy code</code>。程序可能需要使用一些已有代码，但只有这些代码的<code>C</code>语言等版本，可以包装这些代码并且通过所包装的代码创建一个<code>Python</code>扩展库。</li>
+</ul>
+<h3 id="2-Jython-and-IronPython"><a href="#2-Jython-and-IronPython" class="headerlink" title="2. Jython and IronPython"></a>2. Jython and IronPython</h3><ul>
+<li>使用<code>Jython</code>（<code>Java</code>实现）和<code>IronPython</code>（<code>C#</code>实现）可以直接访问底层语言中的类和模块，即不需要像扩展<code>CPython</code>时遵循一些特定的<code>API</code>。可以在<code>Jython</code>中直接访问<code>Java</code>标准库，在<code>IronPython</code>中直接访问<code>C#</code>标准库。</li>
+</ul>
+<h4 id="2-1-Jython"><a href="#2-1-Jython" class="headerlink" title="2.1 Jython"></a>2.1 Jython</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#一个Java类JythonTest.java</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JythonTest</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">geeting</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"hello, world"</span>)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>然后用<code>javac</code>进行编译，例如<code>javac JythonTest.java</code></li>
+<li>启动<code>Jython</code>之前，需要把编译后的<code>.class</code>文件放到当前目录中或者配置的<code>Java CLASSPATH</code>中的某处，之后可以直接导入该类</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> JythonTest</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>test = JythonTest()</div><div class="line">&gt;&gt;&gt;&gt; test.geeting()</div></pre></td></tr></table></figure>
+<ul>
+<li>如果使用<code>Java</code>工作，那么可以使用<code>jythonc</code>命令把<code>Python</code>类编译成<code>Java</code>类，这样就可以直接导入到<code>Java</code>程序中。</li>
+<li><code>Jython</code>在和<code>Java</code>类交互时，可以通过普通特性直接访问属性，不需要使用访问器方法。所有属性还可以通过构造函数中的关键字参数进行设置。</li>
+</ul>
+<h4 id="2-2-IronPython"><a href="#2-2-IronPython" class="headerlink" title="2.2 IronPython"></a>2.2 IronPython</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// 一个C#类IronPythonTest.cs</div><div class="line">using System;namespace FePyTest &#123;   public class IronPythonTest &#123;      public void greeting() &#123;         Console.WriteLine(&quot;Hello, world!&quot;);		&#125;	&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>将其编译成<code>DLL</code>，例如<code>csc.exe /t:library IronPythonTest.cs</code></li>
+<li>该方式也需要更新相关的环境变量</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; import clr&gt;&gt;&gt; clr.AddReferenceToFile(&quot;IronPythonTest.dll&quot;)&gt;&gt;&gt; import FePyTest&gt;&gt;&gt; f = FePyTest.IronPythonTest()&gt;&gt;&gt; f.greeting()</div></pre></td></tr></table></figure>
+<h3 id="3-Writing-C-Extensions"><a href="#3-Writing-C-Extensions" class="headerlink" title="3. Writing C Extensions"></a>3. Writing C Extensions</h3><ul>
+<li>扩展<code>Python</code>通常指的是扩展<code>CPython</code>，即用<code>C</code>语言实现的标准<code>Python</code>。<code>C</code>语言的动态性不如<code>Java</code>和<code>C#</code>，而且在编写<code>Python</code>的<code>C</code>语言扩展时必须严格遵照<code>API</code>，否则如果只是提供编译后的<code>C</code>语言代码，<code>Python</code>很难与之进行交互。</li>
+<li>使用<code>CPython</code>，那么有很多工具可以通过生成并使用<code>C</code>语言库或者通过实际地提高<code>Python</code>代码的速度来提高程序的运行速度。<ul>
+<li><code>Psyco</code>：<code>Python</code>的一个特定的实时编译器。可以把某些类型的代码的速度提升一个数量级，特别是处理数字列表的低级代码。但不是对所有的情况都适用，并且需要很多内存。<code>Psyco</code>实际上是分析程序运行时发生的事情。使用时只需要导入，然后调用<code>psyco.full()</code>即可。</li>
+<li><code>Pyrex</code>：专门为编写<code>Python</code>的扩展模块而设计的语言。<code>Pyrex</code>语言结合了<code>Python</code>和类似于<code>C</code>语言中的可选的静态类型。用<code>Pyrex</code>编写一个模块后，可以通过<code>pyrexc</code>程序会把它转化为遵照<code>Python C API</code>的代码。编译后可以在<code>Python</code>中直接使用。</li>
+<li><code>PyPy</code>：<code>PyPy</code>的核心是<code>RPython</code>，一种受限制的<code>Python</code>语言。<code>RPython</code>适合于自动类型推断以及其他工作，例如将代码转换为静态语言、本地机器码或者其他的动态语言。</li>
+<li><code>Weave</code>：是<code>SciPy</code>发布版的一部分，但可以单独使用。它是一个直接在以字符串形式的<code>Python</code>代码中包括<code>C</code>语言或者<code>C++</code>代码的工具，并且可以使这些代码被直接编译和执行。需要快速计算的数学表达式和使用了数字数组的表达式，可以使用<code>Weave</code>。</li>
+<li><code>NumPy</code>：提供了访问数字数组的功能。不仅接口简单，减少了明确指定低级操作的必要性，而且速度快，隐式的循环是直接用<code>C</code>语言实现的，数字数组能与<code>Pyrex</code>和<code>Weave</code>协同工作。</li>
+<li><code>Ctypes</code>：只需要导入已经存在的共享的<code>C</code>语言库使用即可，不需要包装或特定的<code>API</code>。</li>
+<li><code>Subprocess</code>：标准库中的一个模块。允许<code>Python</code>调用外部程序，并且能通过命令行参数、标准输入输出和错误流与外部程序通信。只需要将<code>C</code>语言代码放置到一个完全独立的程序中，然后<code>suo</code>将其作为子进程运行即可。</li>
+<li><code>PyCXX</code>：一个编写<code>Python</code>扩展的<code>C++</code>工具集。</li>
+<li><code>SIP</code>：用于开发<code>GUI</code>包<code>PyQt</code>的工具，包括一个代码生成器和一个<code>Python</code>模块。它以和<code>SWIG</code>类似的方式使用说明文件。</li>
+<li><code>Boost Python</code>：用于在<code>Python</code>和<code>C++</code>之间进行良好的互操作，并且提供例如引用计数，在<code>C++</code>中操作<code>Python</code>对象等功能。其主要用法是以非常<code>Python</code>化的风格编写<code>C++</code>代码，然后用<code>C++</code>编译器直接编译为<code>Python</code>扩展。</li>
+<li><code>Modulator</code>：可以在<code>Python</code>发布版的工具目录中找到，这个脚本可用于生成一些<code>C</code>语言扩展需要的样板代码。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>3.1节和3.2节介绍的内容，绝大多数可以使用<code>Distutils</code>避免各自设置。虽然说<code>Distutils</code>是直接支持<code>SWIG</code>的，但是尝试了后发现还是需要安装<code>SWIG</code>。</li>
+</ul>
+<h4 id="3-1-SWIG"><a href="#3-1-SWIG" class="headerlink" title="3.1 SWIG"></a>3.1 SWIG</h4><ul>
+<li><code>SWIG</code>：<code>Simple Wrapper and Interface Generator</code>。通过它可以将<code>C</code>或者<code>C++</code>编写的扩展代码进行自动包装，以便能在一些高级语言中使用，例如<code>Java</code>、<code>Python</code>、<code>Ruby</code>等。</li>
+<li>使用现存的<code>C</code>语言代码是<code>SWIG</code>的主要用途。</li>
+<li>使用<code>SWIG</code>的过程：<ol>
+<li>有一些<code>C</code>语言代码，然后为代码写接口文件。也可以直接使用头文件。</li>
+<li>在接口文档上运行<code>SWIG</code>，自动生成部分<code>C</code>语言代码，即包装的代码。</li>
+<li>把原来的<code>C</code>语言代码和产生的包装代码一起编译来产生共享库。</li>
+</ol>
+</li>
+<li>例如：</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 第1步：C语言代码和编写接口文件</span></div><div class="line"><span class="comment">// C语言代码</span></div><div class="line"><span class="comment">// 一份用来检测回文的C语言函数</span></div><div class="line"><span class="comment">// palindrome.c</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">is_palindrome</span><span class="params">(<span class="keyword">char</span> *text)</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> i, n=<span class="built_in">strlen</span>(text);</div><div class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i&lt;n/<span class="number">2</span>; ++i)&#123;</div><div class="line">		<span class="keyword">if</span>(text[i] != text[n-i<span class="number">-1</span>])&#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 第1步：C语言代码和编写接口文件</span></div><div class="line"><span class="comment">// 编写接口文件</span></div><div class="line"><span class="comment">// 如果定义了头文件，SWIG可以从头文件中得到需要的信息。</span></div><div class="line"><span class="comment">// 手动编写接口文件的好处：只需把需要导出的函数放到接口文件中即可。</span></div><div class="line"><span class="comment">// palindrome.i</span></div><div class="line"></div><div class="line"><span class="comment">// 为模块定义一个名字</span></div><div class="line">%<span class="keyword">module</span> palindrome</div><div class="line"></div><div class="line"><span class="comment">// 指定需要包含的文件</span></div><div class="line">%&#123;</div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line">&#125;%</div><div class="line"></div><div class="line"><span class="comment">//声明要导出的函数和变量</span></div><div class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="title">is_palindrome</span><span class="params">(<span class="keyword">char</span> *text)</span></span>;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// 第2步：运行SWIG</div><div class="line">// 在命令行中运行. -python选项使包装后的代码能在Python中运行。</div><div class="line">swig -python palindrome.i</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">// 第3步：编译、连接</div><div class="line">// 明确Python源代码，即pyconfig.h和Python.h所在的位置。</div><div class="line">// 根据选择的C语言编译器，将代码编译到一个共享库，指明正确的选项。</div><div class="line"></div><div class="line">// 假设$PYTHON_HOME是Python安装目录的根目录</div><div class="line">// 假设使用的是gcc编译器</div><div class="line"></div><div class="line">// 在Linux中</div><div class="line">gcc -c palindrome.cgcc -I$PYTHON_HOME -I$PYTHON_HOME/Include -c palindrome_wrap.cgcc -shared palindrome.o palindrome_wrap.o -o _palindrome.so</div><div class="line"></div><div class="line">// 在Windows中，最后一步可以使用下面的命令（Python2.7)</div><div class="line">gcc -shared palindrome.o palindrome_wrap.o C:/Python27/libs/libpython27.a -o  _palindrome.dll</div><div class="line"></div><div class="line">// 在Mac OS中，Python2.7</div><div class="line">gcc -dynamic -I$PYTHON_HOME/include/python2.7 -c palindrome.cgcc -dynamic -I$PYTHON_HOME/include/python2.7 -c palindrome_wrap.cgcc -dynamiclib palindrome_wrap.o palindrome.o -o _palindrome.so -Wl, -undefined, dynamic_lookup</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 上述步骤后会得到一个_palindrome.so的文件。</span></div><div class="line"><span class="comment"># 将其放在当前目录或者$PYTHON_HOME的某处后，可以在代码中直接导入使用。</span></div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> _palindrome</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>_palindrome.is_palindrome(<span class="string">'notlob'</span>)</div><div class="line"><span class="number">0</span></div></pre></td></tr></table></figure>
+<h4 id="3-2-Hacking-It-on-Your-Own"><a href="#3-2-Hacking-It-on-Your-Own" class="headerlink" title="3.2 Hacking It on Your Own"></a>3.2 Hacking It on Your Own</h4><ul>
+<li><code>Python</code>中通过引用计数来管理对象。使用两个宏<code>Py_INCREF</code>和<code>Py_DECREF</code>分别来增加和减少对象的引用计数。</li>
+<li><p>关于对象的引用计数的部分规则如下：</p>
+<ul>
+<li>不能拥有一个对象，但可以拥有一个指向它的引用。一个对象的引用计数是指向它的引用的数目。</li>
+<li>如果拥有一个引用，应该在不再需要这个引用的使用调用<code>Py_DECREF</code>。</li>
+<li>如果临时借用了一个引用，就不应该在使用完对象后调用<code>Py_DECREF</code>。调用<code>Py_DECREF</code>是引用的所有者要做的事。应该确保在引用的所有者销毁掉引用后不再使用和借用的引用。</li>
+<li>可以通过调用<code>Py_INCREF</code>将借用的引用变成自己拥有的引用。这样会创建一个新拥有的引用，而原来的所有者仍然拥有原来的引用。</li>
+<li>当接受到一个作为参数的对象，要不要改变所有者关系或者只是借用，取决于自己。</li>
+</ul>
+</li>
+<li><p>自己完全编写<code>Python</code>的<code>C</code>语言扩展时，需要编写很多重复代码。例如：</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//palindrome2.c</span></div><div class="line"></div><div class="line"><span class="comment">// 在一些平台上Python.h会执行一些被其他的头文件使用的重定义。因此必须包含，且在其他头文件之前包含。</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Python.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="comment">// 函数可以被任何东西调用，因此必须是static。</span></div><div class="line"><span class="comment">// self是自我对象，或者NULL，实际只能被用在封装好的方法中。</span></div><div class="line"><span class="comment">// args包括了函数的所有参数。</span></div><div class="line"><span class="function"><span class="keyword">static</span> PyObject *<span class="title">is_palindrome</span><span class="params">(PyObject *self, PyObject *args)</span></span>&#123;    <span class="keyword">int</span> i, n;    <span class="keyword">const</span> <span class="keyword">char</span> *text;    <span class="keyword">int</span> result;</div><div class="line">    </div><div class="line">    <span class="comment">// 为提取对象，可以使用PyArg_ParseTuple取得参数的位置。</span></div><div class="line">    <span class="comment">// 为提取对象，使用PyArg_ParseTupleAndKeywords取得参数的位置和关键字。</span></div><div class="line">        <span class="comment">/* "s" 表示一个字符串 */</span>    <span class="keyword">if</span> (!PyArg_ParseTuple(args, <span class="string">"s"</span>, &amp;text)) &#123;        <span class="keyword">return</span> <span class="literal">NULL</span>;    &#125;    <span class="comment">/* 原先回文的这部分代码 */</span>    n=<span class="built_in">strlen</span>(text);    result = <span class="number">1</span>;    <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;=n/<span class="number">2</span>; ++i) &#123;        <span class="keyword">if</span> (text[i] != text[n-i<span class="number">-1</span>]) &#123;            result = <span class="number">0</span>;			  <span class="keyword">break</span>; </div><div class="line">		  &#125;    &#125;    <span class="comment">/* "i" 表示一个整数 */</span>    <span class="keyword">return</span> Py_BuildValue(<span class="string">"i"</span>, result);</div><div class="line">    <span class="comment">//另外 “o”表示一个Python对象，并且能组合。例如"iis"表示2个整数和1个字符串</span></div><div class="line">    </div><div class="line">    <span class="comment">// 如果result是一个PyObject对象的指针，例如PyObject *resul，那么在返回result时，可能需要调用Py_INCREF(result)。</span></div><div class="line">    <span class="comment">// 如果对象在函数中被创建，函数中就有该对象的引用，并且能把引用返回。</span></div><div class="line">    <span class="comment">// 如果需要返回None，应该使用已经存在的Py_None对象，此时函数不再拥有一个指向Py_None的引用，因此需要在返回前调用Py_INCREF(result)。</span>&#125;</div><div class="line"><span class="comment">/* 方法和函数的列表 */</span><span class="keyword">static</span> PyMethodDef PalindromeMethods[] = &#123;    <span class="comment">/* 名字, 函数, 参数类型, 文档字符串 */</span>    &#123;<span class="string">"is_palindrome"</span>, is_palindrome, METH_VARARGS, <span class="string">"Detect palindromes"</span>&#125;,    <span class="comment">/* 列表结束标记*/</span>    &#123;<span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="number">0</span>, <span class="literal">NULL</span>&#125;&#125;;</div><div class="line"><span class="comment">/* 初始化模块的函数 */</span><span class="function">PyMODINIT_FUNC <span class="title">initpalindrome</span><span class="params">()</span> </span>&#123;    Py_InitModule(<span class="string">"palindrome"</span>, PalindromeMethods);&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>All article here are forbidden to reprint without my permission. 所有文章未经允许禁止转载。Thanks for reading.</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpeg" alt="LeiHuang WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpeg" alt="LeiHuang Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BeginPython笔记/" rel="tag"># BeginPython笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/27/BeginPython笔记-16-Testing/" rel="next" title="BeginPython笔记:16.Testing">
+                <i class="fa fa-chevron-left"></i> BeginPython笔记:16.Testing
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">LeiHuang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/bosshuang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:myheromyjoe@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Extend-Python"><span class="nav-text">1. Extend Python</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Jython-and-IronPython"><span class="nav-text">2. Jython and IronPython</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Jython"><span class="nav-text">2.1 Jython</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-IronPython"><span class="nav-text">2.2 IronPython</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Writing-C-Extensions"><span class="nav-text">3. Writing C Extensions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-SWIG"><span class="nav-text">3.1 SWIG</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-Hacking-It-on-Your-Own"><span class="nav-text">3.2 Hacking It on Your Own</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LeiHuang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
